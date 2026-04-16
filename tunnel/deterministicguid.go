@@ -8,6 +8,7 @@ package tunnel
 import (
 	"bytes"
 	"encoding/binary"
+	"slices"
 	"sort"
 	"unsafe"
 
@@ -73,14 +74,14 @@ func deterministicGUID(c *conf.Config) *windows.GUID {
 	if !UseFixedGUIDInsteadOfDeterministic {
 		b2Key(c.Interface.PrivateKey.Public())
 		b2Number(len(c.Peers))
-		sortedPeers := c.Peers
+		sortedPeers := slices.Clone(c.Peers)
 		sort.Slice(sortedPeers, func(i, j int) bool {
 			return bytes.Compare(sortedPeers[i].PublicKey[:], sortedPeers[j].PublicKey[:]) < 0
 		})
 		for _, peer := range sortedPeers {
 			b2Key(&peer.PublicKey)
 			b2Number(len(peer.AllowedIPs))
-			sortedAllowedIPs := peer.AllowedIPs
+			sortedAllowedIPs := slices.Clone(peer.AllowedIPs)
 			sort.Slice(sortedAllowedIPs, func(i, j int) bool {
 				if bi, bj := sortedAllowedIPs[i].Addr().BitLen(), sortedAllowedIPs[j].Addr().BitLen(); bi != bj {
 					return bi < bj
