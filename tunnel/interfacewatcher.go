@@ -176,7 +176,6 @@ func (iw *interfaceWatcher) Destroy() {
 		iw.changeCallbacks6 = iw.changeCallbacks6[1:]
 		changeCallbacks6 = changeCallbacks6[1:]
 	}
-	firewall.DisableFirewall()
 	if luid != 0 && iw.luid == luid {
 		// It seems that the Windows networking stack doesn't like it when we destroy interfaces that have active
 		// routes, so to be certain, just remove everything before destroying.
@@ -187,5 +186,6 @@ func (iw *interfaceWatcher) Destroy() {
 		luid.FlushIPAddresses(windows.AF_INET6)
 		luid.FlushDNS(windows.AF_INET6)
 	}
+	firewall.DisableFirewall()
 	iw.setupMutex.Unlock()
 }
