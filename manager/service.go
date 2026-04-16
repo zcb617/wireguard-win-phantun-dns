@@ -177,11 +177,17 @@ func (service *managerService) Execute(args []string, r <-chan svc.ChangeRequest
 			}
 			theirReader, ourWriter, err := os.Pipe()
 			if err != nil {
+				ourReader.Close()
+				theirWriter.Close()
 				log.Printf("Unable to create pipe: %v", err)
 				return
 			}
 			theirEvents, ourEvents, err := os.Pipe()
 			if err != nil {
+				ourReader.Close()
+				theirWriter.Close()
+				theirReader.Close()
+				ourWriter.Close()
 				log.Printf("Unable to create pipe: %v", err)
 				return
 			}
