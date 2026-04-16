@@ -108,11 +108,11 @@ func ShellExecute(program, arguments, directory string, show int32) (err error) 
 	if err != nil {
 		return
 	}
-	originalPath := dataTableEntry.FullDllName.Buffer
+	originalFullDllName := dataTableEntry.FullDllName
 	explorerPath := windows.StringToUTF16Ptr(filepath.Join(windowsDirectory, "explorer.exe"))
 	windows.RtlInitUnicodeString(&dataTableEntry.FullDllName, explorerPath)
 	defer func() {
-		windows.RtlInitUnicodeString(&dataTableEntry.FullDllName, originalPath)
+		dataTableEntry.FullDllName = originalFullDllName
 		runtime.KeepAlive(explorerPath)
 	}()
 
