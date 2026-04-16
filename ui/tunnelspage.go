@@ -432,7 +432,11 @@ func (tp *TunnelsPage) onTunnelsViewItemActivated() {
 		if err != nil || (globalState != manager.TunnelStarted && globalState != manager.TunnelStopped) {
 			return
 		}
-		oldState, err := tp.listView.CurrentTunnel().Toggle()
+		tunnel := tp.listView.CurrentTunnel()
+		if tunnel == nil {
+			return
+		}
+		oldState, err := tunnel.Toggle()
 		if err != nil {
 			tp.Synchronize(func() {
 				if oldState == manager.TunnelUnknown {
