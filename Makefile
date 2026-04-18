@@ -27,7 +27,7 @@ define download =
 endef
 
 $(eval $(call download,go.tar.gz,https://download.wireguard.com/windows-toolchain/distfiles/go1.26.1-linux_amd64_2026-03-21.tar.gz,47eaffc1fe0a495051b0c894858c567c00fe17cdfda04cbd1b5b5fc8b516e0b1))
-$(eval $(call download,wireguard-nt.zip,https://download.wireguard.com/wireguard-nt/wireguard-nt-0.11.zip,55741efb41e4fa1fb1ce5b8a87f984898685a040d812c96f0ce6fa3175595087))
+$(eval $(call download,wireguard-nt.zip,https://download.wireguard.com/wireguard-nt/wireguard-nt-1.0.zip,d44f53300e47b44c53e77ee4c495cf061d06b5739f28872432ee1596107a302d))
 
 .deps/go/prepared: .distfiles/go.tar.gz
 	mkdir -p .deps
