@@ -20,10 +20,11 @@ import (
 type ManageTunnelsWindow struct {
 	walk.FormBase
 
-	tabs        *walk.TabWidget
-	tunnelsPage *TunnelsPage
-	logPage     *LogPage
-	updatePage  *UpdatePage
+	tabs         *walk.TabWidget
+	tunnelsPage  *TunnelsPage
+	logPage      *LogPage
+	phantunPage  *PhantunPage
+	updatePage   *UpdatePage
 
 	tunnelChangedCB *manager.TunnelChangeCallback
 }
@@ -101,6 +102,11 @@ func NewManageTunnelsWindow() (*ManageTunnelsWindow, error) {
 	}
 	mtw.tabs.Pages().Add(mtw.logPage.TabPage)
 
+	if mtw.phantunPage, err = NewPhantunPage(); err != nil {
+		return nil, err
+	}
+	mtw.tabs.Pages().Add(mtw.phantunPage.TabPage)
+
 	mtw.VisibleChanged().Attach(func() {
 		if mtw.Visible() {
 			mtw.tunnelsPage.updateConfView()
@@ -108,6 +114,10 @@ func NewManageTunnelsWindow() (*ManageTunnelsWindow, error) {
 			win.BringWindowToTop(mtw.Handle())
 			mtw.logPage.scrollToBottom()
 		}
+	})
+
+	mtw.tunnelsPage.listView.CurrentIndexChanged().Attach(func() {
+		mtw.phantunPage.SetTunnel(mtw.tunnelsPage.listView.CurrentTunnel())
 	})
 
 	mtw.tunnelChangedCB = manager.IPCClientRegisterTunnelChange(mtw.onTunnelChange)
@@ -214,12 +224,12 @@ func (mtw *ManageTunnelsWindow) WndProc(hwnd win.HWND, msg uint32, wParam, lPara
 		}
 		if !mtw.Visible() {
 			mtw.tunnelsPage.listView.SelectFirstActiveTunnel()
-			if mtw.tabs.Pages().Len() != 3 {
+			if mtw.tabs.Pages().Len() != 4 {
 				mtw.tabs.SetCurrentIndex(0)
 			}
 		}
-		if mtw.tabs.Pages().Len() == 3 {
-			mtw.tabs.SetCurrentIndex(2)
+		if mtw.tabs.Pages().Len() == 4 {
+			mtw.tabs.SetCurrentIndex(3)
 		}
 		raise(mtw.Handle())
 		return 0

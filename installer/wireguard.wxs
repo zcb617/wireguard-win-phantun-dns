@@ -84,6 +84,15 @@
 				<File Source="..\$(var.WIREGUARD_PLATFORM)\wg.exe" KeyPath="yes" />
 				<Environment Id="PATH" Name="PATH" System="yes" Action="set" Part="last" Permanent="no" Value="[WireGuardFolder]" />
 			</Component>
+			<Component Directory="WireGuardFolder" Id="PhantunClientExe" Guid="e5d8c7a1-3f2b-4a5c-9d8e-1f2a3b4c5d6e">
+				<File Source="..\..\phantun-client-win\phantun-client.exe" KeyPath="yes" />
+			</Component>
+			<Component Directory="WireGuardFolder" Id="PhantunDll" Guid="f6e9d8b2-4a3c-5b6d-0e9f-2a3b4c5d6e7f">
+				<File Source="..\..\phantun-client-win\WinDivert.dll" KeyPath="yes" />
+			</Component>
+			<Component Directory="WireGuardFolder" Id="PhantunSys" Guid="0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d">
+				<File Source="..\..\phantun-client-win\WinDivert64.sys" KeyPath="yes" />
+			</Component>
 		</ComponentGroup>
 
 		<!--

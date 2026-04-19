@@ -10,7 +10,11 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
+	"path/filepath"
 	"runtime"
+	"strconv"
+	"strings"
 	"time"
 
 	"golang.org/x/sys/windows"
@@ -38,8 +42,15 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 	var config *conf.Config
 	var err error
 	serviceError := services.ErrorSuccess
+	var phantunProcess *os.Process
+	var originalEndpoints []conf.Endpoint
 
 	defer func() {
+		if phantunProcess != nil {
+			log.Println("Stopping phantun client")
+			phantunProcess.Kill()
+			phantunProcess.Wait()
+		}
 		svcSpecificEC, exitCode = services.DetermineErrorCode(err, serviceError)
 		logErr := services.CombineErrors(err, serviceError)
 		if logErr != nil {
@@ -151,6 +162,37 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		return
 	}
 
+	// Check and start phantun obfuscation if configured
+	phantunConfig, phantunErr := conf.LoadPhantunConfig(config.Name)
+	if phantunErr == nil && phantunConfig.Enabled && phantunConfig.Remote != "" {
+		log.Println("Starting phantun obfuscation")
+		phantunExe := filepath.Join(filepath.Dir(os.Executable()), "phantun-client.exe")
+		phantunArgs := []string{
+			"--remote", phantunConfig.Remote,
+			"--local", phantunConfig.Local,
+			"--ipv4-only",
+		}
+		// Save original endpoints and replace with phantun local address
+		originalEndpoints = make([]conf.Endpoint, len(config.Peers))
+		for i := range config.Peers {
+			originalEndpoints[i] = config.Peers[i].Endpoint
+			config.Peers[i].Endpoint = conf.Endpoint{Host: "127.0.0.1", Port: parsePhantunLocalPort(phantunConfig.Local)}
+		}
+		cmd := exec.Command(phantunExe, phantunArgs...)
+		cmd.Dir = filepath.Dir(phantunExe)
+		cmd.SysProcAttr = &windows.SysProcAttr{HideWindow: true}
+		if cmdErr := cmd.Start(); cmdErr != nil {
+			log.Printf("Warning: failed to start phantun-client: %v", cmdErr)
+			// Restore original endpoints if phantun failed to start
+			for i := range config.Peers {
+				config.Peers[i].Endpoint = originalEndpoints[i]
+			}
+		} else {
+			phantunProcess = cmd.Process
+			log.Println("Phantun client started")
+		}
+	}
+
 	log.Println("Creating network adapter")
 	for i := range 15 {
 		if i > 0 {
@@ -257,4 +299,16 @@ func Run(confPath string) error {
 		return err
 	}
 	return svc.Run(serviceName, &tunnelService{confPath})
+}
+
+func parsePhantunLocalPort(local string) uint16 {
+	_, portStr, found := strings.Cut(local, ":")
+	if !found {
+		return 8080
+	}
+	port, err := strconv.Atoi(portStr)
+	if err != nil || port < 1 || port > 65535 {
+		return 8080
+	}
+	return uint16(port)
 }
