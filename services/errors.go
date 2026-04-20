@@ -31,6 +31,7 @@ const (
 	ErrorEnumerateSessions
 	ErrorDropPrivileges
 	ErrorRunScript
+	ErrorPhantunClient
 	ErrorWin32
 )
 
@@ -68,6 +69,8 @@ func (e Error) Error() string {
 		return "Unable to drop privileges"
 	case ErrorRunScript:
 		return "An error occurred while running a configuration script command"
+	case ErrorPhantunClient:
+		return "Unable to start phantun obfuscation client"
 	case ErrorWin32:
 		return "An internal Windows error has occurred"
 	default:

@@ -171,6 +171,11 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 			exePath = os.Args[0]
 		}
 		phantunExe := filepath.Join(filepath.Dir(exePath), "phantun-client.exe")
+		if _, statErr := os.Stat(phantunExe); os.IsNotExist(statErr) {
+			err = fmt.Errorf("phantun-client.exe not found at %s", phantunExe)
+			serviceError = services.ErrorPhantunClient
+			return
+		}
 		phantunArgs := []string{
 			"--remote", phantunConfig.Remote,
 			"--local", phantunConfig.Local,
@@ -186,15 +191,16 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		cmd.Dir = filepath.Dir(phantunExe)
 		cmd.SysProcAttr = &windows.SysProcAttr{HideWindow: true}
 		if cmdErr := cmd.Start(); cmdErr != nil {
-			log.Printf("Warning: failed to start phantun-client: %v", cmdErr)
-			// Restore original endpoints if phantun failed to start
+			// Restore original endpoints before returning
 			for i := range config.Peers {
 				config.Peers[i].Endpoint = originalEndpoints[i]
 			}
-		} else {
-			phantunProcess = cmd.Process
-			log.Println("Phantun client started")
+			err = fmt.Errorf("failed to start phantun-client: %w", cmdErr)
+			serviceError = services.ErrorPhantunClient
+			return
 		}
+		phantunProcess = cmd.Process
+		log.Println("Phantun client started")
 	}
 
 	log.Println("Creating network adapter")
