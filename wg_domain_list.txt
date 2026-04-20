@@ -1,6 +1,3 @@
-#! genpac 3.0.1 https://github.com/JinnLynn/genpac
-#! Generated: 2026-04-20 13:30:15
-#! GFWList: 2026-04-14 18:07:21 online[http://js.0573zzz.com/gfwlist.txt]
 server=/000webhost.com/
 server=/0rz.tw/
 server=/1-apple.com.tw/
