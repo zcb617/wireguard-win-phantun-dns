@@ -101,6 +101,14 @@ func NewPhantunPage() (*PhantunPage, error) {
 	pp.localEdit.SetText("127.0.0.1:8080")
 	row++
 
+	infoLabel, err := walk.NewTextLabel(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(infoLabel, walk.Rectangle{0, row, 2, 1})
+	infoLabel.SetText(l18n.Sprintf("When activated, all peer endpoints will be redirected to the local listen address above."))
+	row++
+
 	buttonsContainer, err := walk.NewComposite(pp)
 	if err != nil {
 		return nil, err
