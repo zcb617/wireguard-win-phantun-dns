@@ -28,7 +28,7 @@ func DefaultDNSRouterConfig() *DNSRouterConfig {
 	return &DNSRouterConfig{
 		Enabled:       false,
 		ListenAddress: "127.0.0.1:53",
-		DomainListURL: "",
+		DomainListURL: "https://raw.githubusercontent.com/zcb617/wireguard-win-phantun-dns/refs/heads/master/wg_domain_list.txt",
 	}
 }
 
