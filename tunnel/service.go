@@ -166,7 +166,11 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 	phantunConfig, phantunErr := conf.LoadPhantunConfig(config.Name)
 	if phantunErr == nil && phantunConfig.Enabled && phantunConfig.Remote != "" {
 		log.Println("Starting phantun obfuscation")
-		phantunExe := filepath.Join(filepath.Dir(os.Executable()), "phantun-client.exe")
+		exePath, err := os.Executable()
+		if err != nil {
+			exePath = os.Args[0]
+		}
+		phantunExe := filepath.Join(filepath.Dir(exePath), "phantun-client.exe")
 		phantunArgs := []string{
 			"--remote", phantunConfig.Remote,
 			"--local", phantunConfig.Local,
