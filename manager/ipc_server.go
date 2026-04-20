@@ -517,7 +517,15 @@ func (s *ManagerService) ServeConn(reader io.Reader, writer io.Writer) {
 				return
 			}
 			retErr := cfg.Save(tunnelName)
+			dlResult := conf.DownloadDomainListResult{Success: true, Message: ""}
+			if retErr == nil {
+				dlResult = cfg.DownloadDomainListIfNeeded()
+			}
 			err = encoder.Encode(errToString(retErr))
+			if err != nil {
+				return
+			}
+			err = encoder.Encode(dlResult.Message)
 			if err != nil {
 				return
 			}

@@ -7,6 +7,9 @@ package conf
 
 import (
 	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -129,4 +132,61 @@ func (cfg *DNSRouterConfig) DomainListSourceURL() string {
 		return cfg.DomainListURL
 	}
 	return ""
+}
+
+// DownloadDomainListResult describes the outcome of a download attempt.
+type DownloadDomainListResult struct {
+	Success bool
+	Message string
+}
+
+// DownloadDomainListIfNeeded downloads the domain list from the configured URL
+// if the local file does not exist. It returns a descriptive result so the UI
+// can show the user what happened. This is called from the manager service
+// which runs with SYSTEM privileges and can write to the configuration directory.
+func (cfg *DNSRouterConfig) DownloadDomainListIfNeeded() DownloadDomainListResult {
+	if cfg.DomainListURL == "" {
+		return DownloadDomainListResult{Success: true, Message: ""}
+	}
+
+	listPath, err := DomainListPath()
+	if err != nil {
+		return DownloadDomainListResult{Success: false, Message: fmt.Sprintf("Failed to get domain list path: %v", err)}
+	}
+
+	_, statErr := os.Stat(listPath)
+	if statErr == nil {
+		return DownloadDomainListResult{Success: true, Message: ""}
+	}
+	if !os.IsNotExist(statErr) {
+		return DownloadDomainListResult{Success: false, Message: fmt.Sprintf("Failed to check domain list file: %v", statErr)}
+	}
+
+	resp, err := http.Get(cfg.DomainListURL)
+	if err != nil {
+		return DownloadDomainListResult{Success: false, Message: fmt.Sprintf("Failed to download: %v", err)}
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return DownloadDomainListResult{Success: false, Message: fmt.Sprintf("Server returned HTTP %d", resp.StatusCode)}
+	}
+
+	// Ensure parent directory exists.
+	if err := os.MkdirAll(filepath.Dir(listPath), 0o700); err != nil {
+		return DownloadDomainListResult{Success: false, Message: fmt.Sprintf("Failed to create directory: %v", err)}
+	}
+
+	file, err := os.Create(listPath)
+	if err != nil {
+		return DownloadDomainListResult{Success: false, Message: fmt.Sprintf("Failed to create file: %v", err)}
+	}
+	defer file.Close()
+
+	n, err := io.Copy(file, resp.Body)
+	if err != nil {
+		return DownloadDomainListResult{Success: false, Message: fmt.Sprintf("Failed to write file: %v", err)}
+	}
+
+	return DownloadDomainListResult{Success: true, Message: fmt.Sprintf("Domain list downloaded (%d bytes) to %s", n, listPath)}
 }

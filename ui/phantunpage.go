@@ -477,10 +477,13 @@ func (pp *PhantunPage) onSaveClicked() {
 		}
 	}
 
-	err = manager.IPCClientSaveDNSRouterConfig(pp.currentTunnel, pp.dnsRouterConfig)
+	dlMsg, err := manager.IPCClientSaveDNSRouterConfig(pp.currentTunnel, pp.dnsRouterConfig)
 	if err != nil {
 		showErrorCustom(pp.Form(), l18n.Sprintf("Unable to save DNS router configuration"), err.Error())
 		return
+	}
+	if dlMsg != "" {
+		walk.MsgBox(pp.Form(), l18n.Sprintf("Domain List"), dlMsg, walk.MsgBoxIconInformation)
 	}
 
 	pp.statusLabel.SetText(l18n.Sprintf("Saved settings for %s", pp.currentTunnel))
