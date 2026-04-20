@@ -32,15 +32,13 @@ func tunnelConfigurationsDirectory() (string, error) {
 	if cachedConfigFileDir != "" {
 		return cachedConfigFileDir, nil
 	}
-	root, err := RootDirectory(true)
+	// Keep configuration files in the same directory as the wireguard.exe
+	// executable so that everything is together in portable / dev builds.
+	exePath, err := os.Executable()
 	if err != nil {
 		return "", err
 	}
-	c := filepath.Join(root, "Configurations")
-	err = os.Mkdir(c, os.ModeDir|0o700)
-	if err != nil && !os.IsExist(err) {
-		return "", err
-	}
+	c := filepath.Dir(exePath)
 	cachedConfigFileDir = c
 	return cachedConfigFileDir, nil
 }
@@ -55,6 +53,22 @@ func PresetRootDirectory(root string) {
 func RootDirectory(create bool) (string, error) {
 	if cachedRootDir != "" {
 		return cachedRootDir, nil
+	}
+	// Portable mode: place data directory alongside the executable so that
+	// configuration files (tunnel configs, phantun, dnscrypt-proxy TOML, etc.)
+	// live in the same folder as wireguard.exe when running from a development
+	// or portable directory.
+	if exePath, err := os.Executable(); err == nil {
+		data := filepath.Join(filepath.Dir(exePath), "Data")
+		if create {
+			if err := os.MkdirAll(data, 0o700); err == nil {
+				cachedRootDir = data
+				return cachedRootDir, nil
+			}
+		} else {
+			cachedRootDir = data
+			return cachedRootDir, nil
+		}
 	}
 	root, err := windows.KnownFolderPath(windows.FOLDERID_ProgramFiles, windows.KF_FLAG_DEFAULT)
 	if err != nil {
