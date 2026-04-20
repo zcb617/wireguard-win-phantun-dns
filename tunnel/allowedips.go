@@ -27,14 +27,19 @@ type allowedIPsSyncer struct {
 	ticker       *time.Ticker
 	stop         chan struct{}
 	wg           sync.WaitGroup
+	ttl          time.Duration
 }
 
-func newAllowedIPsSyncer(adapter *driver.Adapter, baseConfig *conf.Config) *allowedIPsSyncer {
+func newAllowedIPsSyncer(adapter *driver.Adapter, baseConfig *conf.Config, ttlMinutes int) *allowedIPsSyncer {
+	if ttlMinutes <= 0 {
+		ttlMinutes = 10
+	}
 	return &allowedIPsSyncer{
 		adapter:    adapter,
 		baseConfig: baseConfig,
 		dynamicIPs: make(map[netip.Addr]time.Time),
 		stop:       make(chan struct{}),
+		ttl:        time.Duration(ttlMinutes) * time.Minute,
 	}
 }
 
@@ -52,7 +57,7 @@ func (s *allowedIPsSyncer) Stop() {
 
 func (s *allowedIPsSyncer) AddIP(ip netip.Addr) {
 	s.mu.Lock()
-	s.dynamicIPs[ip] = time.Now().Add(10 * time.Minute) // TTL 10 min
+	s.dynamicIPs[ip] = time.Now().Add(s.ttl)
 	s.mu.Unlock()
 	// Trigger immediate rebuild so the user doesn't wait 30s.
 	s.rebuild()

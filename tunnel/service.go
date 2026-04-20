@@ -52,6 +52,7 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 	var ipSyncer *allowedIPsSyncer
 	var routeSyncer *routeTableSyncer
 	var dnscryptListenAddr string
+	var physicalDNSOverrides []winipcfg.PhysicalDNSOverride
 
 	defer func() {
 		if phantunProcess != nil {
@@ -79,6 +80,11 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		// Restore original DNS if it was modified
 		if len(originalDNS) > 0 && config != nil {
 			config.Interface.DNS = originalDNS
+		}
+		// Restore physical adapter DNS if it was overridden
+		if len(physicalDNSOverrides) > 0 {
+			log.Println("Restoring physical adapter DNS")
+			winipcfg.RestorePhysicalDNS(physicalDNSOverrides)
 		}
 		svcSpecificEC, exitCode = services.DetermineErrorCode(err, serviceError)
 		logErr := services.CombineErrors(err, serviceError)
@@ -292,14 +298,7 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 			dnscryptUpstream = dnsCryptConfig.ListenAddress
 		}
 		wgIPChan = make(chan net.IP, 100)
-		var routerErr error
-		dnsRouterInst, routerErr = startDNSRouter(config.Name, dnscryptUpstream, wgIPChan)
-		if routerErr != nil {
-			err = routerErr
-			serviceError = services.ErrorDNSRouter
-			return
-		}
-		// Override tunnel DNS to point to the DNS router.
+		// Determine the DNS router listen address.
 		routerHost, _, _ := strings.Cut(dnsRouterConfig.ListenAddress, ":")
 		if routerHost == "" {
 			routerHost = "127.0.0.1"
@@ -312,6 +311,25 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 			log.Printf("Redirecting tunnel DNS to DNS router at %s", routerAddr)
 		} else {
 			log.Printf("Warning: could not parse DNS router listen address %q: %v", dnsRouterConfig.ListenAddress, parseErr)
+		}
+		// Override physical adapter DNS to 127.0.0.1 so all system DNS queries
+		// are forced through the DNS router regardless of interface routing.
+		// Capture the original DNS servers before override to avoid loopback loops.
+		var originalServers []netip.Addr
+		var overrideErr error
+		physicalDNSOverrides, originalServers, overrideErr = winipcfg.OverridePhysicalDNS([]netip.Addr{routerAddr})
+		if overrideErr != nil {
+			log.Printf("Warning: failed to override physical adapter DNS: %v", overrideErr)
+		} else {
+			log.Printf("Overridden %d physical adapter(s) DNS to %s", len(physicalDNSOverrides), routerAddr)
+		}
+		// Start DNS router with the captured original DNS servers.
+		var routerErr error
+		dnsRouterInst, routerErr = startDNSRouter(config.Name, dnscryptUpstream, originalServers, wgIPChan)
+		if routerErr != nil {
+			err = routerErr
+			serviceError = services.ErrorDNSRouter
+			return
 		}
 	}
 
@@ -381,7 +399,7 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		if dnsRouterConfig.Mode == conf.DNSRouterModeRouteTable {
 			// Prevent WG from adding default routes; we control routing via /32 entries.
 			config.Interface.TableOff = true
-			routeSyncer = newRouteTableSyncer(luid)
+			routeSyncer = newRouteTableSyncer(luid, dnsRouterConfig.TTLMinutes)
 			routeSyncer.Start()
 			go func() {
 				for ip := range wgIPChan {
@@ -392,7 +410,7 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 			}()
 			log.Println("Route table syncer started")
 		} else {
-			ipSyncer = newAllowedIPsSyncer(adapter, config)
+			ipSyncer = newAllowedIPsSyncer(adapter, config, dnsRouterConfig.TTLMinutes)
 			ipSyncer.Start()
 			go func() {
 				for ip := range wgIPChan {

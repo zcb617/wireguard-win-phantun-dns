@@ -6,7 +6,9 @@
 package ui
 
 import (
+	"fmt"
 	"net"
+	"strconv"
 	"strings"
 
 	"github.com/lxn/walk"
@@ -35,6 +37,7 @@ type PhantunPage struct {
 	dnsRouterListenEdit *walk.LineEdit
 	dnsRouterURLEdit    *walk.LineEdit
 	dnsRouterModeCombo  *walk.ComboBox
+	dnsRouterTTLEdit    *walk.LineEdit
 
 	saveButton  *walk.PushButton
 	statusLabel *walk.TextLabel
@@ -310,6 +313,26 @@ func NewPhantunPage() (*PhantunPage, error) {
 		l18n.Sprintf("AllowedIPs (dynamic update)"),
 		l18n.Sprintf("System route table"),
 	})
+	pp.dnsRouterModeCombo.CurrentIndexChanged().Attach(func() {
+		pp.dnsRouterTTLEdit.SetEnabled(pp.dnsRouterModeCombo.CurrentIndex() == 1)
+	})
+	row++
+
+	dnsRouterTTLLabel, err := walk.NewTextLabel(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(dnsRouterTTLLabel, walk.Rectangle{0, row, 1, 1})
+	dnsRouterTTLLabel.SetTextAlignment(walk.AlignHFarVCenter)
+	dnsRouterTTLLabel.SetText(l18n.Sprintf("Route TTL (minutes):"))
+
+	pp.dnsRouterTTLEdit, err = walk.NewLineEdit(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(pp.dnsRouterTTLEdit, walk.Rectangle{1, row, 1, 1})
+	pp.dnsRouterTTLEdit.SetEnabled(false)
+	pp.dnsRouterTTLEdit.SetText("10")
 	row++
 
 	dnsRouterInfo, err := walk.NewTextLabel(pp)
@@ -366,6 +389,7 @@ func (pp *PhantunPage) SetTunnel(tunnel *manager.Tunnel) {
 		pp.dnsRouterListenEdit.SetEnabled(false)
 		pp.dnsRouterURLEdit.SetEnabled(false)
 		pp.dnsRouterModeCombo.SetEnabled(false)
+		pp.dnsRouterTTLEdit.SetEnabled(false)
 		pp.saveButton.SetEnabled(false)
 		return
 	}
@@ -382,6 +406,7 @@ func (pp *PhantunPage) SetTunnel(tunnel *manager.Tunnel) {
 	pp.dnsRouterListenEdit.SetEnabled(true)
 	pp.dnsRouterURLEdit.SetEnabled(true)
 	pp.dnsRouterModeCombo.SetEnabled(true)
+	pp.dnsRouterTTLEdit.SetEnabled(true)
 	pp.saveButton.SetEnabled(true)
 	pp.statusLabel.SetText(l18n.Sprintf("Configuring settings for tunnel: %s", tunnel.Name))
 
@@ -422,6 +447,11 @@ func (pp *PhantunPage) SetTunnel(tunnel *manager.Tunnel) {
 	} else {
 		pp.dnsRouterModeCombo.SetCurrentIndex(0)
 	}
+	if rcfg.TTLMinutes <= 0 {
+		pp.dnsRouterTTLEdit.SetText("10")
+	} else {
+		pp.dnsRouterTTLEdit.SetText(fmt.Sprintf("%d", rcfg.TTLMinutes))
+	}
 	pp.onDNSRouterEnabledChanged()
 }
 
@@ -448,6 +478,11 @@ func (pp *PhantunPage) onDNSRouterEnabledChanged() {
 	pp.dnsRouterListenEdit.SetEnabled(enabled)
 	pp.dnsRouterURLEdit.SetEnabled(enabled)
 	pp.dnsRouterModeCombo.SetEnabled(enabled)
+	if enabled {
+		pp.dnsRouterTTLEdit.SetEnabled(pp.dnsRouterModeCombo.CurrentIndex() == 1)
+	} else {
+		pp.dnsRouterTTLEdit.SetEnabled(false)
+	}
 }
 
 func (pp *PhantunPage) onSaveClicked() {
@@ -496,6 +531,17 @@ func (pp *PhantunPage) onSaveClicked() {
 		pp.dnsRouterConfig.Mode = conf.DNSRouterModeRouteTable
 	} else {
 		pp.dnsRouterConfig.Mode = conf.DNSRouterModeAllowedIPs
+	}
+	ttlStr := strings.TrimSpace(pp.dnsRouterTTLEdit.Text())
+	if ttlStr == "" {
+		pp.dnsRouterConfig.TTLMinutes = 10
+	} else {
+		ttl, parseErr := strconv.Atoi(ttlStr)
+		if parseErr != nil || ttl < 1 || ttl > 1440 {
+			showWarningCustom(pp.Form(), l18n.Sprintf("Invalid configuration"), l18n.Sprintf("Route TTL must be an integer between 1 and 1440 minutes."))
+			return
+		}
+		pp.dnsRouterConfig.TTLMinutes = ttl
 	}
 
 	if pp.dnsRouterConfig.Enabled && pp.dnsRouterConfig.ListenAddress == "" {

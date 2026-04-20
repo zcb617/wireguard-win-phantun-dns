@@ -25,13 +25,18 @@ type routeTableSyncer struct {
 	ticker       *time.Ticker
 	stop         chan struct{}
 	wg           sync.WaitGroup
+	ttl          time.Duration
 }
 
-func newRouteTableSyncer(luid winipcfg.LUID) *routeTableSyncer {
+func newRouteTableSyncer(luid winipcfg.LUID, ttlMinutes int) *routeTableSyncer {
+	if ttlMinutes <= 0 {
+		ttlMinutes = 10
+	}
 	return &routeTableSyncer{
 		luid:          luid,
 		dynamicRoutes: make(map[netip.Addr]time.Time),
 		stop:          make(chan struct{}),
+		ttl:           time.Duration(ttlMinutes) * time.Minute,
 	}
 }
 
@@ -51,9 +56,12 @@ func (s *routeTableSyncer) Stop() {
 
 func (s *routeTableSyncer) AddIP(ip netip.Addr) {
 	s.mu.Lock()
-	s.dynamicRoutes[ip] = time.Now().Add(10 * time.Minute) // TTL 10 min
+	_, exists := s.dynamicRoutes[ip]
+	s.dynamicRoutes[ip] = time.Now().Add(s.ttl)
 	s.mu.Unlock()
-	s.addRoute(ip)
+	if !exists {
+		s.addRoute(ip)
+	}
 }
 
 func (s *routeTableSyncer) loop() {

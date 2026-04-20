@@ -11,6 +11,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"net/netip"
 	"os"
 	"strings"
 	"sync"
@@ -175,7 +176,9 @@ func (r *dnsRouter) handleRequest(w dns.ResponseWriter, req *dns.Msg) {
 // startDNSRouter creates and starts the DNS router for the given tunnel.
 // It queries the system's active physical network adapters for their DNS
 // servers to use as the upstream for non-matched domains.
-func startDNSRouter(tunnelName string, dnscryptAddr string, wgIPs chan<- net.IP) (*dnsRouter, error) {
+// originalSystemAddrs contains the original DNS servers captured before
+// physical adapters were overridden (to avoid loopback query loops).
+func startDNSRouter(tunnelName string, dnscryptAddr string, originalSystemAddrs []netip.Addr, wgIPs chan<- net.IP) (*dnsRouter, error) {
 	routerCfg, err := conf.LoadDNSRouterConfig(tunnelName)
 	if err != nil {
 		return nil, err
@@ -199,16 +202,22 @@ func startDNSRouter(tunnelName string, dnscryptAddr string, wgIPs chan<- net.IP)
 		listenAddr = "127.0.0.1:53"
 	}
 
-	// Query the system's real DNS servers (e.g., DHCP-assigned).
-	systemDNSAddrs, err := winipcfg.GetSystemDNSServers()
-	if err != nil {
-		log.Printf("DNS router: failed to get system DNS servers: %v", err)
-	}
-
-	// Use the first system DNS as the upstream for non-matched domains.
+	// Determine the upstream DNS for non-matched domains.
+	// Prefer the original physical adapter DNS captured before override,
+	// to avoid querying 127.0.0.1 (which would loop back to ourselves).
 	systemAddr := "223.5.5.5:53"
-	if len(systemDNSAddrs) > 0 {
-		systemAddr = systemDNSAddrs[0].String() + ":53"
+	if len(originalSystemAddrs) > 0 {
+		systemAddr = originalSystemAddrs[0].String() + ":53"
+	} else {
+		// Fallback: query current system DNS (may return loopback if adapters
+		// have already been overridden, so avoid this path when possible).
+		systemDNSAddrs, err := winipcfg.GetSystemDNSServers()
+		if err != nil {
+			log.Printf("DNS router: failed to get system DNS servers: %v", err)
+		}
+		if len(systemDNSAddrs) > 0 {
+			systemAddr = systemDNSAddrs[0].String() + ":53"
+		}
 	}
 
 	router := newDNSRouter(rules, dnscryptAddr, systemAddr, listenAddr, wgIPs)

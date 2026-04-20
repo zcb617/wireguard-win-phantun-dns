@@ -23,6 +23,7 @@ type DNSRouterConfig struct {
 	ListenAddress string `json:"listen_address"`
 	DomainListURL string `json:"domain_list_url"`
 	Mode          string `json:"mode"`
+	TTLMinutes    int    `json:"ttl_minutes"`
 }
 
 const (
@@ -36,6 +37,7 @@ func DefaultDNSRouterConfig() *DNSRouterConfig {
 		ListenAddress: "127.0.0.1:53",
 		DomainListURL: "https://raw.githubusercontent.com/zcb617/wireguard-win-phantun-dns/refs/heads/master/wg_domain_list.txt",
 		Mode:          DNSRouterModeAllowedIPs,
+		TTLMinutes:    10,
 	}
 }
 
