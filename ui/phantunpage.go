@@ -45,7 +45,8 @@ func NewPhantunPage() (*PhantunPage, error) {
 	layout := walk.NewGridLayout()
 	layout.SetSpacing(6)
 	layout.SetMargins(walk.Margins{10, 10, 10, 10})
-	layout.SetColumnStretchFactor(1, 3)
+	layout.SetColumnStretchFactor(0, 0)
+	layout.SetColumnStretchFactor(1, 1)
 	pp.SetLayout(layout)
 
 	pp.statusLabel, err = walk.NewTextLabel(pp)
@@ -117,6 +118,14 @@ func NewPhantunPage() (*PhantunPage, error) {
 	pp.saveButton.SetText(l18n.Sprintf("&Save"))
 	pp.saveButton.SetEnabled(false)
 	pp.saveButton.Clicked().Attach(pp.onSaveClicked)
+	row++
+
+	spacer, err := walk.NewVSpacer(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(spacer, walk.Rectangle{0, row, 2, 1})
+	layout.SetRowStretchFactor(row, 1)
 
 	disposables.Spare()
 	return pp, nil
