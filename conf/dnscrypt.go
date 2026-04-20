@@ -80,6 +80,18 @@ func DeleteDNSCryptConfig(tunnelName string) error {
 	return os.Remove(path)
 }
 
+// tomlKey returns a server name properly escaped for use as a TOML table key.
+// Bare keys (A–Z, a–z, 0–9, _, -) can be used directly.
+// Everything else must be wrapped in double quotes.
+func tomlKey(name string) string {
+	for _, r := range name {
+		if !((r >= 'A' && r <= 'Z') || (r >= 'a' && r <= 'z') || (r >= '0' && r <= '9') || r == '_' || r == '-') {
+			return fmt.Sprintf(`"%s"`, strings.ReplaceAll(name, `"`, `\"`))
+		}
+	}
+	return name
+}
+
 var defaultPublicResolversSource = `[sources.public-resolvers]
 urls = [
   'https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md',
@@ -118,8 +130,20 @@ func (cfg *DNSCryptConfig) GenerateTOML() string {
 				serverName = strings.TrimSpace(serverName[:idx])
 			}
 
-			return fmt.Sprintf("listen_addresses = ['%s']\n\nserver_names = ['%s']\n\n[static]\n  [static.'%s']\n    %s\n",
-				listenAddr, serverName, serverName, custom)
+			// Extract the sdns:// value.  The user may paste:
+			//   sdns://...
+			//   stamp = 'sdns://...'
+			//   stamp='sdns://...'
+			// Strip optional prefix / suffix so we always emit: stamp = 'sdns://...'
+			stamp := custom
+			stamp = strings.TrimPrefix(stamp, "stamp = '")
+			stamp = strings.TrimPrefix(stamp, "stamp='")
+			stamp = strings.TrimSuffix(stamp, "'")
+			stamp = strings.TrimSpace(stamp)
+
+			key := tomlKey(serverName)
+			return fmt.Sprintf("listen_addresses = ['%s']\n\nserver_names = ['%s']\n\n[static]\n  [static.%s]\n    stamp = '%s'\n",
+				listenAddr, serverName, key, stamp)
 		}
 
 		// Otherwise treat custom content as full / partial TOML.
