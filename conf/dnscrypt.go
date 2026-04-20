@@ -80,17 +80,59 @@ func DeleteDNSCryptConfig(tunnelName string) error {
 	return os.Remove(path)
 }
 
+var defaultPublicResolversSource = `[sources.public-resolvers]
+urls = [
+  'https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md',
+  'https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md',
+]
+cache_file = 'public-resolvers.md'
+minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
+refresh_delay = 73
+prefix = ''
+`
+
 // GenerateTOML generates a dnscrypt-proxy.toml file content.
-// If CustomTOML is non-empty, it is used directly.
+// If CustomTOML is non-empty, it is used as the primary configuration.
+// Missing listen_addresses are auto-completed from the UI setting.
+// If neither [sources] nor [static] is present, the public-resolvers source is appended.
 // Otherwise, a minimal configuration is generated from ListenAddress and ServerNames.
 func (cfg *DNSCryptConfig) GenerateTOML() string {
-	if strings.TrimSpace(cfg.CustomTOML) != "" {
-		return cfg.CustomTOML
-	}
-
 	listenAddr := cfg.ListenAddress
 	if listenAddr == "" {
 		listenAddr = "127.0.0.1:53"
+	}
+
+	custom := strings.TrimSpace(cfg.CustomTOML)
+	if custom != "" {
+		hasSection := strings.Contains(custom, "[")
+		hasSDNS := strings.Contains(custom, "sdns://")
+		isBareStamp := !hasSection && hasSDNS
+
+		if isBareStamp {
+			// User only provided a stamp — auto-wrap into a static server block
+			// using the first server name from the ServerNames field.
+			serverName := strings.TrimSpace(cfg.ServerNames)
+			if serverName == "" {
+				serverName = "custom"
+			} else if idx := strings.Index(serverName, ","); idx != -1 {
+				serverName = strings.TrimSpace(serverName[:idx])
+			}
+
+			return fmt.Sprintf("listen_addresses = ['%s']\n\nserver_names = ['%s']\n\n[static]\n  [static.'%s']\n    %s\n",
+				listenAddr, serverName, serverName, custom)
+		}
+
+		// Otherwise treat custom content as full / partial TOML.
+		// Auto-complete listen_addresses if missing.
+		if !strings.Contains(custom, "listen_addresses") {
+			custom = fmt.Sprintf("listen_addresses = ['%s']\n\n%s", listenAddr, custom)
+		}
+		// Append default public-resolvers source only if the user didn't
+		// supply any server source (neither remote sources nor static stamps).
+		if !strings.Contains(custom, "[sources") && !strings.Contains(custom, "[static") {
+			custom = custom + "\n\n" + defaultPublicResolversSource
+		}
+		return custom
 	}
 
 	var b strings.Builder
@@ -121,15 +163,7 @@ func (cfg *DNSCryptConfig) GenerateTOML() string {
 		}
 	}
 
-	b.WriteString("[sources.public-resolvers]\n")
-	b.WriteString("urls = [\n")
-	b.WriteString("  'https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md',\n")
-	b.WriteString("  'https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md',\n")
-	b.WriteString("]\n")
-	b.WriteString("cache_file = 'public-resolvers.md'\n")
-	b.WriteString("minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'\n")
-	b.WriteString("refresh_delay = 73\n")
-	b.WriteString("prefix = ''\n")
+	b.WriteString(defaultPublicResolversSource)
 
 	return b.String()
 }

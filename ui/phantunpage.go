@@ -200,7 +200,7 @@ func NewPhantunPage() (*PhantunPage, error) {
 		return nil, err
 	}
 	layout.SetRange(dnsCustomLabel, walk.Rectangle{0, row, 2, 1})
-	dnsCustomLabel.SetText(l18n.Sprintf("Custom TOML (optional, overrides settings above):"))
+	dnsCustomLabel.SetText(l18n.Sprintf("Stamp or custom TOML:"))
 	row++
 
 	pp.dnsCustomTOMLEdit, err = walk.NewTextEdit(pp)
