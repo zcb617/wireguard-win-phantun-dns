@@ -9,6 +9,7 @@ import (
 	"bytes"
 	"fmt"
 	"log"
+	"net/netip"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -44,12 +45,23 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 	serviceError := services.ErrorSuccess
 	var phantunProcess *os.Process
 	var originalEndpoints []conf.Endpoint
+	var dnscryptProcess *os.Process
+	var originalDNS []netip.Addr
 
 	defer func() {
 		if phantunProcess != nil {
 			log.Println("Stopping phantun client")
 			phantunProcess.Kill()
 			phantunProcess.Wait()
+		}
+		if dnscryptProcess != nil {
+			log.Println("Stopping dnscrypt-proxy")
+			dnscryptProcess.Kill()
+			dnscryptProcess.Wait()
+		}
+		// Restore original DNS if it was modified
+		if len(originalDNS) > 0 && config != nil {
+			config.Interface.DNS = originalDNS
 		}
 		svcSpecificEC, exitCode = services.DetermineErrorCode(err, serviceError)
 		logErr := services.CombineErrors(err, serviceError)
@@ -201,6 +213,59 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		}
 		phantunProcess = cmd.Process
 		log.Println("Phantun client started")
+	}
+
+	// Check and start DNSCrypt proxy if configured
+	dnsCryptConfig, dnsErr := conf.LoadDNSCryptConfig(config.Name)
+	if dnsErr == nil && dnsCryptConfig.Enabled {
+		log.Println("Starting DNSCrypt proxy")
+		exePath, err := os.Executable()
+		if err != nil {
+			exePath = os.Args[0]
+		}
+		dnscryptExe := filepath.Join(filepath.Dir(exePath), "dnscrypt-proxy.exe")
+		if _, statErr := os.Stat(dnscryptExe); os.IsNotExist(statErr) {
+			err = fmt.Errorf("dnscrypt-proxy.exe not found at %s", dnscryptExe)
+			serviceError = services.ErrorDNSCryptClient
+			return
+		}
+
+		// Write TOML config to a temp file
+		tomlContent := dnsCryptConfig.GenerateTOML()
+		tomlPath := filepath.Join(filepath.Dir(exePath), "dnscrypt-proxy-"+config.Name+".toml")
+		if writeErr := os.WriteFile(tomlPath, []byte(tomlContent), 0o600); writeErr != nil {
+			err = fmt.Errorf("failed to write dnscrypt-proxy.toml: %w", writeErr)
+			serviceError = services.ErrorDNSCryptClient
+			return
+		}
+
+		dnscryptArgs := []string{"-config", tomlPath}
+		cmd := exec.Command(dnscryptExe, dnscryptArgs...)
+		cmd.Dir = filepath.Dir(dnscryptExe)
+		cmd.SysProcAttr = &windows.SysProcAttr{HideWindow: true}
+		if cmdErr := cmd.Start(); cmdErr != nil {
+			err = fmt.Errorf("failed to start dnscrypt-proxy: %w", cmdErr)
+			serviceError = services.ErrorDNSCryptClient
+			return
+		}
+		dnscryptProcess = cmd.Process
+		log.Println("DNSCrypt proxy started")
+
+		// Redirect tunnel DNS to dnscrypt-proxy
+		listenHost, listenPort, found := strings.Cut(dnsCryptConfig.ListenAddress, ":")
+		if !found || listenHost == "" {
+			listenHost = "127.0.0.1"
+		}
+		_ = listenPort // port not needed for netip.Addr
+		listenAddr, parseErr := netip.ParseAddr(listenHost)
+		if parseErr == nil {
+			originalDNS = make([]netip.Addr, len(config.Interface.DNS))
+			copy(originalDNS, config.Interface.DNS)
+			config.Interface.DNS = []netip.Addr{listenAddr}
+			log.Printf("Redirecting tunnel DNS to %s", listenAddr)
+		} else {
+			log.Printf("Warning: could not parse DNSCrypt listen address %q: %v", dnsCryptConfig.ListenAddress, parseErr)
+		}
 	}
 
 	log.Println("Creating network adapter")

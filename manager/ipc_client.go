@@ -57,6 +57,8 @@ const (
 	UpdateMethodType
 	SavePhantunConfigMethodType
 	LoadPhantunConfigMethodType
+	SaveDNSCryptConfigMethodType
+	LoadDNSCryptConfigMethodType
 )
 
 var (
@@ -490,6 +492,49 @@ func IPCClientLoadPhantunConfig(tunnelName string) (*conf.PhantunConfig, error) 
 		return nil, err
 	}
 	var cfg conf.PhantunConfig
+	err = rpcDecoder.Decode(&cfg)
+	if err != nil {
+		return nil, err
+	}
+	err = rpcDecodeError()
+	if err != nil {
+		return nil, err
+	}
+	return &cfg, nil
+}
+
+func IPCClientSaveDNSCryptConfig(tunnelName string, cfg *conf.DNSCryptConfig) error {
+	rpcMutex.Lock()
+	defer rpcMutex.Unlock()
+
+	err := rpcEncoder.Encode(SaveDNSCryptConfigMethodType)
+	if err != nil {
+		return err
+	}
+	err = rpcEncoder.Encode(tunnelName)
+	if err != nil {
+		return err
+	}
+	err = rpcEncoder.Encode(*cfg)
+	if err != nil {
+		return err
+	}
+	return rpcDecodeError()
+}
+
+func IPCClientLoadDNSCryptConfig(tunnelName string) (*conf.DNSCryptConfig, error) {
+	rpcMutex.Lock()
+	defer rpcMutex.Unlock()
+
+	err := rpcEncoder.Encode(LoadDNSCryptConfigMethodType)
+	if err != nil {
+		return nil, err
+	}
+	err = rpcEncoder.Encode(tunnelName)
+	if err != nil {
+		return nil, err
+	}
+	var cfg conf.DNSCryptConfig
 	err = rpcDecoder.Decode(&cfg)
 	if err != nil {
 		return nil, err

@@ -471,6 +471,40 @@ func (s *ManagerService) ServeConn(reader io.Reader, writer io.Writer) {
 			if err != nil {
 				return
 			}
+		case SaveDNSCryptConfigMethodType:
+			var tunnelName string
+			err := decoder.Decode(&tunnelName)
+			if err != nil {
+				return
+			}
+			var cfg conf.DNSCryptConfig
+			err = decoder.Decode(&cfg)
+			if err != nil {
+				return
+			}
+			retErr := cfg.Save(tunnelName)
+			err = encoder.Encode(errToString(retErr))
+			if err != nil {
+				return
+			}
+		case LoadDNSCryptConfigMethodType:
+			var tunnelName string
+			err := decoder.Decode(&tunnelName)
+			if err != nil {
+				return
+			}
+			cfg, retErr := conf.LoadDNSCryptConfig(tunnelName)
+			if cfg == nil {
+				cfg = conf.DefaultDNSCryptConfig()
+			}
+			err = encoder.Encode(*cfg)
+			if err != nil {
+				return
+			}
+			err = encoder.Encode(errToString(retErr))
+			if err != nil {
+				return
+			}
 		default:
 			return
 		}

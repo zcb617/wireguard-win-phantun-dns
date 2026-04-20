@@ -53,7 +53,7 @@ var (
 )
 
 func fwpmEngineClose0(engineHandle uintptr) (err error) {
-	r1, _, e1 := syscall.Syscall(procFwpmEngineClose0.Addr(), 1, uintptr(engineHandle), 0, 0)
+	r1, _, e1 := syscall.SyscallN(procFwpmEngineClose0.Addr(), uintptr(engineHandle))
 	if r1 != 0 {
 		err = errnoErr(e1)
 	}
@@ -61,7 +61,7 @@ func fwpmEngineClose0(engineHandle uintptr) (err error) {
 }
 
 func fwpmEngineOpen0(serverName *uint16, authnService wtRpcCAuthN, authIdentity *uintptr, session *wtFwpmSession0, engineHandle unsafe.Pointer) (err error) {
-	r1, _, e1 := syscall.Syscall6(procFwpmEngineOpen0.Addr(), 5, uintptr(unsafe.Pointer(serverName)), uintptr(authnService), uintptr(unsafe.Pointer(authIdentity)), uintptr(unsafe.Pointer(session)), uintptr(engineHandle), 0)
+	r1, _, e1 := syscall.SyscallN(procFwpmEngineOpen0.Addr(), uintptr(unsafe.Pointer(serverName)), uintptr(authnService), uintptr(unsafe.Pointer(authIdentity)), uintptr(unsafe.Pointer(session)), uintptr(engineHandle))
 	if r1 != 0 {
 		err = errnoErr(e1)
 	}
@@ -69,7 +69,7 @@ func fwpmEngineOpen0(serverName *uint16, authnService wtRpcCAuthN, authIdentity 
 }
 
 func fwpmFilterAdd0(engineHandle uintptr, filter *wtFwpmFilter0, sd uintptr, id *uint64) (err error) {
-	r1, _, e1 := syscall.Syscall6(procFwpmFilterAdd0.Addr(), 4, uintptr(engineHandle), uintptr(unsafe.Pointer(filter)), uintptr(sd), uintptr(unsafe.Pointer(id)), 0, 0)
+	r1, _, e1 := syscall.SyscallN(procFwpmFilterAdd0.Addr(), uintptr(engineHandle), uintptr(unsafe.Pointer(filter)), uintptr(sd), uintptr(unsafe.Pointer(id)))
 	if r1 != 0 {
 		err = errnoErr(e1)
 	}
@@ -77,12 +77,12 @@ func fwpmFilterAdd0(engineHandle uintptr, filter *wtFwpmFilter0, sd uintptr, id 
 }
 
 func fwpmFreeMemory0(p unsafe.Pointer) {
-	syscall.Syscall(procFwpmFreeMemory0.Addr(), 1, uintptr(p), 0, 0)
+	syscall.SyscallN(procFwpmFreeMemory0.Addr(), uintptr(p))
 	return
 }
 
 func fwpmGetAppIdFromFileName0(fileName *uint16, appID unsafe.Pointer) (err error) {
-	r1, _, e1 := syscall.Syscall(procFwpmGetAppIdFromFileName0.Addr(), 2, uintptr(unsafe.Pointer(fileName)), uintptr(appID), 0)
+	r1, _, e1 := syscall.SyscallN(procFwpmGetAppIdFromFileName0.Addr(), uintptr(unsafe.Pointer(fileName)), uintptr(appID))
 	if r1 != 0 {
 		err = errnoErr(e1)
 	}
@@ -90,7 +90,7 @@ func fwpmGetAppIdFromFileName0(fileName *uint16, appID unsafe.Pointer) (err erro
 }
 
 func fwpmProviderAdd0(engineHandle uintptr, provider *wtFwpmProvider0, sd uintptr) (err error) {
-	r1, _, e1 := syscall.Syscall(procFwpmProviderAdd0.Addr(), 3, uintptr(engineHandle), uintptr(unsafe.Pointer(provider)), uintptr(sd))
+	r1, _, e1 := syscall.SyscallN(procFwpmProviderAdd0.Addr(), uintptr(engineHandle), uintptr(unsafe.Pointer(provider)), uintptr(sd))
 	if r1 != 0 {
 		err = errnoErr(e1)
 	}
@@ -98,7 +98,7 @@ func fwpmProviderAdd0(engineHandle uintptr, provider *wtFwpmProvider0, sd uintpt
 }
 
 func fwpmSubLayerAdd0(engineHandle uintptr, subLayer *wtFwpmSublayer0, sd uintptr) (err error) {
-	r1, _, e1 := syscall.Syscall(procFwpmSubLayerAdd0.Addr(), 3, uintptr(engineHandle), uintptr(unsafe.Pointer(subLayer)), uintptr(sd))
+	r1, _, e1 := syscall.SyscallN(procFwpmSubLayerAdd0.Addr(), uintptr(engineHandle), uintptr(unsafe.Pointer(subLayer)), uintptr(sd))
 	if r1 != 0 {
 		err = errnoErr(e1)
 	}
@@ -106,7 +106,7 @@ func fwpmSubLayerAdd0(engineHandle uintptr, subLayer *wtFwpmSublayer0, sd uintpt
 }
 
 func fwpmTransactionAbort0(engineHandle uintptr) (err error) {
-	r1, _, e1 := syscall.Syscall(procFwpmTransactionAbort0.Addr(), 1, uintptr(engineHandle), 0, 0)
+	r1, _, e1 := syscall.SyscallN(procFwpmTransactionAbort0.Addr(), uintptr(engineHandle))
 	if r1 != 0 {
 		err = errnoErr(e1)
 	}
@@ -114,7 +114,7 @@ func fwpmTransactionAbort0(engineHandle uintptr) (err error) {
 }
 
 func fwpmTransactionBegin0(engineHandle uintptr, flags uint32) (err error) {
-	r1, _, e1 := syscall.Syscall(procFwpmTransactionBegin0.Addr(), 2, uintptr(engineHandle), uintptr(flags), 0)
+	r1, _, e1 := syscall.SyscallN(procFwpmTransactionBegin0.Addr(), uintptr(engineHandle), uintptr(flags))
 	if r1 != 0 {
 		err = errnoErr(e1)
 	}
@@ -122,7 +122,7 @@ func fwpmTransactionBegin0(engineHandle uintptr, flags uint32) (err error) {
 }
 
 func fwpmTransactionCommit0(engineHandle uintptr) (err error) {
-	r1, _, e1 := syscall.Syscall(procFwpmTransactionCommit0.Addr(), 1, uintptr(engineHandle), 0, 0)
+	r1, _, e1 := syscall.SyscallN(procFwpmTransactionCommit0.Addr(), uintptr(engineHandle))
 	if r1 != 0 {
 		err = errnoErr(e1)
 	}
