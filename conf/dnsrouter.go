@@ -22,13 +22,20 @@ type DNSRouterConfig struct {
 	Enabled       bool   `json:"enabled"`
 	ListenAddress string `json:"listen_address"`
 	DomainListURL string `json:"domain_list_url"`
+	Mode          string `json:"mode"`
 }
+
+const (
+	DNSRouterModeAllowedIPs = "allowedips"
+	DNSRouterModeRouteTable = "routetable"
+)
 
 func DefaultDNSRouterConfig() *DNSRouterConfig {
 	return &DNSRouterConfig{
 		Enabled:       false,
 		ListenAddress: "127.0.0.1:53",
 		DomainListURL: "https://raw.githubusercontent.com/zcb617/wireguard-win-phantun-dns/refs/heads/master/wg_domain_list.txt",
+		Mode:          DNSRouterModeAllowedIPs,
 	}
 }
 

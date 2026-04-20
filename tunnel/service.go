@@ -50,6 +50,7 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 	var originalDNS []netip.Addr
 	var dnsRouterInst *dnsRouter
 	var ipSyncer *allowedIPsSyncer
+	var routeSyncer *routeTableSyncer
 	var dnscryptListenAddr string
 
 	defer func() {
@@ -70,6 +71,10 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		if ipSyncer != nil {
 			log.Println("Stopping AllowedIPs syncer")
 			ipSyncer.Stop()
+		}
+		if routeSyncer != nil {
+			log.Println("Stopping route table syncer")
+			routeSyncer.Stop()
 		}
 		// Restore original DNS if it was modified
 		if len(originalDNS) > 0 && config != nil {
@@ -359,21 +364,6 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		return
 	}
 
-	// Start AllowedIPs syncer if DNS router is active
-	if wgIPChan != nil {
-		ipSyncer = newAllowedIPsSyncer(adapter, config)
-		ipSyncer.Start()
-		// Wire the DNS router's output channel to the syncer.
-		go func() {
-			for ip := range wgIPChan {
-				if addr, ok := netip.AddrFromSlice(ip.To4()); ok {
-					ipSyncer.AddIP(addr)
-				}
-			}
-		}()
-		log.Println("AllowedIPs syncer started")
-	}
-
 	log.Println("Setting interface configuration")
 	err = adapter.SetConfiguration(config.ToDriverConfiguration())
 	if err != nil {
@@ -385,6 +375,36 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		serviceError = services.ErrorDeviceBringUp
 		return
 	}
+
+	// Start syncer if DNS router is active (after interface is UP)
+	if wgIPChan != nil {
+		if dnsRouterConfig.Mode == conf.DNSRouterModeRouteTable {
+			// Prevent WG from adding default routes; we control routing via /32 entries.
+			config.Interface.TableOff = true
+			routeSyncer = newRouteTableSyncer(luid)
+			routeSyncer.Start()
+			go func() {
+				for ip := range wgIPChan {
+					if addr, ok := netip.AddrFromSlice(ip.To4()); ok {
+						routeSyncer.AddIP(addr)
+					}
+				}
+			}()
+			log.Println("Route table syncer started")
+		} else {
+			ipSyncer = newAllowedIPsSyncer(adapter, config)
+			ipSyncer.Start()
+			go func() {
+				for ip := range wgIPChan {
+					if addr, ok := netip.AddrFromSlice(ip.To4()); ok {
+						ipSyncer.AddIP(addr)
+					}
+				}
+			}()
+			log.Println("AllowedIPs syncer started")
+		}
+	}
+
 	watcher.Configure(adapter, config, luid)
 
 	err = runScriptCommand(config.Interface.PostUp, config.Name)

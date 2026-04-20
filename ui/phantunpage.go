@@ -34,6 +34,7 @@ type PhantunPage struct {
 	dnsRouterEnabledCB  *walk.CheckBox
 	dnsRouterListenEdit *walk.LineEdit
 	dnsRouterURLEdit    *walk.LineEdit
+	dnsRouterModeCombo  *walk.ComboBox
 
 	saveButton  *walk.PushButton
 	statusLabel *walk.TextLabel
@@ -291,6 +292,26 @@ func NewPhantunPage() (*PhantunPage, error) {
 	pp.dnsRouterURLEdit.SetEnabled(false)
 	row++
 
+	dnsRouterModeLabel, err := walk.NewTextLabel(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(dnsRouterModeLabel, walk.Rectangle{0, row, 1, 1})
+	dnsRouterModeLabel.SetTextAlignment(walk.AlignHFarVCenter)
+	dnsRouterModeLabel.SetText(l18n.Sprintf("Routing mode:"))
+
+	pp.dnsRouterModeCombo, err = walk.NewComboBox(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(pp.dnsRouterModeCombo, walk.Rectangle{1, row, 1, 1})
+	pp.dnsRouterModeCombo.SetEnabled(false)
+	pp.dnsRouterModeCombo.SetModel([]string{
+		l18n.Sprintf("AllowedIPs (dynamic update)"),
+		l18n.Sprintf("System route table"),
+	})
+	row++
+
 	dnsRouterInfo, err := walk.NewTextLabel(pp)
 	if err != nil {
 		return nil, err
@@ -344,6 +365,7 @@ func (pp *PhantunPage) SetTunnel(tunnel *manager.Tunnel) {
 		pp.dnsRouterEnabledCB.SetEnabled(false)
 		pp.dnsRouterListenEdit.SetEnabled(false)
 		pp.dnsRouterURLEdit.SetEnabled(false)
+		pp.dnsRouterModeCombo.SetEnabled(false)
 		pp.saveButton.SetEnabled(false)
 		return
 	}
@@ -359,6 +381,7 @@ func (pp *PhantunPage) SetTunnel(tunnel *manager.Tunnel) {
 	pp.dnsRouterEnabledCB.SetEnabled(true)
 	pp.dnsRouterListenEdit.SetEnabled(true)
 	pp.dnsRouterURLEdit.SetEnabled(true)
+	pp.dnsRouterModeCombo.SetEnabled(true)
 	pp.saveButton.SetEnabled(true)
 	pp.statusLabel.SetText(l18n.Sprintf("Configuring settings for tunnel: %s", tunnel.Name))
 
@@ -394,6 +417,11 @@ func (pp *PhantunPage) SetTunnel(tunnel *manager.Tunnel) {
 	pp.dnsRouterEnabledCB.SetChecked(rcfg.Enabled)
 	pp.dnsRouterListenEdit.SetText(rcfg.ListenAddress)
 	pp.dnsRouterURLEdit.SetText(rcfg.DomainListURL)
+	if rcfg.Mode == conf.DNSRouterModeRouteTable {
+		pp.dnsRouterModeCombo.SetCurrentIndex(1)
+	} else {
+		pp.dnsRouterModeCombo.SetCurrentIndex(0)
+	}
 	pp.onDNSRouterEnabledChanged()
 }
 
@@ -419,6 +447,7 @@ func (pp *PhantunPage) onDNSRouterEnabledChanged() {
 	}
 	pp.dnsRouterListenEdit.SetEnabled(enabled)
 	pp.dnsRouterURLEdit.SetEnabled(enabled)
+	pp.dnsRouterModeCombo.SetEnabled(enabled)
 }
 
 func (pp *PhantunPage) onSaveClicked() {
@@ -463,6 +492,11 @@ func (pp *PhantunPage) onSaveClicked() {
 	pp.dnsRouterConfig.Enabled = pp.dnsRouterEnabledCB.Checked()
 	pp.dnsRouterConfig.ListenAddress = strings.TrimSpace(pp.dnsRouterListenEdit.Text())
 	pp.dnsRouterConfig.DomainListURL = strings.TrimSpace(pp.dnsRouterURLEdit.Text())
+	if pp.dnsRouterModeCombo.CurrentIndex() == 1 {
+		pp.dnsRouterConfig.Mode = conf.DNSRouterModeRouteTable
+	} else {
+		pp.dnsRouterConfig.Mode = conf.DNSRouterModeAllowedIPs
+	}
 
 	if pp.dnsRouterConfig.Enabled && pp.dnsRouterConfig.ListenAddress == "" {
 		showWarningCustom(pp.Form(), l18n.Sprintf("Invalid configuration"), l18n.Sprintf("Local listen address is required when DNS router is enabled."))
