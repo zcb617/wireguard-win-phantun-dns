@@ -21,6 +21,26 @@ Phantun is a UDP-to-TCP obfuscation tool that makes WireGuard traffic look like 
 4. When the tunnel is activated, the client automatically starts `phantun-client.exe` and redirects all peer endpoints to the local Phantun proxy
 5. On tunnel deactivation, the Phantun process is cleanly shut down
 
+### Important: AllowedIPs Configuration (Best Practice)
+
+When using Phantun obfuscation, **do not use `AllowedIPs = 0.0.0.0/0`** in your WireGuard tunnel configuration.
+
+**Why:** WireGuard treats `0.0.0.0/0` as a "full tunnel" signal and enables an aggressive NDIS classify callback that intercepts **all** outbound traffic at the WFP layer. When Phantun's fake TCP packets are injected by WinDivert, they are immediately caught by this classify callback, re-encrypted, and sent back into the tunnel toward `127.0.0.1:8080`, creating an infinite loop.
+
+**Solution:** Use `0.0.0.0/1, 128.0.0.0/1` instead. This covers the entire IPv4 address space identically, but WireGuard handles it as ordinary route entries rather than triggering the full-tunnel classify mode. WinDivert-injected packets will then bypass WireGuard and exit through the physical adapter normally.
+
+```ini
+[Peer]
+AllowedIPs = 0.0.0.0/1, 128.0.0.0/1
+```
+
+If you also need IPv6 coverage:
+
+```ini
+[Peer]
+AllowedIPs = 0.0.0.0/1, 128.0.0.0/1, ::/1, 8000::/1
+```
+
 ### Prerequisite: Phantun Client Binaries
 
 Before building or running, you need the Phantun client binaries and the WinDivert driver:
