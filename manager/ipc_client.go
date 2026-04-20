@@ -55,6 +55,8 @@ const (
 	QuitMethodType
 	UpdateStateMethodType
 	UpdateMethodType
+	SavePhantunConfigMethodType
+	LoadPhantunConfigMethodType
 )
 
 var (
@@ -454,6 +456,49 @@ func IPCClientUpdate() error {
 	defer rpcMutex.Unlock()
 
 	return rpcEncoder.Encode(UpdateMethodType)
+}
+
+func IPCClientSavePhantunConfig(tunnelName string, cfg *conf.PhantunConfig) error {
+	rpcMutex.Lock()
+	defer rpcMutex.Unlock()
+
+	err := rpcEncoder.Encode(SavePhantunConfigMethodType)
+	if err != nil {
+		return err
+	}
+	err = rpcEncoder.Encode(tunnelName)
+	if err != nil {
+		return err
+	}
+	err = rpcEncoder.Encode(*cfg)
+	if err != nil {
+		return err
+	}
+	return rpcDecodeError()
+}
+
+func IPCClientLoadPhantunConfig(tunnelName string) (*conf.PhantunConfig, error) {
+	rpcMutex.Lock()
+	defer rpcMutex.Unlock()
+
+	err := rpcEncoder.Encode(LoadPhantunConfigMethodType)
+	if err != nil {
+		return nil, err
+	}
+	err = rpcEncoder.Encode(tunnelName)
+	if err != nil {
+		return nil, err
+	}
+	var cfg conf.PhantunConfig
+	err = rpcDecoder.Decode(&cfg)
+	if err != nil {
+		return nil, err
+	}
+	err = rpcDecodeError()
+	if err != nil {
+		return nil, err
+	}
+	return &cfg, nil
 }
 
 func IPCClientRegisterTunnelChange(cb func(tunnel *Tunnel, state, globalState TunnelState, err error)) *TunnelChangeCallback {

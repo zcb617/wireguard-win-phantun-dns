@@ -437,6 +437,40 @@ func (s *ManagerService) ServeConn(reader io.Reader, writer io.Writer) {
 			}
 		case UpdateMethodType:
 			s.Update()
+		case SavePhantunConfigMethodType:
+			var tunnelName string
+			err := decoder.Decode(&tunnelName)
+			if err != nil {
+				return
+			}
+			var cfg conf.PhantunConfig
+			err = decoder.Decode(&cfg)
+			if err != nil {
+				return
+			}
+			retErr := cfg.Save(tunnelName)
+			err = encoder.Encode(errToString(retErr))
+			if err != nil {
+				return
+			}
+		case LoadPhantunConfigMethodType:
+			var tunnelName string
+			err := decoder.Decode(&tunnelName)
+			if err != nil {
+				return
+			}
+			cfg, retErr := conf.LoadPhantunConfig(tunnelName)
+			if cfg == nil {
+				cfg = conf.DefaultPhantunConfig()
+			}
+			err = encoder.Encode(*cfg)
+			if err != nil {
+				return
+			}
+			err = encoder.Encode(errToString(retErr))
+			if err != nil {
+				return
+			}
 		default:
 			return
 		}

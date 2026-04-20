@@ -149,7 +149,7 @@ func (pp *PhantunPage) SetTunnel(tunnel *manager.Tunnel) {
 	pp.saveButton.SetEnabled(true)
 	pp.statusLabel.SetText(l18n.Sprintf("Configuring phantun for tunnel: %s", tunnel.Name))
 
-	cfg, err := conf.LoadPhantunConfig(tunnel.Name)
+	cfg, err := manager.IPCClientLoadPhantunConfig(tunnel.Name)
 	if err != nil {
 		cfg = conf.DefaultPhantunConfig()
 	}
@@ -182,7 +182,7 @@ func (pp *PhantunPage) onSaveClicked() {
 		return
 	}
 
-	err := pp.config.Save(pp.currentTunnel)
+	err := manager.IPCClientSavePhantunConfig(pp.currentTunnel, pp.config)
 	if err != nil {
 		showErrorCustom(pp.Form(), l18n.Sprintf("Unable to save phantun configuration"), err.Error())
 		return
