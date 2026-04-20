@@ -41,7 +41,7 @@ func NewPhantunPage() (*PhantunPage, error) {
 	}
 	disposables.Add(pp)
 
-	pp.SetTitle(l18n.Sprintf("Obfuscation"))
+	pp.SetTitle(l18n.Sprintf("Settings"))
 	layout := walk.NewGridLayout()
 	layout.SetSpacing(6)
 	layout.SetMargins(walk.Margins{10, 10, 10, 10})
