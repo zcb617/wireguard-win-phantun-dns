@@ -269,22 +269,11 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		dnscryptProcess = cmd.Process
 		log.Println("DNSCrypt proxy started")
 
-		// Redirect tunnel DNS to dnscrypt-proxy
-		listenHost, listenPort, found := strings.Cut(dnsCryptConfig.ListenAddress, ":")
-		if !found || listenHost == "" {
-			listenHost = "127.0.0.1"
-		}
-		_ = listenPort // port not needed for netip.Addr
-		dnscryptListenAddr = listenHost
-		listenAddr, parseErr := netip.ParseAddr(listenHost)
-		if parseErr == nil {
-			originalDNS = make([]netip.Addr, len(config.Interface.DNS))
-			copy(originalDNS, config.Interface.DNS)
-			config.Interface.DNS = []netip.Addr{listenAddr}
-			log.Printf("Redirecting tunnel DNS to %s", listenAddr)
-		} else {
-			log.Printf("Warning: could not parse DNSCrypt listen address %q: %v", dnsCryptConfig.ListenAddress, parseErr)
-		}
+		// Note: we no longer override config.Interface.DNS automatically.
+		// The user is responsible for setting the tunnel DNS to the local
+		// proxy address (e.g. 127.0.0.1:53) in the WireGuard configuration
+		// if they want DNS traffic to go through dnscrypt-proxy.
+		dnscryptListenAddr, _, _ = strings.Cut(dnsCryptConfig.ListenAddress, ":")
 	}
 
 	// Check and start DNS router if configured
@@ -297,27 +286,32 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		if dnscryptListenAddr != "" {
 			dnscryptUpstream = dnsCryptConfig.ListenAddress
 		}
+		// Build system DNS addresses from the original WireGuard config.
+		var systemDNSAddrs []string
+		for _, addr := range config.Interface.DNS {
+			systemDNSAddrs = append(systemDNSAddrs, addr.String()+":53")
+		}
 		wgIPChan = make(chan net.IP, 100)
 		var routerErr error
-		dnsRouterInst, routerErr = startDNSRouter(config.Name, dnscryptUpstream, wgIPChan)
+		dnsRouterInst, routerErr = startDNSRouter(config.Name, dnscryptUpstream, systemDNSAddrs, wgIPChan)
 		if routerErr != nil {
 			err = routerErr
 			serviceError = services.ErrorDNSRouter
 			return
 		}
-		// Redirect tunnel DNS to the DNS router instead
+		// Override tunnel DNS to point to the DNS router.
 		routerHost, _, _ := strings.Cut(dnsRouterConfig.ListenAddress, ":")
 		if routerHost == "" {
 			routerHost = "127.0.0.1"
 		}
 		routerAddr, parseErr := netip.ParseAddr(routerHost)
 		if parseErr == nil {
-			if len(originalDNS) == 0 {
-				originalDNS = make([]netip.Addr, len(config.Interface.DNS))
-				copy(originalDNS, config.Interface.DNS)
-			}
+			originalDNS = make([]netip.Addr, len(config.Interface.DNS))
+			copy(originalDNS, config.Interface.DNS)
 			config.Interface.DNS = []netip.Addr{routerAddr}
 			log.Printf("Redirecting tunnel DNS to DNS router at %s", routerAddr)
+		} else {
+			log.Printf("Warning: could not parse DNS router listen address %q: %v", dnsRouterConfig.ListenAddress, parseErr)
 		}
 	}
 

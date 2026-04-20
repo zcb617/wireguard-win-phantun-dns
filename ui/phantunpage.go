@@ -6,6 +6,7 @@
 package ui
 
 import (
+	"net"
 	"strings"
 
 	"github.com/lxn/walk"
@@ -411,6 +412,11 @@ func (pp *PhantunPage) onDNSEnabledChanged() {
 
 func (pp *PhantunPage) onDNSRouterEnabledChanged() {
 	enabled := pp.dnsRouterEnabledCB.Checked()
+	if enabled && !pp.dnsEnabledCB.Checked() {
+		pp.dnsRouterEnabledCB.SetChecked(false)
+		showWarningCustom(pp.Form(), l18n.Sprintf("DNS router requires DNSCrypt"), l18n.Sprintf("DNS router requires dnscrypt-proxy to be enabled first. Please enable DNSCrypt proxy and then enable DNS router."))
+		return
+	}
 	pp.dnsRouterListenEdit.SetEnabled(enabled)
 	pp.dnsRouterURLEdit.SetEnabled(enabled)
 }
@@ -463,6 +469,14 @@ func (pp *PhantunPage) onSaveClicked() {
 		return
 	}
 
+	// Check if the DNS router listen port is already in use.
+	if pp.dnsRouterConfig.Enabled {
+		if isUDPPortInUse(pp.dnsRouterConfig.ListenAddress) {
+			showWarningCustom(pp.Form(), l18n.Sprintf("Port conflict"), l18n.Sprintf("The address %s is already in use. Please choose a different port or stop the conflicting service.", pp.dnsRouterConfig.ListenAddress))
+			return
+		}
+	}
+
 	err = manager.IPCClientSaveDNSRouterConfig(pp.currentTunnel, pp.dnsRouterConfig)
 	if err != nil {
 		showErrorCustom(pp.Form(), l18n.Sprintf("Unable to save DNS router configuration"), err.Error())
@@ -470,4 +484,15 @@ func (pp *PhantunPage) onSaveClicked() {
 	}
 
 	pp.statusLabel.SetText(l18n.Sprintf("Saved settings for %s", pp.currentTunnel))
+}
+
+// isUDPPortInUse tries to bind to the given UDP address. If binding fails,
+// the port is considered in use.
+func isUDPPortInUse(addr string) bool {
+	ln, err := net.Listen("udp", addr)
+	if err != nil {
+		return true
+	}
+	ln.Close()
+	return false
 }

@@ -107,19 +107,10 @@ func (r *dnsRouter) handleRequest(w dns.ResponseWriter, req *dns.Msg) {
 	w.WriteMsg(rsp)
 }
 
-// systemDNSAddr tries to find the system's default DNS server.
-func systemDNSAddr() string {
-	// Windows default resolver usually works through the OS stack.
-	// For our proxy we use a known public fallback or read from the
-	// current adapter config. Simplified: use the OS resolver via
-	// net.Resolver, but for forwarding we need an actual UDP endpoint.
-	// For now, fall back to a common public DNS.
-	// TODO: read from the tunnel's pre-activation DNS settings.
-	return "223.5.5.5:53"
-}
-
 // startDNSRouter creates and starts the DNS router for the given tunnel.
-func startDNSRouter(tunnelName string, dnscryptAddr string, wgIPs chan<- net.IP) (*dnsRouter, error) {
+// systemDNSAddrs contains the original DNS servers from the WireGuard config
+// (before they were overridden by local proxies), used for non-matched domains.
+func startDNSRouter(tunnelName string, dnscryptAddr string, systemDNSAddrs []string, wgIPs chan<- net.IP) (*dnsRouter, error) {
 	routerCfg, err := conf.LoadDNSRouterConfig(tunnelName)
 	if err != nil {
 		return nil, err
@@ -143,11 +134,16 @@ func startDNSRouter(tunnelName string, dnscryptAddr string, wgIPs chan<- net.IP)
 		listenAddr = "127.0.0.1:53"
 	}
 
-	systemAddr := systemDNSAddr()
+	// Use the first original DNS as the system upstream.
+	systemAddr := "223.5.5.5:53"
+	if len(systemDNSAddrs) > 0 {
+		systemAddr = systemDNSAddrs[0]
+	}
+
 	router := newDNSRouter(rules, dnscryptAddr, systemAddr, listenAddr, wgIPs)
 	if err := router.Start(); err != nil {
 		return nil, fmt.Errorf("failed to start DNS router: %w", err)
 	}
-	log.Printf("DNS router started on %s (%d rules)", listenAddr, len(rules))
+	log.Printf("DNS router started on %s (%d rules, system DNS: %s)", listenAddr, len(rules), systemAddr)
 	return router, nil
 }
