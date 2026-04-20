@@ -24,9 +24,10 @@ type PhantunPage struct {
 	localEdit   *walk.LineEdit
 
 	// DNSCrypt controls
-	dnsEnabledCB      *walk.CheckBox
-	dnsListenEdit     *walk.LineEdit
+	dnsEnabledCB       *walk.CheckBox
+	dnsListenEdit      *walk.LineEdit
 	dnsServerNamesEdit *walk.LineEdit
+	dnsCustomTOMLEdit  *walk.TextEdit
 
 	saveButton  *walk.PushButton
 	statusLabel *walk.TextLabel
@@ -194,6 +195,22 @@ func NewPhantunPage() (*PhantunPage, error) {
 	pp.dnsServerNamesEdit.SetEnabled(false)
 	row++
 
+	dnsCustomLabel, err := walk.NewTextLabel(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(dnsCustomLabel, walk.Rectangle{0, row, 2, 1})
+	dnsCustomLabel.SetText(l18n.Sprintf("Custom TOML (optional, overrides settings above):"))
+	row++
+
+	pp.dnsCustomTOMLEdit, err = walk.NewTextEdit(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(pp.dnsCustomTOMLEdit, walk.Rectangle{0, row, 2, 1})
+	pp.dnsCustomTOMLEdit.SetEnabled(false)
+	row++
+
 	dnsInfo, err := walk.NewTextLabel(pp)
 	if err != nil {
 		return nil, err
@@ -243,6 +260,7 @@ func (pp *PhantunPage) SetTunnel(tunnel *manager.Tunnel) {
 		pp.dnsEnabledCB.SetEnabled(false)
 		pp.dnsListenEdit.SetEnabled(false)
 		pp.dnsServerNamesEdit.SetEnabled(false)
+		pp.dnsCustomTOMLEdit.SetEnabled(false)
 		pp.saveButton.SetEnabled(false)
 		return
 	}
@@ -254,6 +272,7 @@ func (pp *PhantunPage) SetTunnel(tunnel *manager.Tunnel) {
 	pp.dnsEnabledCB.SetEnabled(true)
 	pp.dnsListenEdit.SetEnabled(true)
 	pp.dnsServerNamesEdit.SetEnabled(true)
+	pp.dnsCustomTOMLEdit.SetEnabled(true)
 	pp.saveButton.SetEnabled(true)
 	pp.statusLabel.SetText(l18n.Sprintf("Configuring settings for tunnel: %s", tunnel.Name))
 
@@ -277,6 +296,7 @@ func (pp *PhantunPage) SetTunnel(tunnel *manager.Tunnel) {
 	pp.dnsEnabledCB.SetChecked(dcfg.Enabled)
 	pp.dnsListenEdit.SetText(dcfg.ListenAddress)
 	pp.dnsServerNamesEdit.SetText(dcfg.ServerNames)
+	pp.dnsCustomTOMLEdit.SetText(dcfg.CustomTOML)
 	pp.onDNSEnabledChanged()
 }
 
@@ -290,6 +310,7 @@ func (pp *PhantunPage) onDNSEnabledChanged() {
 	enabled := pp.dnsEnabledCB.Checked()
 	pp.dnsListenEdit.SetEnabled(enabled)
 	pp.dnsServerNamesEdit.SetEnabled(enabled)
+	pp.dnsCustomTOMLEdit.SetEnabled(enabled)
 }
 
 func (pp *PhantunPage) onSaveClicked() {
@@ -317,6 +338,7 @@ func (pp *PhantunPage) onSaveClicked() {
 	pp.dnsCryptConfig.Enabled = pp.dnsEnabledCB.Checked()
 	pp.dnsCryptConfig.ListenAddress = strings.TrimSpace(pp.dnsListenEdit.Text())
 	pp.dnsCryptConfig.ServerNames = strings.TrimSpace(pp.dnsServerNamesEdit.Text())
+	pp.dnsCryptConfig.CustomTOML = strings.TrimSpace(pp.dnsCustomTOMLEdit.Text())
 
 	if pp.dnsCryptConfig.Enabled && pp.dnsCryptConfig.ListenAddress == "" {
 		showWarningCustom(pp.Form(), l18n.Sprintf("Invalid configuration"), l18n.Sprintf("Local listen address is required when DNSCrypt is enabled."))
