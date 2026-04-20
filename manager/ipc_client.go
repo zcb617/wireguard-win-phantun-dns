@@ -59,6 +59,8 @@ const (
 	LoadPhantunConfigMethodType
 	SaveDNSCryptConfigMethodType
 	LoadDNSCryptConfigMethodType
+	SaveDNSRouterConfigMethodType
+	LoadDNSRouterConfigMethodType
 )
 
 var (
@@ -535,6 +537,49 @@ func IPCClientLoadDNSCryptConfig(tunnelName string) (*conf.DNSCryptConfig, error
 		return nil, err
 	}
 	var cfg conf.DNSCryptConfig
+	err = rpcDecoder.Decode(&cfg)
+	if err != nil {
+		return nil, err
+	}
+	err = rpcDecodeError()
+	if err != nil {
+		return nil, err
+	}
+	return &cfg, nil
+}
+
+func IPCClientSaveDNSRouterConfig(tunnelName string, cfg *conf.DNSRouterConfig) error {
+	rpcMutex.Lock()
+	defer rpcMutex.Unlock()
+
+	err := rpcEncoder.Encode(SaveDNSRouterConfigMethodType)
+	if err != nil {
+		return err
+	}
+	err = rpcEncoder.Encode(tunnelName)
+	if err != nil {
+		return err
+	}
+	err = rpcEncoder.Encode(*cfg)
+	if err != nil {
+		return err
+	}
+	return rpcDecodeError()
+}
+
+func IPCClientLoadDNSRouterConfig(tunnelName string) (*conf.DNSRouterConfig, error) {
+	rpcMutex.Lock()
+	defer rpcMutex.Unlock()
+
+	err := rpcEncoder.Encode(LoadDNSRouterConfigMethodType)
+	if err != nil {
+		return nil, err
+	}
+	err = rpcEncoder.Encode(tunnelName)
+	if err != nil {
+		return nil, err
+	}
+	var cfg conf.DNSRouterConfig
 	err = rpcDecoder.Decode(&cfg)
 	if err != nil {
 		return nil, err

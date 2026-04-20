@@ -33,6 +33,7 @@ const (
 	ErrorRunScript
 	ErrorPhantunClient
 	ErrorDNSCryptClient
+	ErrorDNSRouter
 	ErrorWin32
 )
 
@@ -74,6 +75,8 @@ func (e Error) Error() string {
 		return "Unable to start phantun obfuscation client"
 	case ErrorDNSCryptClient:
 		return "Unable to start DNSCrypt proxy"
+	case ErrorDNSRouter:
+		return "Unable to start DNS router"
 	case ErrorWin32:
 		return "An internal Windows error has occurred"
 	default:

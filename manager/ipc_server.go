@@ -505,6 +505,40 @@ func (s *ManagerService) ServeConn(reader io.Reader, writer io.Writer) {
 			if err != nil {
 				return
 			}
+		case SaveDNSRouterConfigMethodType:
+			var tunnelName string
+			err := decoder.Decode(&tunnelName)
+			if err != nil {
+				return
+			}
+			var cfg conf.DNSRouterConfig
+			err = decoder.Decode(&cfg)
+			if err != nil {
+				return
+			}
+			retErr := cfg.Save(tunnelName)
+			err = encoder.Encode(errToString(retErr))
+			if err != nil {
+				return
+			}
+		case LoadDNSRouterConfigMethodType:
+			var tunnelName string
+			err := decoder.Decode(&tunnelName)
+			if err != nil {
+				return
+			}
+			cfg, retErr := conf.LoadDNSRouterConfig(tunnelName)
+			if cfg == nil {
+				cfg = conf.DefaultDNSRouterConfig()
+			}
+			err = encoder.Encode(*cfg)
+			if err != nil {
+				return
+			}
+			err = encoder.Encode(errToString(retErr))
+			if err != nil {
+				return
+			}
 		default:
 			return
 		}

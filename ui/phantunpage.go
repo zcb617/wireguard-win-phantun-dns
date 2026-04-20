@@ -29,12 +29,18 @@ type PhantunPage struct {
 	dnsServerNamesEdit *walk.LineEdit
 	dnsCustomTOMLEdit  *walk.TextEdit
 
+	// DNS Router controls
+	dnsRouterEnabledCB  *walk.CheckBox
+	dnsRouterListenEdit *walk.LineEdit
+	dnsRouterURLEdit    *walk.LineEdit
+
 	saveButton  *walk.PushButton
 	statusLabel *walk.TextLabel
 
 	currentTunnel string
-	phantunConfig *conf.PhantunConfig
+	phantunConfig  *conf.PhantunConfig
 	dnsCryptConfig *conf.DNSCryptConfig
+	dnsRouterConfig *conf.DNSRouterConfig
 }
 
 func NewPhantunPage() (*PhantunPage, error) {
@@ -45,6 +51,7 @@ func NewPhantunPage() (*PhantunPage, error) {
 	pp := new(PhantunPage)
 	pp.phantunConfig = conf.DefaultPhantunConfig()
 	pp.dnsCryptConfig = conf.DefaultDNSCryptConfig()
+	pp.dnsRouterConfig = conf.DefaultDNSRouterConfig()
 
 	if pp.TabPage, err = walk.NewTabPage(); err != nil {
 		return nil, err
@@ -219,6 +226,78 @@ func NewPhantunPage() (*PhantunPage, error) {
 	dnsInfo.SetText(l18n.Sprintf("When activated, tunnel DNS will be redirected to the local DNSCrypt proxy."))
 	row++
 
+	// Spacer between sections
+	sectionSpacer2, err := walk.NewVSpacer(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(sectionSpacer2, walk.Rectangle{0, row, 2, 1})
+	layout.SetRowStretchFactor(row, 0)
+	row++
+
+	// ---- DNS Router section ----
+	dnsRouterTitle, err := walk.NewTextLabel(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(dnsRouterTitle, walk.Rectangle{0, row, 2, 1})
+	dnsRouterTitle.SetText(l18n.Sprintf("DNS Router"))
+	if boldFont, err := walk.NewFont("Segoe UI", 9, walk.FontBold); err == nil {
+		dnsRouterTitle.SetFont(boldFont)
+	}
+	row++
+
+	pp.dnsRouterEnabledCB, err = walk.NewCheckBox(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(pp.dnsRouterEnabledCB, walk.Rectangle{0, row, 2, 1})
+	pp.dnsRouterEnabledCB.SetText(l18n.Sprintf("Enable DNS router (domain-based routing)"))
+	pp.dnsRouterEnabledCB.SetEnabled(false)
+	pp.dnsRouterEnabledCB.CheckedChanged().Attach(pp.onDNSRouterEnabledChanged)
+	row++
+
+	dnsRouterListenLabel, err := walk.NewTextLabel(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(dnsRouterListenLabel, walk.Rectangle{0, row, 1, 1})
+	dnsRouterListenLabel.SetTextAlignment(walk.AlignHFarVCenter)
+	dnsRouterListenLabel.SetText(l18n.Sprintf("Local listen:"))
+
+	pp.dnsRouterListenEdit, err = walk.NewLineEdit(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(pp.dnsRouterListenEdit, walk.Rectangle{1, row, 1, 1})
+	pp.dnsRouterListenEdit.SetEnabled(false)
+	pp.dnsRouterListenEdit.SetText("127.0.0.1:53")
+	row++
+
+	dnsRouterURLLabel, err := walk.NewTextLabel(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(dnsRouterURLLabel, walk.Rectangle{0, row, 1, 1})
+	dnsRouterURLLabel.SetTextAlignment(walk.AlignHFarVCenter)
+	dnsRouterURLLabel.SetText(l18n.Sprintf("Domain list URL:"))
+
+	pp.dnsRouterURLEdit, err = walk.NewLineEdit(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(pp.dnsRouterURLEdit, walk.Rectangle{1, row, 1, 1})
+	pp.dnsRouterURLEdit.SetEnabled(false)
+	row++
+
+	dnsRouterInfo, err := walk.NewTextLabel(pp)
+	if err != nil {
+		return nil, err
+	}
+	layout.SetRange(dnsRouterInfo, walk.Rectangle{0, row, 2, 1})
+	dnsRouterInfo.SetText(l18n.Sprintf("When activated, matched domains will use dnscrypt-proxy and route via WG tunnel."))
+	row++
+
 	// ---- Save button ----
 	buttonsContainer, err := walk.NewComposite(pp)
 	if err != nil {
@@ -261,6 +340,9 @@ func (pp *PhantunPage) SetTunnel(tunnel *manager.Tunnel) {
 		pp.dnsListenEdit.SetEnabled(false)
 		pp.dnsServerNamesEdit.SetEnabled(false)
 		pp.dnsCustomTOMLEdit.SetEnabled(false)
+		pp.dnsRouterEnabledCB.SetEnabled(false)
+		pp.dnsRouterListenEdit.SetEnabled(false)
+		pp.dnsRouterURLEdit.SetEnabled(false)
 		pp.saveButton.SetEnabled(false)
 		return
 	}
@@ -273,6 +355,9 @@ func (pp *PhantunPage) SetTunnel(tunnel *manager.Tunnel) {
 	pp.dnsListenEdit.SetEnabled(true)
 	pp.dnsServerNamesEdit.SetEnabled(true)
 	pp.dnsCustomTOMLEdit.SetEnabled(true)
+	pp.dnsRouterEnabledCB.SetEnabled(true)
+	pp.dnsRouterListenEdit.SetEnabled(true)
+	pp.dnsRouterURLEdit.SetEnabled(true)
 	pp.saveButton.SetEnabled(true)
 	pp.statusLabel.SetText(l18n.Sprintf("Configuring settings for tunnel: %s", tunnel.Name))
 
@@ -298,6 +383,17 @@ func (pp *PhantunPage) SetTunnel(tunnel *manager.Tunnel) {
 	pp.dnsServerNamesEdit.SetText(dcfg.ServerNames)
 	pp.dnsCustomTOMLEdit.SetText(dcfg.CustomTOML)
 	pp.onDNSEnabledChanged()
+
+	// Load DNSRouter config
+	rcfg, err := manager.IPCClientLoadDNSRouterConfig(tunnel.Name)
+	if err != nil {
+		rcfg = conf.DefaultDNSRouterConfig()
+	}
+	pp.dnsRouterConfig = rcfg
+	pp.dnsRouterEnabledCB.SetChecked(rcfg.Enabled)
+	pp.dnsRouterListenEdit.SetText(rcfg.ListenAddress)
+	pp.dnsRouterURLEdit.SetText(rcfg.DomainListURL)
+	pp.onDNSRouterEnabledChanged()
 }
 
 func (pp *PhantunPage) onEnabledChanged() {
@@ -311,6 +407,12 @@ func (pp *PhantunPage) onDNSEnabledChanged() {
 	pp.dnsListenEdit.SetEnabled(enabled)
 	pp.dnsServerNamesEdit.SetEnabled(enabled)
 	pp.dnsCustomTOMLEdit.SetEnabled(enabled)
+}
+
+func (pp *PhantunPage) onDNSRouterEnabledChanged() {
+	enabled := pp.dnsRouterEnabledCB.Checked()
+	pp.dnsRouterListenEdit.SetEnabled(enabled)
+	pp.dnsRouterURLEdit.SetEnabled(enabled)
 }
 
 func (pp *PhantunPage) onSaveClicked() {
@@ -348,6 +450,22 @@ func (pp *PhantunPage) onSaveClicked() {
 	err = manager.IPCClientSaveDNSCryptConfig(pp.currentTunnel, pp.dnsCryptConfig)
 	if err != nil {
 		showErrorCustom(pp.Form(), l18n.Sprintf("Unable to save DNSCrypt configuration"), err.Error())
+		return
+	}
+
+	// Save DNSRouter config
+	pp.dnsRouterConfig.Enabled = pp.dnsRouterEnabledCB.Checked()
+	pp.dnsRouterConfig.ListenAddress = strings.TrimSpace(pp.dnsRouterListenEdit.Text())
+	pp.dnsRouterConfig.DomainListURL = strings.TrimSpace(pp.dnsRouterURLEdit.Text())
+
+	if pp.dnsRouterConfig.Enabled && pp.dnsRouterConfig.ListenAddress == "" {
+		showWarningCustom(pp.Form(), l18n.Sprintf("Invalid configuration"), l18n.Sprintf("Local listen address is required when DNS router is enabled."))
+		return
+	}
+
+	err = manager.IPCClientSaveDNSRouterConfig(pp.currentTunnel, pp.dnsRouterConfig)
+	if err != nil {
+		showErrorCustom(pp.Form(), l18n.Sprintf("Unable to save DNS router configuration"), err.Error())
 		return
 	}
 

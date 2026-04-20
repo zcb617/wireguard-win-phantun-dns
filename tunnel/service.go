@@ -9,6 +9,7 @@ import (
 	"bytes"
 	"fmt"
 	"log"
+	"net"
 	"net/netip"
 	"os"
 	"os/exec"
@@ -47,6 +48,9 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 	var originalEndpoints []conf.Endpoint
 	var dnscryptProcess *os.Process
 	var originalDNS []netip.Addr
+	var dnsRouterInst *dnsRouter
+	var ipSyncer *allowedIPsSyncer
+	var dnscryptListenAddr string
 
 	defer func() {
 		if phantunProcess != nil {
@@ -58,6 +62,14 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 			log.Println("Stopping dnscrypt-proxy")
 			dnscryptProcess.Kill()
 			dnscryptProcess.Wait()
+		}
+		if dnsRouterInst != nil {
+			log.Println("Stopping DNS router")
+			dnsRouterInst.Stop()
+		}
+		if ipSyncer != nil {
+			log.Println("Stopping AllowedIPs syncer")
+			ipSyncer.Stop()
 		}
 		// Restore original DNS if it was modified
 		if len(originalDNS) > 0 && config != nil {
@@ -263,6 +275,7 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 			listenHost = "127.0.0.1"
 		}
 		_ = listenPort // port not needed for netip.Addr
+		dnscryptListenAddr = listenHost
 		listenAddr, parseErr := netip.ParseAddr(listenHost)
 		if parseErr == nil {
 			originalDNS = make([]netip.Addr, len(config.Interface.DNS))
@@ -271,6 +284,40 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 			log.Printf("Redirecting tunnel DNS to %s", listenAddr)
 		} else {
 			log.Printf("Warning: could not parse DNSCrypt listen address %q: %v", dnsCryptConfig.ListenAddress, parseErr)
+		}
+	}
+
+	// Check and start DNS router if configured
+	dnsRouterConfig, dnsRouterErr := conf.LoadDNSRouterConfig(config.Name)
+	var wgIPChan chan net.IP
+	if dnsRouterErr == nil && dnsRouterConfig.Enabled {
+		log.Println("Starting DNS router")
+		// Determine dnscrypt upstream address
+		dnscryptUpstream := ""
+		if dnscryptListenAddr != "" {
+			dnscryptUpstream = dnsCryptConfig.ListenAddress
+		}
+		wgIPChan = make(chan net.IP, 100)
+		var routerErr error
+		dnsRouterInst, routerErr = startDNSRouter(config.Name, dnscryptUpstream, wgIPChan)
+		if routerErr != nil {
+			err = routerErr
+			serviceError = services.ErrorDNSRouter
+			return
+		}
+		// Redirect tunnel DNS to the DNS router instead
+		routerHost, _, _ := strings.Cut(dnsRouterConfig.ListenAddress, ":")
+		if routerHost == "" {
+			routerHost = "127.0.0.1"
+		}
+		routerAddr, parseErr := netip.ParseAddr(routerHost)
+		if parseErr == nil {
+			if len(originalDNS) == 0 {
+				originalDNS = make([]netip.Addr, len(config.Interface.DNS))
+				copy(originalDNS, config.Interface.DNS)
+			}
+			config.Interface.DNS = []netip.Addr{routerAddr}
+			log.Printf("Redirecting tunnel DNS to DNS router at %s", routerAddr)
 		}
 	}
 
@@ -321,6 +368,21 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 	if err != nil {
 		serviceError = services.ErrorDropPrivileges
 		return
+	}
+
+	// Start AllowedIPs syncer if DNS router is active
+	if wgIPChan != nil {
+		ipSyncer = newAllowedIPsSyncer(adapter, config)
+		ipSyncer.Start()
+		// Wire the DNS router's output channel to the syncer.
+		go func() {
+			for ip := range wgIPChan {
+				if addr, ok := netip.AddrFromSlice(ip.To4()); ok {
+					ipSyncer.AddIP(addr)
+				}
+			}
+		}()
+		log.Println("AllowedIPs syncer started")
 	}
 
 	log.Println("Setting interface configuration")
