@@ -548,23 +548,32 @@ func IPCClientLoadDNSCryptConfig(tunnelName string) (*conf.DNSCryptConfig, error
 	return &cfg, nil
 }
 
-func IPCClientSaveDNSRouterConfig(tunnelName string, cfg *conf.DNSRouterConfig) error {
+func IPCClientSaveDNSRouterConfig(tunnelName string, cfg *conf.DNSRouterConfig) (string, error) {
 	rpcMutex.Lock()
 	defer rpcMutex.Unlock()
 
 	err := rpcEncoder.Encode(SaveDNSRouterConfigMethodType)
 	if err != nil {
-		return err
+		return "", err
 	}
 	err = rpcEncoder.Encode(tunnelName)
 	if err != nil {
-		return err
+		return "", err
 	}
 	err = rpcEncoder.Encode(*cfg)
 	if err != nil {
-		return err
+		return "", err
 	}
-	return rpcDecodeError()
+	err = rpcDecodeError()
+	if err != nil {
+		return "", err
+	}
+	var msg string
+	err = rpcDecoder.Decode(&msg)
+	if err != nil {
+		return "", err
+	}
+	return msg, nil
 }
 
 func IPCClientLoadDNSRouterConfig(tunnelName string) (*conf.DNSRouterConfig, error) {

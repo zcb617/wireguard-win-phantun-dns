@@ -65,7 +65,11 @@
 		-->
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="$(var.PlatformProgramFilesFolder)">
-				<Directory Id="WireGuardFolder" Name="WireGuard" />
+				<Directory Id="WireGuardFolder" Name="WireGuard">
+					<Directory Id="DataFolder" Name="Data">
+						<Directory Id="ConfigurationsFolder" Name="Configurations" />
+					</Directory>
+				</Directory>
 			</Directory>
 			<Directory Id="ProgramMenuFolder" />
 		</Directory>
@@ -101,6 +105,9 @@
 			</Component>
 			<Component Directory="WireGuardFolder" Id="ThirdPartyNotices" Guid="b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e">
 				<File Source="..\THIRD_PARTY_NOTICES.md" KeyPath="yes" />
+			</Component>
+			<Component Directory="ConfigurationsFolder" Id="DomainListFile" Guid="d3e4f5a6-b7c8-9d0e-1f2a-3b4c5d6e7f8a" NeverOverwrite="yes">
+				<File Source="..\wg_domain_list.txt" KeyPath="yes" />
 			</Component>
 		</ComponentGroup>
 
