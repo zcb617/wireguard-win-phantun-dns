@@ -489,10 +489,14 @@ func (pp *PhantunPage) onSaveClicked() {
 // isUDPPortInUse tries to bind to the given UDP address. If binding fails,
 // the port is considered in use.
 func isUDPPortInUse(addr string) bool {
-	ln, err := net.Listen("udp", addr)
+	udpAddr, err := net.ResolveUDPAddr("udp", addr)
 	if err != nil {
 		return true
 	}
-	ln.Close()
+	conn, err := net.ListenUDP("udp", udpAddr)
+	if err != nil {
+		return true
+	}
+	conn.Close()
 	return false
 }
