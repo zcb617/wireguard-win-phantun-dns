@@ -13,7 +13,7 @@ import (
 )
 
 const DNSRouterConfigSuffix = ".dnsrouter.json"
-const DomainListFile = "wg_domain_list.conf"
+const DomainListFile = "wg_domain_list.txt"
 
 type DNSRouterConfig struct {
 	Enabled       bool   `json:"enabled"`
