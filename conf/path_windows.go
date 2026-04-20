@@ -20,6 +20,14 @@ var (
 	cachedRootDir       string
 )
 
+// TunnelConfigurationsDirectory returns the path to the directory where tunnel
+// configuration files are stored. It is exported so that other packages (such
+// as the tunnel service) can place runtime-generated files alongside persistent
+// configs.
+func TunnelConfigurationsDirectory() (string, error) {
+	return tunnelConfigurationsDirectory()
+}
+
 func tunnelConfigurationsDirectory() (string, error) {
 	if cachedConfigFileDir != "" {
 		return cachedConfigFileDir, nil

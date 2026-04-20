@@ -230,9 +230,15 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 			return
 		}
 
-		// Write TOML config to a temp file
+		// Write TOML config to the tunnel config directory alongside the JSON config
 		tomlContent := dnsCryptConfig.GenerateTOML()
-		tomlPath := filepath.Join(filepath.Dir(exePath), "dnscrypt-proxy-"+config.Name+".toml")
+		configDir, dirErr := conf.TunnelConfigurationsDirectory()
+		if dirErr != nil {
+			err = fmt.Errorf("failed to get tunnel config directory: %w", dirErr)
+			serviceError = services.ErrorDNSCryptClient
+			return
+		}
+		tomlPath := filepath.Join(configDir, "dnscrypt-proxy-"+config.Name+".toml")
 		if writeErr := os.WriteFile(tomlPath, []byte(tomlContent), 0o600); writeErr != nil {
 			err = fmt.Errorf("failed to write dnscrypt-proxy.toml: %w", writeErr)
 			serviceError = services.ErrorDNSCryptClient
