@@ -286,14 +286,9 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		if dnscryptListenAddr != "" {
 			dnscryptUpstream = dnsCryptConfig.ListenAddress
 		}
-		// Build system DNS addresses from the original WireGuard config.
-		var systemDNSAddrs []string
-		for _, addr := range config.Interface.DNS {
-			systemDNSAddrs = append(systemDNSAddrs, addr.String()+":53")
-		}
 		wgIPChan = make(chan net.IP, 100)
 		var routerErr error
-		dnsRouterInst, routerErr = startDNSRouter(config.Name, dnscryptUpstream, systemDNSAddrs, wgIPChan)
+		dnsRouterInst, routerErr = startDNSRouter(config.Name, dnscryptUpstream, wgIPChan)
 		if routerErr != nil {
 			err = routerErr
 			serviceError = services.ErrorDNSRouter

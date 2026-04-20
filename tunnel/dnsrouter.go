@@ -7,14 +7,18 @@ package tunnel
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"net"
+	"net/http"
+	"os"
 	"strings"
 	"sync"
 	"time"
 
 	"github.com/miekg/dns"
 	"golang.zx2c4.com/wireguard/windows/conf"
+	"golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
 )
 
 // dnsRouter runs a local UDP DNS proxy. It matches queries against a domain
@@ -22,13 +26,16 @@ import (
 // others go to the system DNS. Resolved IPs for matched domains are sent
 // through wgIPs for AllowedIPs inclusion.
 type dnsRouter struct {
-	rules       map[string]struct{}
-	dnscryptAddr string
-	systemAddr   string
-	listenAddr   string
-	wgIPs        chan<- net.IP
-	server       *dns.Server
-	wg           sync.WaitGroup
+	rules         map[string]struct{}
+	dnscryptAddr  string
+	systemAddr    string
+	listenAddr    string
+	wgIPs         chan<- net.IP
+	server        *dns.Server
+	wg            sync.WaitGroup
+	domainListURL string
+	listPath      string
+	stopTicker    chan struct{}
 }
 
 func newDNSRouter(rules map[string]struct{}, dnscryptAddr, systemAddr, listenAddr string, wgIPs chan<- net.IP) *dnsRouter {
@@ -54,14 +61,72 @@ func (r *dnsRouter) Start() error {
 			log.Printf("DNS router stopped: %v", err)
 		}
 	}()
+	// Start background updater if a remote URL is configured.
+	if r.domainListURL != "" {
+		r.stopTicker = make(chan struct{})
+		r.wg.Add(1)
+		go r.updateLoop()
+	}
 	return nil
 }
 
 func (r *dnsRouter) Stop() {
+	if r.stopTicker != nil {
+		close(r.stopTicker)
+	}
 	if r.server != nil {
 		r.server.Shutdown()
 	}
 	r.wg.Wait()
+}
+
+// updateLoop periodically downloads the domain list and reloads rules.
+func (r *dnsRouter) updateLoop() {
+	defer r.wg.Done()
+	t := time.NewTicker(1 * time.Hour)
+	defer t.Stop()
+	for {
+		select {
+		case <-t.C:
+			r.downloadAndReload()
+		case <-r.stopTicker:
+			return
+		}
+	}
+}
+
+// downloadAndReload fetches the domain list from domainListURL and overwrites
+// the local file, then reloads the rules into memory.
+func (r *dnsRouter) downloadAndReload() {
+	if r.domainListURL == "" {
+		return
+	}
+	resp, err := http.Get(r.domainListURL)
+	if err != nil {
+		log.Printf("DNS router: failed to download domain list: %v", err)
+		return
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		log.Printf("DNS router: domain list download returned status %d", resp.StatusCode)
+		return
+	}
+	data, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Printf("DNS router: failed to read domain list response: %v", err)
+		return
+	}
+	if err := os.WriteFile(r.listPath, data, 0o600); err != nil {
+		log.Printf("DNS router: failed to write domain list: %v", err)
+		return
+	}
+	newRules, err := conf.LoadDomainRules(r.listPath)
+	if err != nil {
+		log.Printf("DNS router: failed to reload domain list: %v", err)
+		return
+	}
+	r.rules = newRules
+	log.Printf("DNS router: domain list updated (%d rules)", len(r.rules))
 }
 
 func (r *dnsRouter) handleRequest(w dns.ResponseWriter, req *dns.Msg) {
@@ -108,9 +173,9 @@ func (r *dnsRouter) handleRequest(w dns.ResponseWriter, req *dns.Msg) {
 }
 
 // startDNSRouter creates and starts the DNS router for the given tunnel.
-// systemDNSAddrs contains the original DNS servers from the WireGuard config
-// (before they were overridden by local proxies), used for non-matched domains.
-func startDNSRouter(tunnelName string, dnscryptAddr string, systemDNSAddrs []string, wgIPs chan<- net.IP) (*dnsRouter, error) {
+// It queries the system's active physical network adapters for their DNS
+// servers to use as the upstream for non-matched domains.
+func startDNSRouter(tunnelName string, dnscryptAddr string, wgIPs chan<- net.IP) (*dnsRouter, error) {
 	routerCfg, err := conf.LoadDNSRouterConfig(tunnelName)
 	if err != nil {
 		return nil, err
@@ -134,13 +199,21 @@ func startDNSRouter(tunnelName string, dnscryptAddr string, systemDNSAddrs []str
 		listenAddr = "127.0.0.1:53"
 	}
 
-	// Use the first original DNS as the system upstream.
+	// Query the system's real DNS servers (e.g., DHCP-assigned).
+	systemDNSAddrs, err := winipcfg.GetSystemDNSServers()
+	if err != nil {
+		log.Printf("DNS router: failed to get system DNS servers: %v", err)
+	}
+
+	// Use the first system DNS as the upstream for non-matched domains.
 	systemAddr := "223.5.5.5:53"
 	if len(systemDNSAddrs) > 0 {
-		systemAddr = systemDNSAddrs[0]
+		systemAddr = systemDNSAddrs[0].String() + ":53"
 	}
 
 	router := newDNSRouter(rules, dnscryptAddr, systemAddr, listenAddr, wgIPs)
+	router.domainListURL = routerCfg.DomainListURL
+	router.listPath = listPath
 	if err := router.Start(); err != nil {
 		return nil, fmt.Errorf("failed to start DNS router: %w", err)
 	}
