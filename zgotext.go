@@ -73,13 +73,13 @@ var messageKeyToIndex = map[string]int{
 	"%d hour(s)":                            14,
 	"%d minute(s)":                          15,
 	"%d second(s)":                          16,
-	"%d tunnels were unable to be removed.": 157,
+	"%d tunnels were unable to be removed.": 156,
 	"%d year(s)":                            12,
 	"%d\u00a0B":                             18,
 	"%s\n\nPlease consult the log for more information.": 108,
 	"%s (out of date)":                        109,
-	"%s (unsigned build, no updates)":         162,
-	"%s You cannot undo this action.":         153,
+	"%s (unsigned build, no updates)":         161,
+	"%s You cannot undo this action.":         152,
 	"%s ago":                                  17,
 	"%s received, %s sent":                    69,
 	"%s: %q":                                  23,
@@ -102,7 +102,7 @@ var messageKeyToIndex = map[string]int{
 	"(no argument): elevate and install manager service": 1,
 	"(unknown)":                             79,
 	"A name is required.":                   85,
-	"A tunnel was unable to be removed: %s": 155,
+	"A tunnel was unable to be removed: %s": 154,
 	"About WireGuard":                       44,
 	"Activating":                            94,
 	"Active":                                93,
@@ -115,51 +115,54 @@ var messageKeyToIndex = map[string]int{
 	"Allowed IPs:":                          58,
 	"An Update is Available!":               127,
 	"An interface must have a private key":  39,
-	"An update to WireGuard is available. It is highly advisable to update without delay.":        165,
+	"An update to WireGuard is available. It is highly advisable to update without delay.":        164,
 	"An update to WireGuard is now available. You are advised to update as soon as possible.":     129,
-	"Another tunnel already exists with the name ‘%s’":                                            143,
+	"Another tunnel already exists with the name ‘%s’":                                            142,
 	"Another tunnel already exists with the name ‘%s’.":                                           89,
-	"App version: %s\nDriver version: %s\nGo version: %s\nOperating system: %s\nArchitecture: %s": 173,
-	"Are you sure you would like to delete %d tunnels?":                                           150,
-	"Are you sure you would like to delete tunnel ‘%s’?":                                          152,
+	"App version: %s\nDriver version: %s\nGo version: %s\nOperating system: %s\nArchitecture: %s": 172,
+	"Are you sure you would like to delete %d tunnels?":                                           149,
+	"Are you sure you would like to delete tunnel ‘%s’?":                                          151,
 	"Brackets must contain an IPv6 address":                                                       26,
 	"Cancel":                                                                                      82,
 	"Close":                                                                                       46,
 	"Command Line Options":                                                                        3,
 	"Config key is missing an equals separator":                                                   35,
-	"Configuration Files (*.zip, *.conf)|*.zip;*.conf|All Files (*.*)|*.*":                        158,
-	"Configuration ZIP Files (*.zip)|*.zip":                                                       160,
-	"Could not enumerate existing tunnels: %v":                                                    142,
+	"Configuration Files (*.zip, *.conf)|*.zip;*.conf|All Files (*.*)|*.*":                        157,
+	"Configuration ZIP Files (*.zip)|*.zip":                                                       159,
+	"Configuring phantun for tunnel: %s":                                                          182,
+	"Could not enumerate existing tunnels: %v":                                                    187,
 	"Could not import selected configuration: %v":                                                 141,
 	"Create new tunnel":                                                                           75,
 	"DNS servers:":                                                                                55,
 	"Deactivating":                                                                                96,
-	"Delete %d tunnels":                                                                           149,
-	"Delete tunnel ‘%s’":                                                                          151,
+	"Delete %d tunnels":                                                                           148,
+	"Delete tunnel ‘%s’":                                                                          150,
 	"E&xit":                                                                                       117,
 	"Edit &selected tunnel…":                                                                      138,
 	"Edit tunnel":                                                                                 76,
+	"Enable phantun obfuscation":                                                                  178,
 	"Endpoint:":                                                                                   59,
 	"Error":                                                                                       0,
-	"Error Exiting WireGuard":                                                                     163,
-	"Error: ":                                                                                     171,
-	"Error: %v. Please try again.":                                                                169,
+	"Error Exiting WireGuard":                                                                     162,
+	"Error: ":                                                                                     170,
+	"Error: %v. Please try again.":                                                                168,
 	"Export all tunnels to &zip…":                                                                 137,
 	"Export all tunnels to zip":                                                                   135,
 	"Export log to file":                                                                          105,
-	"Export tunnels to zip":                                                                       161,
+	"Export tunnels to zip":                                                                       160,
 	"Failed to activate tunnel":                                                                   71,
 	"Failed to deactivate tunnel":                                                                 72,
 	"Failed to determine tunnel state":                                                            70,
 	"File ‘%s’ already exists.\n\nDo you want to overwrite it?":                                   92,
-	"Import tunnel(s) from file":                                                                  159,
-	"Imported %d of %d tunnels":                                                                   147,
-	"Imported %d tunnels":                                                                         146,
-	"Imported tunnels":                                                                            145,
+	"Import tunnel(s) from file":                                                                  158,
+	"Imported %d of %d tunnels":                                                                   146,
+	"Imported %d tunnels":                                                                         145,
+	"Imported tunnels":                                                                            144,
 	"Inactive":                                                                                    95,
 	"Interface: %s":                                                                               73,
-	"Invalid IP address: ":                                                                        172,
+	"Invalid IP address: ":                                                                        171,
 	"Invalid MTU":                                                                                 27,
+	"Invalid configuration":                                                                       183,
 	"Invalid endpoint host":                                                                       25,
 	"Invalid key for [Interface] section":                                                         37,
 	"Invalid key for [Peer] section":                                                              38,
@@ -172,6 +175,7 @@ var messageKeyToIndex = map[string]int{
 	"Latest handshake:":                                                                           61,
 	"Line must occur in a section":                                                                34,
 	"Listen port:":                                                                                52,
+	"Local listen:":                                                                               180,
 	"Log":                                                                                         98,
 	"Log message":                                                                                 103,
 	"MTU:":                                                                                        53,
@@ -179,46 +183,53 @@ var messageKeyToIndex = map[string]int{
 	"Now":                                                                                         10,
 	"Peer":                                                                                        74,
 	"Persistent keepalive:":                                                                       60,
-	"Please ask the system administrator to update.":                                              177,
+	"Please ask the system administrator to update.":                                              188,
 	"Preshared key:":                                                                              57,
 	"Public key:":                                                                                 51,
-	"Remove selected tunnel(s)":                                                                   134,
-	"Scripts:":                                                                                    56,
-	"Select &all":                                                                                 100,
-	"Status:":                                                                                     48,
-	"Status: %s":                                                                                  125,
-	"Status: Complete!":                                                                           170,
-	"Status: Unknown":                                                                             113,
-	"Status: Waiting for administrator":                                                           178,
-	"Status: Waiting for updater service":                                                         168,
-	"Status: Waiting for user":                                                                    166,
-	"System clock wound backward!":                                                                11,
-	"Table:":                                                                                      174,
-	"Text Files (*.txt)|*.txt|All Files (*.*)|*.*":                                                104,
-	"The %s tunnel has been activated.":                                                           120,
-	"The %s tunnel has been deactivated.":                                                         122,
-	"Time":                                                                                        102,
-	"Transfer:":                                                                                   62,
-	"Tunnel Error":                                                                                107,
-	"Tunnel already exists":                                                                       88,
-	"Tunnel name is not valid":                                                                    33,
-	"Tunnel name ‘%s’ is invalid.":                                                                86,
-	"Tunnels":                                                                                     130,
-	"Two commas in a row":                                                                         32,
-	"Unable to create new configuration":                                                          90,
-	"Unable to create tunnel":                                                                     148,
-	"Unable to delete tunnel":                                                                     154,
-	"Unable to delete tunnels":                                                                    156,
+	"Remote server address is required when phantun is enabled.": 184,
+	"Remote server:":                     179,
+	"Remove selected tunnel(s)":          134,
+	"Saved phantun configuration for %s": 186,
+	"Scripts:":                           56,
+	"Select &all":                        100,
+	"Select a tunnel to configure phantun obfuscation.": 177,
+	"Settings":                            176,
+	"Status:":                             48,
+	"Status: %s":                          125,
+	"Status: Complete!":                   169,
+	"Status: Unknown":                     113,
+	"Status: Waiting for administrator":   189,
+	"Status: Waiting for updater service": 167,
+	"Status: Waiting for user":            165,
+	"System clock wound backward!":        11,
+	"Table:":                              173,
+	"Text Files (*.txt)|*.txt|All Files (*.*)|*.*": 104,
+	"The %s tunnel has been activated.":            120,
+	"The %s tunnel has been deactivated.":          122,
+	"Time":                                         102,
+	"Transfer:":                                    62,
+	"Tunnel Error":                                 107,
+	"Tunnel already exists":                        88,
+	"Tunnel name is not valid":                     33,
+	"Tunnel name ‘%s’ is invalid.":                 86,
+	"Tunnels":                                      130,
+	"Two commas in a row":                          32,
+	"Unable to create new configuration":           90,
+	"Unable to create tunnel":                      147,
+	"Unable to delete tunnel":                      153,
+	"Unable to delete tunnels":                     155,
 	"Unable to determine whether the process is running under WOW64: %v":                          4,
-	"Unable to exit service due to: %v. You may want to stop WireGuard from the service manager.": 164,
-	"Unable to import configuration: %v":                                                          144,
+	"Unable to exit service due to: %v. You may want to stop WireGuard from the service manager.": 163,
+	"Unable to import configuration: %v":                                                          143,
 	"Unable to list existing tunnels":                                                             87,
 	"Unable to open current process token: %v":                                                    6,
+	"Unable to save phantun configuration":                                                        185,
 	"Unable to wait for WireGuard window to appear: %v":                                           111,
 	"Unknown state":    97,
-	"Update Now":       167,
+	"Update Now":       166,
 	"Usage: %s [\n%s]": 2,
-	"When a configuration has exactly one peer, and that peer has an allowed IPs containing at least one of 0.0.0.0/0 or ::/0, and the interface does not have table off, then the tunnel service engages a firewall ruleset to block all traffic that is neither to nor from the tunnel interface or is to the wrong DNS server, with special exceptions for DHCP and NDP.": 176,
+	"When a configuration has exactly one peer, and that peer has an allowed IPs containing at least one of 0.0.0.0/0 or ::/0, and the interface does not have table off, then the tunnel service engages a firewall ruleset to block all traffic that is neither to nor from the tunnel interface or is to the wrong DNS server, with special exceptions for DHCP and NDP.": 175,
+	"When activated, all peer endpoints will be redirected to the local listen address above.": 181,
 	"WireGuard Activated":        119,
 	"WireGuard Deactivated":      121,
 	"WireGuard Detection Error":  110,
@@ -238,7 +249,7 @@ var messageKeyToIndex = map[string]int{
 	"disabled, per policy":              67,
 	"enabled":                           68,
 	"no configuration files were found": 140,
-	"off":                               175,
+	"off":                               174,
 	"post-down":                         66,
 	"post-up":                           64,
 	"pre-down":                          65,
@@ -246,7 +257,7 @@ var messageKeyToIndex = map[string]int{
 	"♥ &Donate!":                        47,
 }
 
-var caIndex = []uint32{ // 180 elements
+var caIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000006, 0x00000042, 0x00000056,
 	0x00000071, 0x000000b0, 0x000000f5, 0x0000012c,
@@ -287,20 +298,23 @@ var caIndex = []uint32{ // 180 elements
 	0x00000d06, 0x00000d2d, 0x00000d82, 0x00000d8a,
 	0x00000d92, 0x00000da9, 0x00000db7, 0x00000dd7,
 	0x00000dee, 0x00000df7, 0x00000e1b, 0x00000e3b,
-	0x00000e5c, 0x00000e85, 0x00000ec1, 0x00000ef6,
-	0x00000f29, 0x00000f58, 0x00000f6a, 0x00000fa1,
-	0x00000fe9, 0x00001007, 0x0000103d, 0x000010a1,
-	0x000010bd, 0x000010f3, 0x0000111a, 0x0000113b,
-	0x0000116f, 0x00001192, 0x000011e6, 0x00001237,
+	0x00000e5c, 0x00000e85, 0x00000ec1, 0x00000ef4,
+	0x00000f23, 0x00000f35, 0x00000f6c, 0x00000fb4,
+	0x00000fd2, 0x00001008, 0x0000106c, 0x00001088,
+	0x000010be, 0x000010e5, 0x00001106, 0x0000113a,
+	0x0000115d, 0x000011b1, 0x00001202, 0x00001225,
 	// Entry A0 - BF
-	0x0000125a, 0x00001285, 0x0000129c, 0x000012d2,
-	0x000012ef, 0x0000136b, 0x000013c5, 0x000013e0,
-	0x000013ef, 0x0000141b, 0x00001449, 0x0000145b,
-	0x0000145b, 0x0000145b, 0x0000145b, 0x0000145b,
-	0x0000145b, 0x0000145b, 0x0000145b, 0x0000145b,
-} // Size: 744 bytes
+	0x00001250, 0x00001267, 0x0000129d, 0x000012ba,
+	0x00001336, 0x00001390, 0x000013ab, 0x000013ba,
+	0x000013e6, 0x00001414, 0x00001426, 0x00001426,
+	0x00001426, 0x00001426, 0x00001426, 0x00001426,
+	0x00001426, 0x00001426, 0x00001426, 0x00001426,
+	0x00001426, 0x00001426, 0x00001426, 0x00001426,
+	0x00001426, 0x00001426, 0x00001426, 0x00001426,
+	0x00001426, 0x00001426, 0x00001426,
+} // Size: 788 bytes
 
-const caData string = "" + // Size: 5211 bytes
+const caData string = "" + // Size: 5158 bytes
 	"\x02Error\x02(sense argument): eleva i instala el servei d'administrador" +
 	"\x02Ús: %[1]s [\x0a%[2]s]\x02Opcions de línia d'ordres\x02No s'ha pogut " +
 	"determinar si el procés corre sota WOW64: %[1]v\x02Heu de fer servir la " +
@@ -360,32 +374,31 @@ const caData string = "" + // Size: 5211 bytes
 	"(s) seleccionats\x02Exportar túnels a zip\x02&Alterna\x02Exportar tots e" +
 	"ls túnels a &zip…\x02Editar túnels &seleccionats…\x02&Eliminar túnel(s) " +
 	"seleccionats\x02no s'han trobat fitxers de configuració\x02No s'ha pogut" +
-	" importar la configuració seleccionada: %[1]v\x02No s'han pogut enumerar" +
-	" els túnels existents: %[1]v\x02Ja existeix un altre túnel amb el nom ‘%" +
-	"[1]s’\x02No s'ha pogut importar la configuració: %[1]v\x02Túnels importa" +
-	"ts\x14\x01\x81\x01\x00\x02\x16\x02%[1]d túnel importat\x00\x18\x02%[1]d " +
-	"túnels importats\x14\x02\x80\x01\x02\x1f\x02%[1]d de %[2]d túnel importa" +
-	"t\x00!\x02%[1]d de %[2]d túnels importats\x02No s'ha pogut crear el túne" +
-	"l\x14\x01\x81\x01\x00\x02\x16\x02Eliminar %[1]d túnel\x00\x17\x02Elimina" +
-	"r %[1]d túnels\x14\x01\x81\x01\x00\x02-\x02Estàs segur que vols eliminar" +
-	" %[1]d túnel?\x00.\x02Estàs segur que vols eliminar %[1]d túnels?\x02Eli" +
-	"minar túnel ‘%[1]s’\x02Estàs segur que vols eliminar el túnel ‘%[1]s’?" +
-	"\x02%[1]s Aquesta acció no es pot desfer.\x02No s'ha pogut eliminar el t" +
-	"únel\x02Un túnel no ha estat capaç de ser eliminat: %[1]s\x02No s'ha po" +
-	"gut eliminar els túnels\x14\x01\x81\x01\x00\x02%\x02No s'ha pogut elimin" +
-	"ar %[1]d túnel.\x00&\x02No s'ha pogut eliminar %[1]d túnels.\x02Fitxers " +
-	"de configuració (*.zip, *.conf)|*.zip;*.conf|Tots els fitxers (*.*)|*.*" +
-	"\x02Importar túnel(s) des d'un fitxer\x02Fitxers ZIP de configuració (*." +
-	"zip)|*.zip\x02Exportar túnels a zip\x02%[1]s (compilació no signada, sen" +
-	"se actualitzacions)\x02Error al sortir de WireGuard\x02No s'ha pogut sor" +
-	"tir del servei a causa de l'error: %[1]v. Pot intentar aturar WireGuard " +
-	"des de l'administrador de serveis.\x02Una actualització per WireGuard es" +
-	"tà disponible. Es recomana actualitzar immediatament.\x02Estat: Esperant" +
-	" a l'usuari\x02Actualitza ara\x02Estat: Esperant el servei d'actualitzac" +
-	"ions\x02Error: %[1]v. Si us plau, torneu-ho a provar.\x02Estat: Completa" +
-	"t!"
+	" importar la configuració seleccionada: %[1]v\x02Ja existeix un altre tú" +
+	"nel amb el nom ‘%[1]s’\x02No s'ha pogut importar la configuració: %[1]v" +
+	"\x02Túnels importats\x14\x01\x81\x01\x00\x02\x16\x02%[1]d túnel importat" +
+	"\x00\x18\x02%[1]d túnels importats\x14\x02\x80\x01\x02\x1f\x02%[1]d de %" +
+	"[2]d túnel importat\x00!\x02%[1]d de %[2]d túnels importats\x02No s'ha p" +
+	"ogut crear el túnel\x14\x01\x81\x01\x00\x02\x16\x02Eliminar %[1]d túnel" +
+	"\x00\x17\x02Eliminar %[1]d túnels\x14\x01\x81\x01\x00\x02-\x02Estàs segu" +
+	"r que vols eliminar %[1]d túnel?\x00.\x02Estàs segur que vols eliminar %" +
+	"[1]d túnels?\x02Eliminar túnel ‘%[1]s’\x02Estàs segur que vols eliminar " +
+	"el túnel ‘%[1]s’?\x02%[1]s Aquesta acció no es pot desfer.\x02No s'ha po" +
+	"gut eliminar el túnel\x02Un túnel no ha estat capaç de ser eliminat: %[1" +
+	"]s\x02No s'ha pogut eliminar els túnels\x14\x01\x81\x01\x00\x02%\x02No s" +
+	"'ha pogut eliminar %[1]d túnel.\x00&\x02No s'ha pogut eliminar %[1]d tún" +
+	"els.\x02Fitxers de configuració (*.zip, *.conf)|*.zip;*.conf|Tots els fi" +
+	"txers (*.*)|*.*\x02Importar túnel(s) des d'un fitxer\x02Fitxers ZIP de c" +
+	"onfiguració (*.zip)|*.zip\x02Exportar túnels a zip\x02%[1]s (compilació " +
+	"no signada, sense actualitzacions)\x02Error al sortir de WireGuard\x02No" +
+	" s'ha pogut sortir del servei a causa de l'error: %[1]v. Pot intentar at" +
+	"urar WireGuard des de l'administrador de serveis.\x02Una actualització p" +
+	"er WireGuard està disponible. Es recomana actualitzar immediatament.\x02" +
+	"Estat: Esperant a l'usuari\x02Actualitza ara\x02Estat: Esperant el serve" +
+	"i d'actualitzacions\x02Error: %[1]v. Si us plau, torneu-ho a provar.\x02" +
+	"Estat: Completat!"
 
-var csIndex = []uint32{ // 180 elements
+var csIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000006, 0x0000004f, 0x00000069,
 	0x0000008a, 0x000000bd, 0x00000106, 0x00000138,
@@ -426,20 +439,23 @@ var csIndex = []uint32{ // 180 elements
 	0x00000cee, 0x00000d13, 0x00000d75, 0x00000d7c,
 	0x00000d85, 0x00000da1, 0x00000daf, 0x00000dc9,
 	0x00000deb, 0x00000df6, 0x00000e1c, 0x00000e37,
-	0x00000e52, 0x00000e82, 0x00000eaf, 0x00000ee4,
-	0x00000f0a, 0x00000f2e, 0x00000f42, 0x00000fb7,
-	0x0000104c, 0x00001062, 0x000010cc, 0x00001176,
-	0x0000118e, 0x000011b6, 0x000011db, 0x000011f1,
-	0x00001217, 0x0000122e, 0x000012d8, 0x00001326,
+	0x00000e52, 0x00000e82, 0x00000eaf, 0x00000ed5,
+	0x00000ef9, 0x00000f0d, 0x00000f82, 0x00001017,
+	0x0000102d, 0x00001097, 0x00001141, 0x00001159,
+	0x00001181, 0x000011a6, 0x000011bc, 0x000011e2,
+	0x000011f9, 0x000012a3, 0x000012f1, 0x00001310,
 	// Entry A0 - BF
-	0x00001345, 0x0000136c, 0x00001385, 0x000013b6,
-	0x000013e2, 0x0000143c, 0x000014a5, 0x000014c3,
-	0x000014d6, 0x000014fe, 0x0000151d, 0x0000152f,
-	0x0000152f, 0x0000152f, 0x0000152f, 0x0000152f,
-	0x0000152f, 0x0000152f, 0x0000152f, 0x0000152f,
-} // Size: 744 bytes
+	0x00001337, 0x00001350, 0x00001381, 0x000013ad,
+	0x00001407, 0x00001470, 0x0000148e, 0x000014a1,
+	0x000014c9, 0x000014e8, 0x000014fa, 0x000014fa,
+	0x000014fa, 0x000014fa, 0x000014fa, 0x000014fa,
+	0x000014fa, 0x000014fa, 0x000014fa, 0x000014fa,
+	0x000014fa, 0x000014fa, 0x000014fa, 0x000014fa,
+	0x000014fa, 0x000014fa, 0x000014fa, 0x000014fa,
+	0x000014fa, 0x000014fa, 0x000014fa,
+} // Size: 788 bytes
 
-const csData string = "" + // Size: 5423 bytes
+const csData string = "" + // Size: 5370 bytes
 	"\x02Chyba\x02(žádný argument): Zvýšit oprávnění a instalovat službu sprá" +
 	"vce\x02Použití: %[1]s [\x0a%[2]s]\x02Možnosti příkazového řádku\x02Nelze" +
 	" zjistit, zda proces běží pod WOW64: %[1]v\x02Musíte použít nativní verz" +
@@ -499,35 +515,34 @@ const csData string = "" + // Size: 5423 bytes
 	"nely do zip\x02&Přepnout\x02Exportovat všechny tunely do &zip…\x02Upravi" +
 	"t &vybraný tunel…\x02&Odstranit vybrané tunely\x02nebyly nalezeny žádné " +
 	"konfigurační soubory\x02Nelze importovat vybranou konfiguraci: %[1]v\x02" +
-	"Nepodařilo se vyjmenovat existující tunely: %[1]v\x02Tunel s názvem '%[1" +
-	"]s' již existuje\x02Nelze importovat konfiguraci: %[1]v\x02Importované t" +
-	"unely\x14\x01\x81\x01\x00\x04\x1a\x02Importovány %[1]d tunely\x05\x1b" +
-	"\x02Importováno %[1]d tunelů\x02\x18\x02Importován %[1]d tunel\x00\x1b" +
-	"\x02Importováno %[1]d tunelů\x14\x02\x80\x01\x04#\x02Importováno %[1]d z" +
-	" %[2]d tunelů\x05#\x02Importováno %[1]d z %[2]d tunelů\x02 \x02Importová" +
-	"n %[1]d z %[2]d tunel\x00#\x02Importováno %[1]d z %[2]d tunelů\x02Nelze " +
-	"vytvořit tunel\x14\x01\x81\x01\x00\x04\x17\x02Odstranit %[1]d tunely\x05" +
-	"\x18\x02Odstranit %[1]d tunelů\x02\x16\x02Odstranit %[1]d tunel\x00\x18" +
-	"\x02Odstranit %[1]d tunelů\x14\x01\x81\x01\x00\x04'\x02Opravdu chcete od" +
-	"stranit %[1]d tunely?\x05(\x02Opravdu chcete odstranit %[1]d tunelů?\x02" +
-	"&\x02Opravdu chcete odstranit %[1]d tunel?\x00(\x02Opravdu chcete odstra" +
-	"nit %[1]d tunelů?\x02Odstranit tunel \x22%[1]s\x22\x02Opravdu chcete ods" +
-	"tranit tunel \x22%[1]s\x22?\x02%[1]s Tuto akci nelze vrátit zpět.\x02Nel" +
-	"ze odstranit tunel\x02Tunel nebylo možné odstranit: %[1]s\x02Nelze odstr" +
-	"anit tunely\x14\x01\x81\x01\x00\x04'\x02%[1]d tunely nebylo možné odstra" +
-	"nit.\x05(\x02%[1]d tunelů nebylo možné odstranit.\x02&\x02%[1]d tunel ne" +
-	"bylo možné odstranit.\x00(\x02%[1]d tunelů nebylo možné odstranit.\x02Ko" +
-	"nfigurace souborů (*.zip, *.conf)|*.zip; *.conf|Všechny soubory (*.*)|*." +
-	"*\x02Importovat tunel(y) ze souboru\x02Konfigurace souborů ZIP (*.zip)|*" +
-	".zip\x02Exportovat tunely do zip\x02%[1]s (nepodepsaná verze, žádné aktu" +
-	"alizace)\x02Chyba při ukončování aplikace WireGuard\x02Nelze ukončit slu" +
-	"žbu z důvodu: %[1]v. WireGuard můžete zastavit ve správci služeb.\x02Ak" +
-	"tualizace aplikace WireGuard je nyní k dispozici. Silně doporučujeme ji " +
-	"aktualizovat co nejdříve.\x02Stav: Čekání na uživatele\x02Aktualizovat n" +
-	"yní\x02Stav: Čeká se na službu aktualizací\x02Chyba: %[1]v. Zkuste to zn" +
-	"ovu.\x02Stav: Dokončeno!"
+	"Tunel s názvem '%[1]s' již existuje\x02Nelze importovat konfiguraci: %[1" +
+	"]v\x02Importované tunely\x14\x01\x81\x01\x00\x04\x1a\x02Importovány %[1]" +
+	"d tunely\x05\x1b\x02Importováno %[1]d tunelů\x02\x18\x02Importován %[1]d" +
+	" tunel\x00\x1b\x02Importováno %[1]d tunelů\x14\x02\x80\x01\x04#\x02Impor" +
+	"továno %[1]d z %[2]d tunelů\x05#\x02Importováno %[1]d z %[2]d tunelů\x02" +
+	" \x02Importován %[1]d z %[2]d tunel\x00#\x02Importováno %[1]d z %[2]d tu" +
+	"nelů\x02Nelze vytvořit tunel\x14\x01\x81\x01\x00\x04\x17\x02Odstranit %[" +
+	"1]d tunely\x05\x18\x02Odstranit %[1]d tunelů\x02\x16\x02Odstranit %[1]d " +
+	"tunel\x00\x18\x02Odstranit %[1]d tunelů\x14\x01\x81\x01\x00\x04'\x02Opra" +
+	"vdu chcete odstranit %[1]d tunely?\x05(\x02Opravdu chcete odstranit %[1]" +
+	"d tunelů?\x02&\x02Opravdu chcete odstranit %[1]d tunel?\x00(\x02Opravdu " +
+	"chcete odstranit %[1]d tunelů?\x02Odstranit tunel \x22%[1]s\x22\x02Oprav" +
+	"du chcete odstranit tunel \x22%[1]s\x22?\x02%[1]s Tuto akci nelze vrátit" +
+	" zpět.\x02Nelze odstranit tunel\x02Tunel nebylo možné odstranit: %[1]s" +
+	"\x02Nelze odstranit tunely\x14\x01\x81\x01\x00\x04'\x02%[1]d tunely neby" +
+	"lo možné odstranit.\x05(\x02%[1]d tunelů nebylo možné odstranit.\x02&" +
+	"\x02%[1]d tunel nebylo možné odstranit.\x00(\x02%[1]d tunelů nebylo možn" +
+	"é odstranit.\x02Konfigurace souborů (*.zip, *.conf)|*.zip; *.conf|Všech" +
+	"ny soubory (*.*)|*.*\x02Importovat tunel(y) ze souboru\x02Konfigurace so" +
+	"uborů ZIP (*.zip)|*.zip\x02Exportovat tunely do zip\x02%[1]s (nepodepsan" +
+	"á verze, žádné aktualizace)\x02Chyba při ukončování aplikace WireGuard" +
+	"\x02Nelze ukončit službu z důvodu: %[1]v. WireGuard můžete zastavit ve s" +
+	"právci služeb.\x02Aktualizace aplikace WireGuard je nyní k dispozici. Si" +
+	"lně doporučujeme ji aktualizovat co nejdříve.\x02Stav: Čekání na uživate" +
+	"le\x02Aktualizovat nyní\x02Stav: Čeká se na službu aktualizací\x02Chyba:" +
+	" %[1]v. Zkuste to znovu.\x02Stav: Dokončeno!"
 
-var deIndex = []uint32{ // 180 elements
+var deIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000007, 0x00000059, 0x00000074,
 	0x0000008b, 0x000000e1, 0x00000137, 0x0000016b,
@@ -568,20 +583,23 @@ var deIndex = []uint32{ // 180 elements
 	0x00000dca, 0x00000dee, 0x00000e61, 0x00000e68,
 	0x00000e74, 0x00000e98, 0x00000eab, 0x00000ec9,
 	0x00000ef3, 0x00000eff, 0x00000f24, 0x00000f48,
-	0x00000f69, 0x00000f8e, 0x00000fcf, 0x00001001,
-	0x0000103b, 0x0000106f, 0x00001081, 0x000010ba,
-	0x00001106, 0x00001126, 0x0000115b, 0x000011cb,
-	0x000011e7, 0x0000121e, 0x0000125b, 0x0000127a,
-	0x000012aa, 0x000012d0, 0x00001331, 0x0000137b,
+	0x00000f69, 0x00000f8e, 0x00000fcf, 0x00001009,
+	0x0000103d, 0x0000104f, 0x00001088, 0x000010d4,
+	0x000010f4, 0x00001129, 0x00001199, 0x000011b5,
+	0x000011ec, 0x00001229, 0x00001248, 0x00001278,
+	0x0000129e, 0x000012ff, 0x00001349, 0x00001365,
 	// Entry A0 - BF
-	0x00001397, 0x000013c0, 0x000013df, 0x0000140a,
-	0x0000142c, 0x00001498, 0x00001506, 0x00001520,
-	0x00001534, 0x0000155d, 0x0000158b, 0x0000159b,
-	0x0000159b, 0x0000159b, 0x0000159b, 0x0000159b,
-	0x0000159b, 0x0000159b, 0x0000159b, 0x0000159b,
-} // Size: 744 bytes
+	0x0000138e, 0x000013ad, 0x000013d8, 0x000013fa,
+	0x00001466, 0x000014d4, 0x000014ee, 0x00001502,
+	0x0000152b, 0x00001559, 0x00001569, 0x00001569,
+	0x00001569, 0x00001569, 0x00001569, 0x00001569,
+	0x00001569, 0x00001569, 0x00001569, 0x00001569,
+	0x00001569, 0x00001569, 0x00001569, 0x00001569,
+	0x00001569, 0x00001569, 0x00001569, 0x00001569,
+	0x00001569, 0x00001569, 0x00001569,
+} // Size: 788 bytes
 
-const deData string = "" + // Size: 5531 bytes
+const deData string = "" + // Size: 5481 bytes
 	"\x02Fehler\x02(kein Argument): Als Administrator ausführen und den Manag" +
 	"er-Dienst installieren\x02Verwendung: %[1]s [\x0a%[2]s]\x02Kommandozeile" +
 	"noptionen\x02Es kann nicht festgestellt werden, ob der Prozess unter WOW" +
@@ -645,33 +663,32 @@ const deData string = "" + // Size: 5531 bytes
 	"n\x02Alle Tunnel in eine Zip-Datei exportieren\x02&Umschalten\x02Exporti" +
 	"ere alle Tunnel in &Zip-Datei\x02Ausgewählten Tunnel &bearbeiten…\x02Aus" +
 	"gewählte(n) Tunnel &löschen\x02keine Konfigurationsdateien gefunden\x02A" +
-	"usgewählte Konfiguration konnte nicht importiert werden: %[1]v\x02Konnte" +
-	" existierende Tunnel nicht auflisten: %[1]v\x02Es existiert bereits ein " +
-	"Tunnel mit dem Namen „%[1]s“\x02Importieren der Konfiguration nicht mögl" +
-	"ich: %[1]v\x02Tunnel importiert\x14\x01\x81\x01\x00\x02\x18\x02%[1]d Tun" +
-	"nel importiert\x00\x18\x02%[1]d Tunnel importiert\x14\x02\x80\x01\x02" +
-	"\x22\x02%[1]d von %[2]d Tunnel importiert\x00\x22\x02%[1]d von %[2]d Tun" +
-	"nel importiert\x02Tunnel erstellen nicht möglich\x14\x01\x81\x01\x00\x02" +
-	"\x16\x02%[1]d Tunnel löschen\x00\x16\x02%[1]d Tunnel löschen\x14\x01\x81" +
-	"\x01\x00\x024\x02Möchten Sie diesen %[1]d Tunnel wirklich löschen?\x003" +
-	"\x02Möchten Sie diese %[1]d Tunnel wirklich löschen?\x02Tunnel „%[1]s“ l" +
-	"öschen\x02Möchten Sie den Tunnel „%[1]s“ wirklich löschen?\x02%[1]s Die" +
-	"ser Schritt kann nicht rückgängig gemacht werden.\x02Tunnel löschen nich" +
-	"t möglich\x02Ein Tunnel konnte nicht gelöscht werden: %[1]s\x02Tunnel ko" +
-	"nnten nicht gelöscht werden\x14\x01\x81\x01\x00\x02+\x02%[1]d Tunnel kon" +
-	"nte nicht entfernt werden.\x00-\x02%[1]d Tunnel konnten nicht gelöscht w" +
-	"erden.\x02Konfigurationsdateien (*.zip, *.conf)|*.zip;*.conf|Alle Dateie" +
-	"n (*.*)|*.*\x02Importiere Tunnel aus Datei\x02Konfigurations-ZIP-Dateien" +
-	" (*.zip)|*.zip\x02Exportiere Tunnel in Zip-Datei\x02%[1]s (unsigniert, k" +
-	"eine Aktualisierungen)\x02Fehler beim Beenden von WireGuard\x02Der Diens" +
-	"t konnte nicht gestoppt werden: %[1]v. Versuchen Sie WireGuard in der Di" +
-	"enstverwaltung zu beenden.\x02Eine Aktualisierung für WireGuard ist verf" +
-	"ügbar. Es ist höchst empfehlenswert diese sofort durchzuführen.\x02Stat" +
-	"us: Auf Nutzer warten\x02Jetzt aktualisieren\x02Status: Auf Aktualisieru" +
-	"ngsdienst warten\x02Fehler: %[1]v. Bitte versuchen Sie es erneut.\x02Sta" +
-	"tus: Fertig!"
+	"usgewählte Konfiguration konnte nicht importiert werden: %[1]v\x02Es exi" +
+	"stiert bereits ein Tunnel mit dem Namen „%[1]s“\x02Importieren der Konfi" +
+	"guration nicht möglich: %[1]v\x02Tunnel importiert\x14\x01\x81\x01\x00" +
+	"\x02\x18\x02%[1]d Tunnel importiert\x00\x18\x02%[1]d Tunnel importiert" +
+	"\x14\x02\x80\x01\x02\x22\x02%[1]d von %[2]d Tunnel importiert\x00\x22" +
+	"\x02%[1]d von %[2]d Tunnel importiert\x02Tunnel erstellen nicht möglich" +
+	"\x14\x01\x81\x01\x00\x02\x16\x02%[1]d Tunnel löschen\x00\x16\x02%[1]d Tu" +
+	"nnel löschen\x14\x01\x81\x01\x00\x024\x02Möchten Sie diesen %[1]d Tunnel" +
+	" wirklich löschen?\x003\x02Möchten Sie diese %[1]d Tunnel wirklich lösch" +
+	"en?\x02Tunnel „%[1]s“ löschen\x02Möchten Sie den Tunnel „%[1]s“ wirklich" +
+	" löschen?\x02%[1]s Dieser Schritt kann nicht rückgängig gemacht werden." +
+	"\x02Tunnel löschen nicht möglich\x02Ein Tunnel konnte nicht gelöscht wer" +
+	"den: %[1]s\x02Tunnel konnten nicht gelöscht werden\x14\x01\x81\x01\x00" +
+	"\x02+\x02%[1]d Tunnel konnte nicht entfernt werden.\x00-\x02%[1]d Tunnel" +
+	" konnten nicht gelöscht werden.\x02Konfigurationsdateien (*.zip, *.conf)" +
+	"|*.zip;*.conf|Alle Dateien (*.*)|*.*\x02Importiere Tunnel aus Datei\x02K" +
+	"onfigurations-ZIP-Dateien (*.zip)|*.zip\x02Exportiere Tunnel in Zip-Date" +
+	"i\x02%[1]s (unsigniert, keine Aktualisierungen)\x02Fehler beim Beenden v" +
+	"on WireGuard\x02Der Dienst konnte nicht gestoppt werden: %[1]v. Versuche" +
+	"n Sie WireGuard in der Dienstverwaltung zu beenden.\x02Eine Aktualisieru" +
+	"ng für WireGuard ist verfügbar. Es ist höchst empfehlenswert diese sofor" +
+	"t durchzuführen.\x02Status: Auf Nutzer warten\x02Jetzt aktualisieren\x02" +
+	"Status: Auf Aktualisierungsdienst warten\x02Fehler: %[1]v. Bitte versuch" +
+	"en Sie es erneut.\x02Status: Fertig!"
 
-var enIndex = []uint32{ // 180 elements
+var enIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000006, 0x00000039, 0x0000004f,
 	0x00000064, 0x000000aa, 0x000000e9, 0x00000115,
@@ -712,20 +729,23 @@ var enIndex = []uint32{ // 180 elements
 	0x00000b1b, 0x00000b36, 0x00000b8e, 0x00000b96,
 	0x00000b9c, 0x00000bb1, 0x00000bbc, 0x00000bd6,
 	0x00000bf0, 0x00000bf8, 0x00000c16, 0x00000c2f,
-	0x00000c4a, 0x00000c6c, 0x00000c9b, 0x00000cc7,
-	0x00000cff, 0x00000d25, 0x00000d36, 0x00000d6c,
-	0x00000db3, 0x00000dcb, 0x00000dfd, 0x00000e6f,
-	0x00000e89, 0x00000ec3, 0x00000ee6, 0x00000efe,
-	0x00000f27, 0x00000f40, 0x00000f99, 0x00000fde,
+	0x00000c4a, 0x00000c6c, 0x00000c9b, 0x00000cd3,
+	0x00000cf9, 0x00000d0a, 0x00000d40, 0x00000d87,
+	0x00000d9f, 0x00000dd1, 0x00000e43, 0x00000e5d,
+	0x00000e97, 0x00000eba, 0x00000ed2, 0x00000efb,
+	0x00000f14, 0x00000f6d, 0x00000fb2, 0x00000fcd,
 	// Entry A0 - BF
-	0x00000ff9, 0x0000101f, 0x00001035, 0x00001058,
-	0x00001070, 0x000010cf, 0x00001124, 0x0000113d,
-	0x00001148, 0x0000116c, 0x0000118c, 0x0000119e,
-	0x000011aa, 0x000011c3, 0x0000122a, 0x00001231,
-	0x00001235, 0x0000139c, 0x000013cb, 0x000013ed,
-} // Size: 744 bytes
+	0x00000ff3, 0x00001009, 0x0000102c, 0x00001044,
+	0x000010a3, 0x000010f8, 0x00001111, 0x0000111c,
+	0x00001140, 0x00001160, 0x00001172, 0x0000117e,
+	0x00001197, 0x000011fe, 0x00001205, 0x00001209,
+	0x00001370, 0x00001379, 0x000013ab, 0x000013c6,
+	0x000013d5, 0x000013e3, 0x0000143c, 0x00001462,
+	0x00001478, 0x000014b3, 0x000014d8, 0x000014fe,
+	0x0000152a, 0x00001559, 0x0000157b,
+} // Size: 788 bytes
 
-const enData string = "" + // Size: 5101 bytes
+const enData string = "" + // Size: 5499 bytes
 	"\x02Error\x02(no argument): elevate and install manager service\x02Usage" +
 	": %[1]s [\x0a%[2]s]\x02Command Line Options\x02Unable to determine wheth" +
 	"er the process is running under WOW64: %[1]v\x02You must use the native " +
@@ -779,39 +799,45 @@ const enData string = "" + // Size: 5101 bytes
 	"move selected tunnel(s)\x02Export all tunnels to zip\x02&Toggle\x02Expor" +
 	"t all tunnels to &zip…\x02Edit &selected tunnel…\x02&Remove selected tun" +
 	"nel(s)\x02no configuration files were found\x02Could not import selected" +
-	" configuration: %[1]v\x02Could not enumerate existing tunnels: %[1]v\x02" +
-	"Another tunnel already exists with the name ‘%[1]s’\x02Unable to import " +
-	"configuration: %[1]v\x02Imported tunnels\x14\x01\x81\x01\x00\x02\x16\x02" +
-	"Imported %[1]d tunnel\x00\x17\x02Imported %[1]d tunnels\x14\x02\x80\x01" +
-	"\x02\x1f\x02Imported %[1]d of %[2]d tunnel\x00 \x02Imported %[1]d of %[2" +
-	"]d tunnels\x02Unable to create tunnel\x14\x01\x81\x01\x00\x02\x14\x02Del" +
-	"ete %[1]d tunnel\x00\x15\x02Delete %[1]d tunnels\x14\x01\x81\x01\x00\x02" +
-	"4\x02Are you sure you would like to delete %[1]d tunnel?\x005\x02Are you" +
-	" sure you would like to delete %[1]d tunnels?\x02Delete tunnel ‘%[1]s’" +
-	"\x02Are you sure you would like to delete tunnel ‘%[1]s’?\x02%[1]s You c" +
-	"annot undo this action.\x02Unable to delete tunnel\x02A tunnel was unabl" +
-	"e to be removed: %[1]s\x02Unable to delete tunnels\x14\x01\x81\x01\x00" +
-	"\x02'\x02%[1]d tunnel was unable to be removed.\x00)\x02%[1]d tunnels we" +
-	"re unable to be removed.\x02Configuration Files (*.zip, *.conf)|*.zip;*." +
-	"conf|All Files (*.*)|*.*\x02Import tunnel(s) from file\x02Configuration " +
-	"ZIP Files (*.zip)|*.zip\x02Export tunnels to zip\x02%[1]s (unsigned buil" +
-	"d, no updates)\x02Error Exiting WireGuard\x02Unable to exit service due " +
-	"to: %[1]v. You may want to stop WireGuard from the service manager.\x02A" +
-	"n update to WireGuard is available. It is highly advisable to update wit" +
-	"hout delay.\x02Status: Waiting for user\x02Update Now\x02Status: Waiting" +
-	" for updater service\x02Error: %[1]v. Please try again.\x02Status: Compl" +
-	"ete!\x04\x00\x01 \x07\x02Error:\x04\x00\x01 \x14\x02Invalid IP address:" +
-	"\x02App version: %[1]s\x0aDriver version: %[2]s\x0aGo version: %[3]s\x0a" +
-	"Operating system: %[4]s\x0aArchitecture: %[5]s\x02Table:\x02off\x02When " +
-	"a configuration has exactly one peer, and that peer has an allowed IPs c" +
-	"ontaining at least one of 0.0.0.0/0 or ::/0, and the interface does not " +
-	"have table off, then the tunnel service engages a firewall ruleset to bl" +
-	"ock all traffic that is neither to nor from the tunnel interface or is t" +
-	"o the wrong DNS server, with special exceptions for DHCP and NDP.\x02Ple" +
-	"ase ask the system administrator to update.\x02Status: Waiting for admin" +
-	"istrator"
+	" configuration: %[1]v\x02Another tunnel already exists with the name ‘%[" +
+	"1]s’\x02Unable to import configuration: %[1]v\x02Imported tunnels\x14" +
+	"\x01\x81\x01\x00\x02\x16\x02Imported %[1]d tunnel\x00\x17\x02Imported %[" +
+	"1]d tunnels\x14\x02\x80\x01\x02\x1f\x02Imported %[1]d of %[2]d tunnel" +
+	"\x00 \x02Imported %[1]d of %[2]d tunnels\x02Unable to create tunnel\x14" +
+	"\x01\x81\x01\x00\x02\x14\x02Delete %[1]d tunnel\x00\x15\x02Delete %[1]d " +
+	"tunnels\x14\x01\x81\x01\x00\x024\x02Are you sure you would like to delet" +
+	"e %[1]d tunnel?\x005\x02Are you sure you would like to delete %[1]d tunn" +
+	"els?\x02Delete tunnel ‘%[1]s’\x02Are you sure you would like to delete t" +
+	"unnel ‘%[1]s’?\x02%[1]s You cannot undo this action.\x02Unable to delete" +
+	" tunnel\x02A tunnel was unable to be removed: %[1]s\x02Unable to delete " +
+	"tunnels\x14\x01\x81\x01\x00\x02'\x02%[1]d tunnel was unable to be remove" +
+	"d.\x00)\x02%[1]d tunnels were unable to be removed.\x02Configuration Fil" +
+	"es (*.zip, *.conf)|*.zip;*.conf|All Files (*.*)|*.*\x02Import tunnel(s) " +
+	"from file\x02Configuration ZIP Files (*.zip)|*.zip\x02Export tunnels to " +
+	"zip\x02%[1]s (unsigned build, no updates)\x02Error Exiting WireGuard\x02" +
+	"Unable to exit service due to: %[1]v. You may want to stop WireGuard fro" +
+	"m the service manager.\x02An update to WireGuard is available. It is hig" +
+	"hly advisable to update without delay.\x02Status: Waiting for user\x02Up" +
+	"date Now\x02Status: Waiting for updater service\x02Error: %[1]v. Please " +
+	"try again.\x02Status: Complete!\x04\x00\x01 \x07\x02Error:\x04\x00\x01 " +
+	"\x14\x02Invalid IP address:\x02App version: %[1]s\x0aDriver version: %[2" +
+	"]s\x0aGo version: %[3]s\x0aOperating system: %[4]s\x0aArchitecture: %[5]" +
+	"s\x02Table:\x02off\x02When a configuration has exactly one peer, and tha" +
+	"t peer has an allowed IPs containing at least one of 0.0.0.0/0 or ::/0, " +
+	"and the interface does not have table off, then the tunnel service engag" +
+	"es a firewall ruleset to block all traffic that is neither to nor from t" +
+	"he tunnel interface or is to the wrong DNS server, with special exceptio" +
+	"ns for DHCP and NDP.\x02Settings\x02Select a tunnel to configure phantun" +
+	" obfuscation.\x02Enable phantun obfuscation\x02Remote server:\x02Local l" +
+	"isten:\x02When activated, all peer endpoints will be redirected to the l" +
+	"ocal listen address above.\x02Configuring phantun for tunnel: %[1]s\x02I" +
+	"nvalid configuration\x02Remote server address is required when phantun i" +
+	"s enabled.\x02Unable to save phantun configuration\x02Saved phantun conf" +
+	"iguration for %[1]s\x02Could not enumerate existing tunnels: %[1]v\x02Pl" +
+	"ease ask the system administrator to update.\x02Status: Waiting for admi" +
+	"nistrator"
 
-var es_ESIndex = []uint32{ // 180 elements
+var es_ESIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000006, 0x00000044, 0x00000058,
 	0x00000077, 0x000000c5, 0x000000ff, 0x00000137,
@@ -852,20 +878,23 @@ var es_ESIndex = []uint32{ // 180 elements
 	0x00000d97, 0x00000dbe, 0x00000e1b, 0x00000e24,
 	0x00000e2c, 0x00000e46, 0x00000e55, 0x00000e77,
 	0x00000e99, 0x00000ea9, 0x00000ecf, 0x00000ef1,
-	0x00000f14, 0x00000f41, 0x00000f7c, 0x00000fb1,
-	0x00000fdd, 0x0000100e, 0x00001022, 0x0000105c,
-	0x000010a7, 0x000010c6, 0x000010fd, 0x00001170,
-	0x0000118c, 0x000011c8, 0x000011ee, 0x00001210,
-	0x00001237, 0x0000125c, 0x000012b3, 0x000012ff,
+	0x00000f14, 0x00000f41, 0x00000f7c, 0x00000fa8,
+	0x00000fd9, 0x00000fed, 0x00001027, 0x00001072,
+	0x00001091, 0x000010c8, 0x0000113b, 0x00001157,
+	0x00001193, 0x000011b9, 0x000011db, 0x00001202,
+	0x00001227, 0x0000127e, 0x000012ca, 0x000012ec,
 	// Entry A0 - BF
-	0x00001321, 0x0000134e, 0x00001366, 0x0000139b,
-	0x000013b7, 0x00001432, 0x0000148f, 0x000014ac,
-	0x000014bd, 0x000014ed, 0x00001518, 0x0000152c,
-	0x0000152c, 0x0000152c, 0x0000152c, 0x0000152c,
-	0x0000152c, 0x0000152c, 0x0000152c, 0x0000152c,
-} // Size: 744 bytes
+	0x00001319, 0x00001331, 0x00001366, 0x00001382,
+	0x000013fd, 0x0000145a, 0x00001477, 0x00001488,
+	0x000014b8, 0x000014e3, 0x000014f7, 0x000014f7,
+	0x000014f7, 0x000014f7, 0x000014f7, 0x000014f7,
+	0x000014f7, 0x000014f7, 0x000014f7, 0x000014f7,
+	0x000014f7, 0x000014f7, 0x000014f7, 0x000014f7,
+	0x000014f7, 0x000014f7, 0x000014f7, 0x000014f7,
+	0x000014f7, 0x000014f7, 0x000014f7,
+} // Size: 788 bytes
 
-const es_ESData string = "" + // Size: 5420 bytes
+const es_ESData string = "" + // Size: 5367 bytes
 	"\x02Error\x02(sin argumento): eleve e instale el servicio de administrad" +
 	"or\x02Uso: %[1]s [\x0a%[2]s]\x02Opciones de línea de comandos\x02No fue " +
 	"posible determinar si el proceso se está ejecutando bajo WOW64: %[1]v" +
@@ -928,31 +957,30 @@ const es_ESData string = "" + // Size: 5420 bytes
 	" estado\x02Exportar todos los túneles a &ZIP…\x02Editar túneles &selecci" +
 	"onados…\x02&Eliminar túnel(es) seleccionados\x02no se encontraron archiv" +
 	"os de configuración\x02No se puede importar la configuración seleccionad" +
-	"a: %[1]v\x02No se pueden enumerar los túneles existentes: %[1]v\x02Ya ex" +
-	"iste otro túnel con el nombre '%[1]s'\x02No fue posible importar la conf" +
-	"iguración: %[1]v\x02Túneles importados\x14\x01\x81\x01\x00\x02\x17\x02%[" +
-	"1]d túnel importado\x00\x1a\x02%[1]d túneles importados\x14\x02\x80\x01" +
-	"\x02 \x02Importado %[1]d de %[2]d túnel\x00#\x02Importados %[1]d de %[2]" +
-	"d túneles\x02No fue posible crear el túnel\x14\x01\x81\x01\x00\x02\x16" +
-	"\x02Eliminar %[1]d túnel\x00\x18\x02Eliminar %[1]d túneles\x14\x01\x81" +
-	"\x01\x00\x024\x02¿Está seguro de que querer eliminar %[1]d túnel?\x006" +
-	"\x02¿Está seguro de que querer eliminar %[1]d túneles?\x02Eliminar túnel" +
-	" ‘%[1]s’\x02¿Está seguro de que desea eliminar el túnel ‘%[1]s’?\x02%[1]" +
-	"s No puede deshacer esta acción.\x02No fue posible eliminar el túnel\x02" +
-	"Un túnel no pudo ser eliminado: %[1]s\x02No fue posible eliminar los tún" +
-	"eles\x14\x01\x81\x01\x00\x02&\x02No fue posible eliminar %[1]d túnel." +
-	"\x00(\x02No fue posible eliminar %[1]d túneles.\x02Archivos de configura" +
-	"ción (*.zip, *.conf)|*.zip;*.conf|All Files (*.*)|*.*\x02Importar túnel(" +
-	"es) desde archivo\x02Archivos ZIP de configuración (*.zip)|*.zip\x02Expo" +
-	"rtar túneles a ZIP\x02%[1]s (compilación no firmada, sin actualizaciones" +
-	")\x02Error al salir de WireGuard\x02No fue posible terminar el servicio " +
-	"debido a: %[1]v. Puede intentar detener WireGuard desde el administrador" +
-	" de servicios.\x02Hay una actualización de Wireguard disponible. Es muy " +
-	"recomendable actualizar de inmediato.\x02Estado: Esperando al usuario" +
-	"\x02Actualizar ahora\x02Estado: Esperando al servicio de actualización" +
-	"\x02Error: %[1]v. Por favor, intente de nuevo.\x02Estado: ¡Completo!"
+	"a: %[1]v\x02Ya existe otro túnel con el nombre '%[1]s'\x02No fue posible" +
+	" importar la configuración: %[1]v\x02Túneles importados\x14\x01\x81\x01" +
+	"\x00\x02\x17\x02%[1]d túnel importado\x00\x1a\x02%[1]d túneles importado" +
+	"s\x14\x02\x80\x01\x02 \x02Importado %[1]d de %[2]d túnel\x00#\x02Importa" +
+	"dos %[1]d de %[2]d túneles\x02No fue posible crear el túnel\x14\x01\x81" +
+	"\x01\x00\x02\x16\x02Eliminar %[1]d túnel\x00\x18\x02Eliminar %[1]d túnel" +
+	"es\x14\x01\x81\x01\x00\x024\x02¿Está seguro de que querer eliminar %[1]d" +
+	" túnel?\x006\x02¿Está seguro de que querer eliminar %[1]d túneles?\x02El" +
+	"iminar túnel ‘%[1]s’\x02¿Está seguro de que desea eliminar el túnel ‘%[1" +
+	"]s’?\x02%[1]s No puede deshacer esta acción.\x02No fue posible eliminar " +
+	"el túnel\x02Un túnel no pudo ser eliminado: %[1]s\x02No fue posible elim" +
+	"inar los túneles\x14\x01\x81\x01\x00\x02&\x02No fue posible eliminar %[1" +
+	"]d túnel.\x00(\x02No fue posible eliminar %[1]d túneles.\x02Archivos de " +
+	"configuración (*.zip, *.conf)|*.zip;*.conf|All Files (*.*)|*.*\x02Import" +
+	"ar túnel(es) desde archivo\x02Archivos ZIP de configuración (*.zip)|*.zi" +
+	"p\x02Exportar túneles a ZIP\x02%[1]s (compilación no firmada, sin actual" +
+	"izaciones)\x02Error al salir de WireGuard\x02No fue posible terminar el " +
+	"servicio debido a: %[1]v. Puede intentar detener WireGuard desde el admi" +
+	"nistrador de servicios.\x02Hay una actualización de Wireguard disponible" +
+	". Es muy recomendable actualizar de inmediato.\x02Estado: Esperando al u" +
+	"suario\x02Actualizar ahora\x02Estado: Esperando al servicio de actualiza" +
+	"ción\x02Error: %[1]v. Por favor, intente de nuevo.\x02Estado: ¡Completo!"
 
-var etIndex = []uint32{ // 180 elements
+var etIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000005, 0x0000003c, 0x00000055,
 	0x00000066, 0x000000ae, 0x000000eb, 0x0000011a,
@@ -993,20 +1021,23 @@ var etIndex = []uint32{ // 180 elements
 	0x00000c45, 0x00000c60, 0x00000cb6, 0x00000cbf,
 	0x00000cc6, 0x00000cdc, 0x00000ce8, 0x00000d03,
 	0x00000d25, 0x00000d35, 0x00000d5b, 0x00000d76,
-	0x00000d92, 0x00000db3, 0x00000deb, 0x00000e23,
-	0x00000e48, 0x00000e6e, 0x00000e82, 0x00000ebd,
-	0x00000f0d, 0x00000f22, 0x00000f57, 0x00000fc9,
-	0x00000fe0, 0x0000101d, 0x00001047, 0x00001061,
-	0x00001085, 0x000010a0, 0x000010f1, 0x00001135,
+	0x00000d92, 0x00000db3, 0x00000deb, 0x00000e10,
+	0x00000e36, 0x00000e4a, 0x00000e85, 0x00000ed5,
+	0x00000eea, 0x00000f1f, 0x00000f91, 0x00000fa8,
+	0x00000fe5, 0x0000100f, 0x00001029, 0x0000104d,
+	0x00001068, 0x000010b9, 0x000010fd, 0x00001118,
 	// Entry A0 - BF
-	0x00001150, 0x00001179, 0x00001195, 0x000011ca,
-	0x000011e6, 0x00001257, 0x000012ad, 0x000012cc,
-	0x000012da, 0x000012ff, 0x00001323, 0x00001334,
-	0x00001334, 0x00001334, 0x00001334, 0x00001334,
-	0x00001334, 0x00001334, 0x00001334, 0x00001334,
-} // Size: 744 bytes
+	0x00001141, 0x0000115d, 0x00001192, 0x000011ae,
+	0x0000121f, 0x00001275, 0x00001294, 0x000012a2,
+	0x000012c7, 0x000012eb, 0x000012fc, 0x000012fc,
+	0x000012fc, 0x000012fc, 0x000012fc, 0x000012fc,
+	0x000012fc, 0x000012fc, 0x000012fc, 0x000012fc,
+	0x000012fc, 0x000012fc, 0x000012fc, 0x000012fc,
+	0x000012fc, 0x000012fc, 0x000012fc, 0x000012fc,
+	0x000012fc, 0x000012fc, 0x000012fc,
+} // Size: 788 bytes
 
-const etData string = "" + // Size: 4916 bytes
+const etData string = "" + // Size: 4860 bytes
 	"\x02Viga\x02(tühi muutuja): paigalda haldusteenus ülemõigustega\x02Kasut" +
 	"us: %[1]s [ \x0a%[2]s]\x02Käsurea valikud\x02Pole võimalik tuvastada, ka" +
 	"s protsess töötab WOW64 kontekstis: %[1]v\x02Peate kasutama antud arvuti" +
@@ -1063,31 +1094,30 @@ const etData string = "" + // Size: 4916 bytes
 	"unnel(id)\x02Ekspordi kõik tunnelid zip-faili\x02Lüli&tu ümber\x02Ekspor" +
 	"di kõik tunnelid &zip-faili…\x02Muuda &valitud tunnelit…\x02&Eemalda val" +
 	"itud tunnel(id)\x02ühtegi seadistusfaili ei leitud\x02Pole võimeline imp" +
-	"ortima valitud seadistusfaili: %[1]v\x02Pole võimeline loetlema olemasol" +
-	"evaid tunneleid: %[1]v\x02Tunnel nimega '%[1]s' on juba olemas\x02Seadis" +
-	"tuse import ebaõnnestus: %[1]v\x02Imporditud tunnelid\x14\x01\x81\x01" +
-	"\x00\x02\x18\x02Imporditud %[1]d tunnel\x00\x1a\x02Importitud %[1]d tunn" +
-	"elit\x14\x02\x80\x01\x02$\x02Imporditud %[1]d %[2]d-st tunnelist\x00$" +
-	"\x02Imporditud %[1]d %[2]d-st tunnelist\x02Tunnelit ei saa luua\x14\x01" +
-	"\x81\x01\x00\x02\x15\x02Kustuta %[1]d tunnel\x00\x17\x02Kustuta %[1]d tu" +
-	"nnelit\x14\x01\x81\x01\x00\x024\x02Kas oled kindel, et soovid kustutada " +
-	"%[1]d tunneli?\x005\x02Kas oled kindel, et soovid kustutada %[1]d tunnel" +
-	"it?\x02Kustuta tunnel '%[1]s'\x02Kas oled kindel, et soovid kustutada tu" +
-	"nneli nimega '%[1]s'?\x02%[1]s Seda tegevust ei saa tagasi võtta.\x02Tun" +
-	"nelit ei saa kustutada\x02Tunnelit ei saanud kustutada: %[1]s\x02Tunnele" +
-	"id ei saa kustutada\x14\x01\x81\x01\x00\x02$\x02Ei saanud eemaldada %[1]" +
-	"d tunnelit.\x00$\x02Ei saanud eemaldada %[1]d tunnelit.\x02Seadistusfail" +
-	"id (*.zip, *.conf)|*.zip;*.conf|Kõik failid (*.*)|*.*\x02Impordi tunnel(" +
-	"id) failist\x02Pakendatud seadistusfailid (*.zip)|*.zip\x02Ekspordi tunn" +
-	"elid zip-faili\x02%[1]s (allkirjastamata kompilatsioon, uuendusi pole)" +
-	"\x02Viga WireGuard'i sulgemisel\x02Teenuse lõpetamine ebaõnnestus järgne" +
-	"va tõttu: %[1]v. Võid proovida WireGuard'i lõpetada teenusehaldurist." +
-	"\x02WireGuard'ile on uuendus saadaval. Sügavalt soovitame uuendada niipe" +
-	"a kui võimalik.\x02Staatus: Ootan kasutaja järel\x02Uuenda nüüd\x02Staat" +
-	"us: Ootan uuendusteenuse järel\x02Viga: %[1]v. Palun proovige uuesti." +
-	"\x02Staatus: Valmis!"
+	"ortima valitud seadistusfaili: %[1]v\x02Tunnel nimega '%[1]s' on juba ol" +
+	"emas\x02Seadistuse import ebaõnnestus: %[1]v\x02Imporditud tunnelid\x14" +
+	"\x01\x81\x01\x00\x02\x18\x02Imporditud %[1]d tunnel\x00\x1a\x02Importitu" +
+	"d %[1]d tunnelit\x14\x02\x80\x01\x02$\x02Imporditud %[1]d %[2]d-st tunne" +
+	"list\x00$\x02Imporditud %[1]d %[2]d-st tunnelist\x02Tunnelit ei saa luua" +
+	"\x14\x01\x81\x01\x00\x02\x15\x02Kustuta %[1]d tunnel\x00\x17\x02Kustuta " +
+	"%[1]d tunnelit\x14\x01\x81\x01\x00\x024\x02Kas oled kindel, et soovid ku" +
+	"stutada %[1]d tunneli?\x005\x02Kas oled kindel, et soovid kustutada %[1]" +
+	"d tunnelit?\x02Kustuta tunnel '%[1]s'\x02Kas oled kindel, et soovid kust" +
+	"utada tunneli nimega '%[1]s'?\x02%[1]s Seda tegevust ei saa tagasi võtta" +
+	".\x02Tunnelit ei saa kustutada\x02Tunnelit ei saanud kustutada: %[1]s" +
+	"\x02Tunneleid ei saa kustutada\x14\x01\x81\x01\x00\x02$\x02Ei saanud eem" +
+	"aldada %[1]d tunnelit.\x00$\x02Ei saanud eemaldada %[1]d tunnelit.\x02Se" +
+	"adistusfailid (*.zip, *.conf)|*.zip;*.conf|Kõik failid (*.*)|*.*\x02Impo" +
+	"rdi tunnel(id) failist\x02Pakendatud seadistusfailid (*.zip)|*.zip\x02Ek" +
+	"spordi tunnelid zip-faili\x02%[1]s (allkirjastamata kompilatsioon, uuend" +
+	"usi pole)\x02Viga WireGuard'i sulgemisel\x02Teenuse lõpetamine ebaõnnest" +
+	"us järgneva tõttu: %[1]v. Võid proovida WireGuard'i lõpetada teenusehald" +
+	"urist.\x02WireGuard'ile on uuendus saadaval. Sügavalt soovitame uuendada" +
+	" niipea kui võimalik.\x02Staatus: Ootan kasutaja järel\x02Uuenda nüüd" +
+	"\x02Staatus: Ootan uuendusteenuse järel\x02Viga: %[1]v. Palun proovige u" +
+	"uesti.\x02Staatus: Valmis!"
 
-var faIndex = []uint32{ // 180 elements
+var faIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000007, 0x0000005b, 0x0000007a,
 	0x0000009e, 0x000000fe, 0x00000171, 0x000001a3,
@@ -1129,17 +1159,20 @@ var faIndex = []uint32{ // 180 elements
 	0x00001392, 0x000013c0, 0x000013d6, 0x000013fb,
 	0x00001430, 0x00001446, 0x0000147f, 0x000014a7,
 	0x000014d4, 0x00001505, 0x00001552, 0x00001552,
-	0x00001552, 0x00001552, 0x00001574, 0x000015b7,
-	0x0000160f, 0x0000163c, 0x00001671, 0x00001671,
-	0x0000168d, 0x0000168d, 0x0000168d, 0x000016bf,
-	0x000016bf, 0x000016f4, 0x000016f4, 0x000016f4,
+	0x00001552, 0x00001574, 0x000015b7, 0x0000160f,
+	0x0000163c, 0x00001671, 0x00001671, 0x0000168d,
+	0x0000168d, 0x0000168d, 0x000016bf, 0x000016bf,
+	0x000016f4, 0x000016f4, 0x000016f4, 0x00001727,
 	// Entry A0 - BF
-	0x00001727, 0x00001763, 0x00001791, 0x00001791,
-	0x000017c7, 0x000017c7, 0x000017c7, 0x000017f8,
-	0x00001821, 0x00001868, 0x000018a0, 0x000018bb,
+	0x00001763, 0x00001791, 0x00001791, 0x000017c7,
+	0x000017c7, 0x000017c7, 0x000017f8, 0x00001821,
+	0x00001868, 0x000018a0, 0x000018bb, 0x000018bb,
 	0x000018bb, 0x000018bb, 0x000018bb, 0x000018bb,
 	0x000018bb, 0x000018bb, 0x000018bb, 0x000018bb,
-} // Size: 744 bytes
+	0x000018bb, 0x000018bb, 0x000018bb, 0x000018bb,
+	0x000018bb, 0x000018bb, 0x000018bb, 0x000018bb,
+	0x000018bb, 0x000018bb, 0x000018bb,
+} // Size: 788 bytes
 
 const faData string = "" + // Size: 6331 bytes
 	"\x02خطا\x02(بدون ورودیی): سرویس مدیریت را ارتقا و نصب کنید\x02استفاده: %" +
@@ -1210,7 +1243,7 @@ const faData string = "" + // Size: 6331 bytes
 	"ربر\x02اکنون به\u200cروز رسانی کن\x02وضعیت: درانتظار برای سرویس به" +
 	"\u200cروزرسان\x02خطا: %[1]v. لطفا دوباره تلاش کنید.\x02وضعیت: کامل شد!"
 
-var fiIndex = []uint32{ // 180 elements
+var fiIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000006, 0x00000056, 0x0000006f,
 	0x00000085, 0x000000ea, 0x00000133, 0x0000016b,
@@ -1251,20 +1284,23 @@ var fiIndex = []uint32{ // 180 elements
 	0x00000ce9, 0x00000d08, 0x00000d68, 0x00000d70,
 	0x00000d79, 0x00000d94, 0x00000da4, 0x00000dbe,
 	0x00000de1, 0x00000dee, 0x00000e15, 0x00000e33,
-	0x00000e4c, 0x00000e6d, 0x00000ea0, 0x00000ed3,
-	0x00000f04, 0x00000f2e, 0x00000f3e, 0x00000f70,
-	0x00000fb6, 0x00000fce, 0x00001002, 0x0000106f,
-	0x0000108a, 0x000010c2, 0x000010eb, 0x00001105,
-	0x00001126, 0x00001140, 0x00001140, 0x00001140,
+	0x00000e4c, 0x00000e6d, 0x00000ea0, 0x00000ed1,
+	0x00000efb, 0x00000f0b, 0x00000f3d, 0x00000f83,
+	0x00000f9b, 0x00000fcf, 0x0000103c, 0x00001057,
+	0x0000108f, 0x000010b8, 0x000010d2, 0x000010f3,
+	0x0000110d, 0x0000110d, 0x0000110d, 0x00001128,
 	// Entry A0 - BF
-	0x0000115b, 0x0000115b, 0x00001177, 0x00001177,
-	0x00001199, 0x00001199, 0x00001199, 0x000011b7,
-	0x000011c5, 0x000011c5, 0x000011c5, 0x000011d3,
-	0x000011d3, 0x000011d3, 0x000011d3, 0x000011d3,
-	0x000011d3, 0x000011d3, 0x000011d3, 0x000011d3,
-} // Size: 744 bytes
+	0x00001128, 0x00001144, 0x00001144, 0x00001166,
+	0x00001166, 0x00001166, 0x00001184, 0x00001192,
+	0x00001192, 0x00001192, 0x000011a0, 0x000011a0,
+	0x000011a0, 0x000011a0, 0x000011a0, 0x000011a0,
+	0x000011a0, 0x000011a0, 0x000011a0, 0x000011a0,
+	0x000011a0, 0x000011a0, 0x000011a0, 0x000011a0,
+	0x000011a0, 0x000011a0, 0x000011a0, 0x000011a0,
+	0x000011a0, 0x000011a0, 0x000011a0,
+} // Size: 788 bytes
 
-const fiData string = "" + // Size: 4563 bytes
+const fiData string = "" + // Size: 4512 bytes
 	"\x02Virhe\x02(ei määrityksiä): suorita järjestelmäoikeuksilla ja asenna " +
 	"hallintapalvelu\x02Käyttö: %[1]s [\x0a%[2]s]\x02Komentorivin valinnat" +
 	"\x02Ei pystytä määrittämään mikäli prosessia suoritetaan WOW64-järjestel" +
@@ -1323,22 +1359,22 @@ const fiData string = "" + // Size: 4563 bytes
 	"li(t)\x02Vie kaikki tunnelit zip-tiedostoon\x02Vaihda &tila\x02Vie kaikk" +
 	"i tunnelit &zip-tiedostoon…\x02Muokkaa &valittua tunnelia…\x02&Poista va" +
 	"litut tunnelit\x02määritystiedostoa ei löytynyt\x02Valittua määritystied" +
-	"ostoa ei voitu tuoda: %[1]v\x02Olemassaolevia tunneleita ei voitu luetel" +
-	"la: %[1]v\x02Nimellä ‘%[1]s’ on jo olemassaoleva tunneli\x02Ei voitu tuo" +
-	"da määritystiedostoa: %[1]v\x02Tuodut tunnelit\x14\x01\x81\x01\x00\x02" +
-	"\x14\x02Tuotu %[1]d tunneli\x00\x15\x02Tuotu %[1]d tunnelia\x14\x02\x80" +
-	"\x01\x02\x1f\x02Tuotiin %[1]d / %[2]d tunnelia\x00\x1f\x02Tuotiin %[1]d " +
-	"/ %[2]d tunnelia\x02Tunnelia ei voitu luoda\x14\x01\x81\x01\x00\x02\x15" +
-	"\x02Poista %[1]d tunneli\x00\x16\x02Poista %[1]d tunnelia\x14\x01\x81" +
-	"\x01\x00\x022\x02Oletko varma että haluat poistaa %[1]d tunnelin?\x002" +
-	"\x02Oletko varma että haluat poistaa %[1]d tunnelia?\x02Poista tunneli ‘" +
-	"%[1]s’\x02Oletko varma että haluat poistaa tunnelin ‘%[1]s’?\x02%[1]s Tä" +
-	"tä toimintoa ei voi peruuttaa.\x02Tunnelia ei voitu poistaa\x02Tunnelia " +
-	"ei voitu poistaa: %[1]s\x02Tunnelia ei voitu poistaa\x02Tuo tunneli(t) t" +
-	"iedostosta\x02Vie tunnelit zip-tiedostoon\x02Virhe WireGuardista poistut" +
-	"taessa\x02Tila: Odotetaan käyttäjää\x02Päivitä nyt\x02Tila: Valmis!"
+	"ostoa ei voitu tuoda: %[1]v\x02Nimellä ‘%[1]s’ on jo olemassaoleva tunne" +
+	"li\x02Ei voitu tuoda määritystiedostoa: %[1]v\x02Tuodut tunnelit\x14\x01" +
+	"\x81\x01\x00\x02\x14\x02Tuotu %[1]d tunneli\x00\x15\x02Tuotu %[1]d tunne" +
+	"lia\x14\x02\x80\x01\x02\x1f\x02Tuotiin %[1]d / %[2]d tunnelia\x00\x1f" +
+	"\x02Tuotiin %[1]d / %[2]d tunnelia\x02Tunnelia ei voitu luoda\x14\x01" +
+	"\x81\x01\x00\x02\x15\x02Poista %[1]d tunneli\x00\x16\x02Poista %[1]d tun" +
+	"nelia\x14\x01\x81\x01\x00\x022\x02Oletko varma että haluat poistaa %[1]d" +
+	" tunnelin?\x002\x02Oletko varma että haluat poistaa %[1]d tunnelia?\x02P" +
+	"oista tunneli ‘%[1]s’\x02Oletko varma että haluat poistaa tunnelin ‘%[1]" +
+	"s’?\x02%[1]s Tätä toimintoa ei voi peruuttaa.\x02Tunnelia ei voitu poist" +
+	"aa\x02Tunnelia ei voitu poistaa: %[1]s\x02Tunnelia ei voitu poistaa\x02T" +
+	"uo tunneli(t) tiedostosta\x02Vie tunnelit zip-tiedostoon\x02Virhe WireGu" +
+	"ardista poistuttaessa\x02Tila: Odotetaan käyttäjää\x02Päivitä nyt\x02Til" +
+	"a: Valmis!"
 
-var frIndex = []uint32{ // 180 elements
+var frIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000007, 0x00000046, 0x00000063,
 	0x00000083, 0x000000cb, 0x00000112, 0x0000014b,
@@ -1379,20 +1415,23 @@ var frIndex = []uint32{ // 180 elements
 	0x00000e07, 0x00000e2d, 0x00000ea2, 0x00000eaa,
 	0x00000eb4, 0x00000ecf, 0x00000ee1, 0x00000f0c,
 	0x00000f2f, 0x00000f39, 0x00000f60, 0x00000f85,
-	0x00000fb1, 0x00000fd8, 0x00001016, 0x0000104d,
-	0x00001079, 0x000010a8, 0x000010ba, 0x000010f1,
-	0x0000113a, 0x00001159, 0x00001191, 0x000011f5,
-	0x00001215, 0x0000124b, 0x0000127a, 0x0000129c,
-	0x000012d1, 0x000012f5, 0x00001361, 0x000013b4,
+	0x00000fb1, 0x00000fd8, 0x00001016, 0x00001042,
+	0x00001071, 0x00001083, 0x000010ba, 0x00001103,
+	0x00001122, 0x0000115a, 0x000011be, 0x000011de,
+	0x00001214, 0x00001243, 0x00001265, 0x0000129a,
+	0x000012be, 0x0000132a, 0x0000137d, 0x000013ab,
 	// Entry A0 - BF
-	0x000013e2, 0x0000140e, 0x0000142c, 0x0000145d,
-	0x0000147b, 0x000014f6, 0x0000156f, 0x00001594,
-	0x000015ae, 0x000015dd, 0x00001602, 0x00001613,
-	0x00001613, 0x00001613, 0x00001613, 0x00001613,
-	0x00001613, 0x00001613, 0x00001613, 0x00001613,
-} // Size: 744 bytes
+	0x000013d7, 0x000013f5, 0x00001426, 0x00001444,
+	0x000014bf, 0x00001538, 0x0000155d, 0x00001577,
+	0x000015a6, 0x000015cb, 0x000015dc, 0x000015dc,
+	0x000015dc, 0x000015dc, 0x000015dc, 0x000015dc,
+	0x000015dc, 0x000015dc, 0x000015dc, 0x000015dc,
+	0x000015dc, 0x000015dc, 0x000015dc, 0x000015dc,
+	0x000015dc, 0x000015dc, 0x000015dc, 0x000015dc,
+	0x000015dc, 0x000015dc, 0x000015dc,
+} // Size: 788 bytes
 
-const frData string = "" + // Size: 5651 bytes
+const frData string = "" + // Size: 5596 bytes
 	"\x02Erreur\x02(sans argument) : élever et installer service du gestionna" +
 	"ire\x02Utilisation : %[1]s [\x0a%[2]s]\x02Options de la ligne de command" +
 	"e\x02Impossible de détecter si le processus s’exécute sous WOW64 : %[1]v" +
@@ -1457,32 +1496,32 @@ const frData string = "" + // Size: 5651 bytes
 	"ter tous les tunnels vers &zip…\x02Modifier &le tunnel sélectionné…\x02&" +
 	"Supprimer le(s) tunnel(s) sélectionné(s)\x02aucun fichier de configurati" +
 	"on trouvé\x02Impossible d'importer la configuration sélectionnée : %[1]v" +
-	"\x02Impossible d'énumérer les tunnels existantes : %[1]v\x02Un tunnel no" +
-	"mmé « %[1]s » existe déjà.\x02Impossible d'importer la configuration : %" +
-	"[1]v\x02Tunnels importés\x14\x01\x81\x01\x00\x02\x16\x02%[1]d tunnel imp" +
-	"orté\x00\x18\x02%[1]d tunnels importés\x14\x02\x80\x01\x02 \x02%[1]d de " +
-	"%[2]d tunnels importé\x00!\x02%[1]d de %[2]d tunnels importés\x02Impossi" +
-	"ble de créer le tunnel\x14\x01\x81\x01\x00\x02\x17\x02Supprimer %[1]d tu" +
-	"nnel\x00\x18\x02Supprimer %[1]d tunnels\x14\x01\x81\x01\x00\x02-\x02Voul" +
-	"ez-vous vraiment supprimer %[1]d tunnel?\x00.\x02Voulez-vous vraiment su" +
-	"pprimer %[1]d tunnels?\x02Supprimer le tunnel ‘%[1]s’\x02Voulez-vous vra" +
-	"iment supprimer le tunnel « %[1]s »?\x02%[1]s Vous ne pouvez pas annuler" +
-	" cette action.\x02Impossible de supprimer le tunnel\x02Il a été impossib" +
-	"le de supprimer un tunnel : %[1]s\x02Impossible de supprimer les tunnels" +
-	"\x14\x01\x81\x01\x00\x021\x02Il a été impossible de supprimer %[1]d tunn" +
-	"el.\x002\x02Il a été impossible de supprimer %[1]d tunnels.\x02Fichiers " +
-	"de configuration (*.zip, *.conf)|*.zip;*.conf|Tous les fichiers (*.*)|*." +
-	"*\x02Importer le(s) tunnel(s) à partir du fichier\x02Fichiers de configu" +
-	"ration ZIP (*.zip)|*.zip\x02Exporter les tunnels vers zip\x02%[1]s (vers" +
-	"ion non signée, aucune mise à jour)\x02Erreur de sortie du WireGuard\x02" +
-	"Impossible de quitter le service en raison de : %[1]v. Essayez d'arrêter" +
-	" WireGuard à partir du gestionnair des services.\x02Une mise à jour du W" +
-	"ireGuard est disponible. Il est fortement conseillé de metter votre Wire" +
-	"Guard à jour sans délai.\x02État: En attente de l’utilisateur\x02Mettre " +
-	"à jour maintenant\x02État: En attente du programme de mise à jour\x02Er" +
-	"reur : %[1]v. Veuillez réessayer.\x02État: Terminé!"
+	"\x02Un tunnel nommé « %[1]s » existe déjà.\x02Impossible d'importer la c" +
+	"onfiguration : %[1]v\x02Tunnels importés\x14\x01\x81\x01\x00\x02\x16\x02" +
+	"%[1]d tunnel importé\x00\x18\x02%[1]d tunnels importés\x14\x02\x80\x01" +
+	"\x02 \x02%[1]d de %[2]d tunnels importé\x00!\x02%[1]d de %[2]d tunnels i" +
+	"mportés\x02Impossible de créer le tunnel\x14\x01\x81\x01\x00\x02\x17\x02" +
+	"Supprimer %[1]d tunnel\x00\x18\x02Supprimer %[1]d tunnels\x14\x01\x81" +
+	"\x01\x00\x02-\x02Voulez-vous vraiment supprimer %[1]d tunnel?\x00.\x02Vo" +
+	"ulez-vous vraiment supprimer %[1]d tunnels?\x02Supprimer le tunnel ‘%[1]" +
+	"s’\x02Voulez-vous vraiment supprimer le tunnel « %[1]s »?\x02%[1]s Vous " +
+	"ne pouvez pas annuler cette action.\x02Impossible de supprimer le tunnel" +
+	"\x02Il a été impossible de supprimer un tunnel : %[1]s\x02Impossible de " +
+	"supprimer les tunnels\x14\x01\x81\x01\x00\x021\x02Il a été impossible de" +
+	" supprimer %[1]d tunnel.\x002\x02Il a été impossible de supprimer %[1]d " +
+	"tunnels.\x02Fichiers de configuration (*.zip, *.conf)|*.zip;*.conf|Tous " +
+	"les fichiers (*.*)|*.*\x02Importer le(s) tunnel(s) à partir du fichier" +
+	"\x02Fichiers de configuration ZIP (*.zip)|*.zip\x02Exporter les tunnels " +
+	"vers zip\x02%[1]s (version non signée, aucune mise à jour)\x02Erreur de " +
+	"sortie du WireGuard\x02Impossible de quitter le service en raison de : %" +
+	"[1]v. Essayez d'arrêter WireGuard à partir du gestionnair des services." +
+	"\x02Une mise à jour du WireGuard est disponible. Il est fortement consei" +
+	"llé de metter votre WireGuard à jour sans délai.\x02État: En attente de " +
+	"l’utilisateur\x02Mettre à jour maintenant\x02État: En attente du program" +
+	"me de mise à jour\x02Erreur : %[1]v. Veuillez réessayer.\x02État: Termin" +
+	"é!"
 
-var idIndex = []uint32{ // 180 elements
+var idIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x0000000a, 0x00000047, 0x00000062,
 	0x00000074, 0x000000bf, 0x000000fe, 0x0000012f,
@@ -1534,7 +1573,10 @@ var idIndex = []uint32{ // 180 elements
 	0x000008b0, 0x000008b0, 0x000008b0, 0x000008b0,
 	0x000008b0, 0x000008b0, 0x000008b0, 0x000008b0,
 	0x000008b0, 0x000008b0, 0x000008b0, 0x000008b0,
-} // Size: 744 bytes
+	0x000008b0, 0x000008b0, 0x000008b0, 0x000008b0,
+	0x000008b0, 0x000008b0, 0x000008b0, 0x000008b0,
+	0x000008b0, 0x000008b0, 0x000008b0,
+} // Size: 788 bytes
 
 const idData string = "" + // Size: 2224 bytes
 	"\x02Kesalahan\x02(tidak ada argumen): naikkan akses dan instal servis ma" +
@@ -1575,7 +1617,7 @@ const idData string = "" + // Size: 2224 bytes
 	"lih…\x02&Hapus tunnel terpilih\x02Tidak dapat mengimpor konfigurasi yang" +
 	" dipilih: %[1]v"
 
-var itIndex = []uint32{ // 180 elements
+var itIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000007, 0x00000044, 0x0000005d,
 	0x00000075, 0x000000bd, 0x00000101, 0x0000013a,
@@ -1616,20 +1658,23 @@ var itIndex = []uint32{ // 180 elements
 	0x00000cf6, 0x00000d1d, 0x00000d7c, 0x00000d83,
 	0x00000d8d, 0x00000da7, 0x00000db7, 0x00000dd2,
 	0x00000df0, 0x00000df9, 0x00000e1b, 0x00000e3e,
-	0x00000e5c, 0x00000e82, 0x00000ebd, 0x00000eed,
-	0x00000f21, 0x00000f50, 0x00000f61, 0x00000f98,
-	0x00000fe0, 0x00000ffd, 0x00001030, 0x00001091,
-	0x000010ac, 0x000010e1, 0x00001111, 0x00001131,
-	0x00001163, 0x00001182, 0x000011e9, 0x00001234,
+	0x00000e5c, 0x00000e82, 0x00000ebd, 0x00000ef1,
+	0x00000f20, 0x00000f31, 0x00000f68, 0x00000fb0,
+	0x00000fcd, 0x00001000, 0x00001061, 0x0000107c,
+	0x000010b1, 0x000010e1, 0x00001101, 0x00001133,
+	0x00001152, 0x000011b9, 0x00001204, 0x0000121b,
 	// Entry A0 - BF
-	0x0000124b, 0x00001274, 0x0000128a, 0x000012bd,
-	0x000012e5, 0x00001357, 0x000013bc, 0x000013d9,
-	0x000013e6, 0x00001415, 0x00001432, 0x00001443,
-	0x00001443, 0x00001443, 0x00001443, 0x00001443,
-	0x00001443, 0x00001443, 0x00001443, 0x00001443,
-} // Size: 744 bytes
+	0x00001244, 0x0000125a, 0x0000128d, 0x000012b5,
+	0x00001327, 0x0000138c, 0x000013a9, 0x000013b6,
+	0x000013e5, 0x00001402, 0x00001413, 0x00001413,
+	0x00001413, 0x00001413, 0x00001413, 0x00001413,
+	0x00001413, 0x00001413, 0x00001413, 0x00001413,
+	0x00001413, 0x00001413, 0x00001413, 0x00001413,
+	0x00001413, 0x00001413, 0x00001413, 0x00001413,
+	0x00001413, 0x00001413, 0x00001413,
+} // Size: 788 bytes
 
-const itData string = "" + // Size: 5187 bytes
+const itData string = "" + // Size: 5139 bytes
 	"\x02Errore\x02(nessun argomento): eleva e installa il servizio di gestio" +
 	"ne\x02Utilizzo: %[1]s [\x0a%[2]s]\x02Opzioni riga di comando\x02Impossib" +
 	"ile determinare se il processo è in esecuzione in WOW64: %[1]v\x02Devi u" +
@@ -1690,32 +1735,31 @@ const itData string = "" + // Size: 5187 bytes
 	"zionati\x02Esporta tutti i tunnel in zip\x02Commu&ta\x02Esporta tutti i " +
 	"tunnel in &zip...\x02Modifica il tunnel &selezionato…\x02&Rimuovi i tunn" +
 	"el selezionati\x02nessun file di configurazione trovato\x02Impossibile i" +
-	"mportare la configurazione selezionata: %[1]v\x02Impossibile enumerare i" +
-	" tunnel esistenti: %[1]v\x02Un altro tunnel esiste già con il nome ‘%[1]" +
-	"s‘\x02Impossibile importare la configurazione: %[1]v\x02Tunnel importati" +
-	"\x14\x01\x81\x01\x00\x02\x17\x02%[1]d tunnel importato\x00\x17\x02%[1]d " +
-	"tunnel importati\x14\x02\x80\x01\x02 \x02%[1]d de %[2]d tunnel importato" +
-	"\x00 \x02%[1]d di %[2]d tunnel importati\x02Impossibile creare il tunnel" +
-	"\x14\x01\x81\x01\x00\x02\x15\x02Elimina %[1]d tunnel\x00\x15\x02Elimina " +
-	"%[1]d tunnel\x14\x01\x81\x01\x00\x02,\x02Sei sicuro di voler eliminare %" +
-	"[1]d tunnel?\x00,\x02Sei sicuro di voler eliminare %[1]d tunnel?\x02Elim" +
-	"ina tunnel ‘%[1]s‘\x02Sei sicuro di voler eliminare il tunnel ‘%[1]s‘?" +
-	"\x02%[1]s Non è possibile annullare questa azione.\x02Impossibile elimin" +
-	"are il tunnel\x02Non è stato possibile rimuovere un tunnel: %[1]s\x02Imp" +
-	"ossibile eliminare i tunnel\x14\x01\x81\x01\x00\x02/\x02Non è stato poss" +
-	"ibile eliminare %[1]d tunnel.\x00/\x02Non è stato possibile eliminare %[" +
-	"1]d tunnel.\x02File di configurazione (*.zip, *.conf)|*.zip;*.conf|Tutti" +
-	" i file (*.*)|*.*\x02Importa tunnel da file\x02File di configurazione ZI" +
-	"P (*.zip)|*.zip\x02Esporta tunnel in zip\x02%[1]s (versione non firmata," +
-	" nessun aggiornamento)\x02Errore durante la chiusura di WireGuard\x02Imp" +
-	"ossibile uscire dal servizio a causa di: %[1]v. Potresti voler interromp" +
-	"ere WireGuard dal gestore dei servizi.\x02Un aggiornamento di WireGuard " +
-	"è disponibile. Ti consigliamo vivamente di aggiornare immediatamente." +
-	"\x02Stato: in attesa dell'utente\x02Aggiorna ora\x02Stato: in attesa del" +
-	" servizio di aggiornamento\x02Errore: %[1]v. Prova ancora.\x02Stato: Com" +
-	"pleto!"
+	"mportare la configurazione selezionata: %[1]v\x02Un altro tunnel esiste " +
+	"già con il nome ‘%[1]s‘\x02Impossibile importare la configurazione: %[1]" +
+	"v\x02Tunnel importati\x14\x01\x81\x01\x00\x02\x17\x02%[1]d tunnel import" +
+	"ato\x00\x17\x02%[1]d tunnel importati\x14\x02\x80\x01\x02 \x02%[1]d de %" +
+	"[2]d tunnel importato\x00 \x02%[1]d di %[2]d tunnel importati\x02Impossi" +
+	"bile creare il tunnel\x14\x01\x81\x01\x00\x02\x15\x02Elimina %[1]d tunne" +
+	"l\x00\x15\x02Elimina %[1]d tunnel\x14\x01\x81\x01\x00\x02,\x02Sei sicuro" +
+	" di voler eliminare %[1]d tunnel?\x00,\x02Sei sicuro di voler eliminare " +
+	"%[1]d tunnel?\x02Elimina tunnel ‘%[1]s‘\x02Sei sicuro di voler eliminare" +
+	" il tunnel ‘%[1]s‘?\x02%[1]s Non è possibile annullare questa azione." +
+	"\x02Impossibile eliminare il tunnel\x02Non è stato possibile rimuovere u" +
+	"n tunnel: %[1]s\x02Impossibile eliminare i tunnel\x14\x01\x81\x01\x00" +
+	"\x02/\x02Non è stato possibile eliminare %[1]d tunnel.\x00/\x02Non è sta" +
+	"to possibile eliminare %[1]d tunnel.\x02File di configurazione (*.zip, *" +
+	".conf)|*.zip;*.conf|Tutti i file (*.*)|*.*\x02Importa tunnel da file\x02" +
+	"File di configurazione ZIP (*.zip)|*.zip\x02Esporta tunnel in zip\x02%[1" +
+	"]s (versione non firmata, nessun aggiornamento)\x02Errore durante la chi" +
+	"usura di WireGuard\x02Impossibile uscire dal servizio a causa di: %[1]v." +
+	" Potresti voler interrompere WireGuard dal gestore dei servizi.\x02Un ag" +
+	"giornamento di WireGuard è disponibile. Ti consigliamo vivamente di aggi" +
+	"ornare immediatamente.\x02Stato: in attesa dell'utente\x02Aggiorna ora" +
+	"\x02Stato: in attesa del servizio di aggiornamento\x02Errore: %[1]v. Pro" +
+	"va ancora.\x02Stato: Completo!"
 
-var jaIndex = []uint32{ // 180 elements
+var jaIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x0000000a, 0x0000005b, 0x00000075,
 	0x0000009a, 0x000000e6, 0x00000140, 0x0000017e,
@@ -1756,20 +1800,23 @@ var jaIndex = []uint32{ // 180 elements
 	0x00000eea, 0x00000f13, 0x00000f7b, 0x00000f88,
 	0x00000f93, 0x00000fb6, 0x00000fcc, 0x00000fee,
 	0x00001022, 0x00001033, 0x0000106e, 0x00001097,
-	0x000010bd, 0x000010e8, 0x00001135, 0x00001173,
-	0x000011bf, 0x000011f7, 0x0000121c, 0x00001254,
-	0x00001298, 0x000012bd, 0x000012e0, 0x0000131c,
-	0x0000133f, 0x0000137a, 0x000013ab, 0x000013d0,
-	0x00001405, 0x0000142a, 0x00001465, 0x000014b8,
+	0x000010bd, 0x000010e8, 0x00001135, 0x00001181,
+	0x000011b9, 0x000011de, 0x00001216, 0x0000125a,
+	0x0000127f, 0x000012a2, 0x000012de, 0x00001301,
+	0x0000133c, 0x0000136d, 0x00001392, 0x000013c7,
+	0x000013ec, 0x00001427, 0x0000147a, 0x000014ab,
 	// Entry A0 - BF
-	0x000014e9, 0x00001513, 0x0000153b, 0x00001571,
-	0x0000158b, 0x0000160f, 0x00001674, 0x0000169e,
-	0x000016ae, 0x000016e1, 0x00001716, 0x00001728,
-	0x00001728, 0x00001728, 0x00001728, 0x00001728,
-	0x00001728, 0x00001728, 0x00001728, 0x00001728,
-} // Size: 744 bytes
+	0x000014d5, 0x000014fd, 0x00001533, 0x0000154d,
+	0x000015d1, 0x00001636, 0x00001660, 0x00001670,
+	0x000016a3, 0x000016d8, 0x000016ea, 0x000016ea,
+	0x000016ea, 0x000016ea, 0x000016ea, 0x000016ea,
+	0x000016ea, 0x000016ea, 0x000016ea, 0x000016ea,
+	0x000016ea, 0x000016ea, 0x000016ea, 0x000016ea,
+	0x000016ea, 0x000016ea, 0x000016ea, 0x000016ea,
+	0x000016ea, 0x000016ea, 0x000016ea,
+} // Size: 788 bytes
 
-const jaData string = "" + // Size: 5928 bytes
+const jaData string = "" + // Size: 5866 bytes
 	"\x02エラー\x02(引数なし): 管理者権限でmanagerサービスをインストールする\x02使い方: %[1]s [\x0a%[2]s]" +
 	"\x02コマンドラインオプション\x02プロセスがWOW64下で動作しているか確認できません: %[1]v\x02このコンピュータではネイティブ" +
 	"版の WireGuard を使ってください。\x02現在のプロセスのトークンを開けません: %[1]v\x02WireGuard は組み込み" +
@@ -1806,21 +1853,21 @@ const jaData string = "" + // Size: 5928 bytes
 	"す\x02WireGuard の更新が利用可能になりました。できるだけ早く更新してください。\x02トンネル\x02編集(&E)\x02空の" +
 	"トンネルを追加…(&E)\x02トンネルの追加\x02選択したトンネルの削除\x02すべてのトンネルをzipにエクスポート\x02切り替え(" +
 	"&T)\x02すべてのトンネルをzipにエクスポート…(&Z)\x02選択したトンネルの編集…(&S)\x02選択したトンネルの削除(&R)" +
-	"\x02設定ファイルが見つかりません\x02選択したファイルからインポートできませんでした: %[1]v\x02既存のトンネルを表示できませんで" +
-	"した: %[1]v\x02‘%[1]s’ という名前の別のトンネルがすでに存在します\x02設定をインポートできませんでした: %[1]v" +
-	"\x02トンネルのインポート結果\x14\x01\x81\x01\x00\x001\x02%[1]d トンネルをインポートしました\x14" +
-	"\x02\x80\x01\x00>\x02%[2]d 中の %[1]d トンネルをインポートしました\x02トンネルを作成できません\x14" +
-	"\x01\x81\x01\x00\x00\x1c\x02%[1]d トンネルを削除\x14\x01\x81\x01\x00\x005\x02本当" +
-	"に %[1]d トンネルを削除しますか？\x02トンネル ‘%[1]s’ を削除\x02本当にトンネル ‘%[1]s’ を削除しますか？" +
-	"\x02%[1]s この操作はもとに戻せません。\x02トンネルを削除できません\x02トンネルを削除できませんでした: %[1]s\x02トン" +
-	"ネルを削除できません\x14\x01\x81\x01\x00\x004\x02%[1]d トンネルを削除できませんでした\x02設定ファイル" +
-	" (*.zip, *.conf)|*.zip;*.conf|すべてのファイル (*.*)|*.*\x02ファイルからトンネルをインポート\x02" +
-	"ZIP形式設定ファイル (*.zip)|*.zip\x02トンネルをZIPにエクスポート\x02%[1]s (未署名のビルド、更新の提供なし)" +
-	"\x02WireGuard 終了エラー\x02%[1]v のためサービスを終了できませんでした。サービスマネージャから WireGuard を停" +
-	"止できます。\x02WireGuard の更新が利用可能です。速やかに更新することを強く推奨します。\x02状態: ユーザーからの応答待ち" +
-	"\x02今すぐ更新\x02状態: アップデータサービスを待機中\x02エラー: %[1]v。再度実行してください。\x02状態: 完了！"
+	"\x02設定ファイルが見つかりません\x02選択したファイルからインポートできませんでした: %[1]v\x02‘%[1]s’ という名前の別の" +
+	"トンネルがすでに存在します\x02設定をインポートできませんでした: %[1]v\x02トンネルのインポート結果\x14\x01\x81" +
+	"\x01\x00\x001\x02%[1]d トンネルをインポートしました\x14\x02\x80\x01\x00>\x02%[2]d 中の %" +
+	"[1]d トンネルをインポートしました\x02トンネルを作成できません\x14\x01\x81\x01\x00\x00\x1c\x02%[1]d" +
+	" トンネルを削除\x14\x01\x81\x01\x00\x005\x02本当に %[1]d トンネルを削除しますか？\x02トンネル ‘%[1" +
+	"]s’ を削除\x02本当にトンネル ‘%[1]s’ を削除しますか？\x02%[1]s この操作はもとに戻せません。\x02トンネルを削除でき" +
+	"ません\x02トンネルを削除できませんでした: %[1]s\x02トンネルを削除できません\x14\x01\x81\x01\x00\x004" +
+	"\x02%[1]d トンネルを削除できませんでした\x02設定ファイル (*.zip, *.conf)|*.zip;*.conf|すべてのファイ" +
+	"ル (*.*)|*.*\x02ファイルからトンネルをインポート\x02ZIP形式設定ファイル (*.zip)|*.zip\x02トンネルをZ" +
+	"IPにエクスポート\x02%[1]s (未署名のビルド、更新の提供なし)\x02WireGuard 終了エラー\x02%[1]v のためサービス" +
+	"を終了できませんでした。サービスマネージャから WireGuard を停止できます。\x02WireGuard の更新が利用可能です。速やか" +
+	"に更新することを強く推奨します。\x02状態: ユーザーからの応答待ち\x02今すぐ更新\x02状態: アップデータサービスを待機中\x02" +
+	"エラー: %[1]v。再度実行してください。\x02状態: 完了！"
 
-var koIndex = []uint32{ // 180 elements
+var koIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000007, 0x0000003e, 0x00000055,
 	0x0000006d, 0x000000b6, 0x00000103, 0x00000137,
@@ -1861,20 +1908,23 @@ var koIndex = []uint32{ // 180 elements
 	0x00000d4f, 0x00000d6d, 0x00000de3, 0x00000dea,
 	0x00000df2, 0x00000e08, 0x00000e16, 0x00000e31,
 	0x00000e59, 0x00000e61, 0x00000e8d, 0x00000ea9,
-	0x00000ec5, 0x00000ee8, 0x00000f18, 0x00000f45,
-	0x00000f8e, 0x00000fb4, 0x00000fc8, 0x00000fe6,
-	0x0000100d, 0x0000102c, 0x00001047, 0x0000107e,
-	0x00001098, 0x000010da, 0x00001110, 0x0000112f,
-	0x00001155, 0x00001174, 0x000011aa, 0x000011e9,
+	0x00000ec5, 0x00000ee8, 0x00000f18, 0x00000f61,
+	0x00000f87, 0x00000f9b, 0x00000fb9, 0x00000fe0,
+	0x00000fff, 0x0000101a, 0x00001051, 0x0000106b,
+	0x000010ad, 0x000010e3, 0x00001102, 0x00001128,
+	0x00001147, 0x0000117d, 0x000011bc, 0x000011e0,
 	// Entry A0 - BF
-	0x0000120d, 0x0000122d, 0x00001255, 0x0000128d,
-	0x000012ab, 0x00001330, 0x0000139b, 0x000013c1,
-	0x000013d5, 0x00001408, 0x00001433, 0x00001443,
-	0x00001443, 0x00001443, 0x00001443, 0x00001443,
-	0x00001443, 0x00001443, 0x00001443, 0x00001443,
-} // Size: 744 bytes
+	0x00001200, 0x00001228, 0x00001260, 0x0000127e,
+	0x00001303, 0x0000136e, 0x00001394, 0x000013a8,
+	0x000013db, 0x00001406, 0x00001416, 0x00001416,
+	0x00001416, 0x00001416, 0x00001416, 0x00001416,
+	0x00001416, 0x00001416, 0x00001416, 0x00001416,
+	0x00001416, 0x00001416, 0x00001416, 0x00001416,
+	0x00001416, 0x00001416, 0x00001416, 0x00001416,
+	0x00001416, 0x00001416, 0x00001416,
+} // Size: 788 bytes
 
-const koData string = "" + // Size: 5187 bytes
+const koData string = "" + // Size: 5142 bytes
 	"\x02오류\x02(인수 없음): 관리자 서비스 상승 및 설치\x02사용: %[1]s [\x0a%[2]s]\x02커맨드 라인 옵션" +
 	"\x02WOW64에서 프로세스가 실행 중인지 확인할 수 없음: %[1]v\x02이 컴퓨터에서는 기본 버전의 WireGuard를 사" +
 	"용해야 합니다.\x02현재 프로세스 토큰을 열 수 없음: %[1]v\x02WireGuard는 Builtin %[1]s 그룹의 " +
@@ -1910,21 +1960,21 @@ const koData string = "" + // Size: 5187 bytes
 	"다!\x02WireGuard 업데이트 가능\x02이제 WireGuard 업데이트를 사용할 수 있습니다. 최대한 빨리 업데이트하" +
 	"는 것이 좋습니다.\x02터널\x02&편집\x02&빈 터널 추가…\x02터널 추가\x02선택한 터널(s) 제거\x02터널들을 " +
 	"Zip 파일에 내보내기\x02&토글\x02모든 터널을 &zip으로 내보내기…\x02편집 &선택한 터널…\x02&선택한 터널(s) " +
-	"제거\x02구성 파일을 찾을 수 없음\x02선택한 구성을 가져올 수 없음: %[1]v\x02기존 터널을 열거할 수 없음: %[" +
-	"1]v\x02이름과 함께 또 다른 터널이 이미 존재합니다 ‘%[1]s’\x02구성을 가져올 수 없음: %[1]v\x02터널을 가져" +
-	"옴\x14\x01\x81\x01\x00\x00\x17\x02터널 %[1]d 가져옴\x14\x02\x80\x01\x00!\x02" +
-	"터널 %[1]d 의 %[2]d 가져옴\x02터널을 생성할 수 없음\x14\x01\x81\x01\x00\x00\x14\x02터널" +
-	" %[1]d 삭제\x14\x01\x81\x01\x00\x000\x02삭제하고 싶은 게 확실해 %[1]d 터널?\x02터널 삭제 ‘" +
-	"%[1]s’\x02터널을 삭제하고 싶은 것이 확실합니까 ‘%[1]s’?\x02%[1]s 이 작업은 실행취소할 수 없습니다.\x02" +
-	"터널을 삭제할 수 없음\x02터널을 제거할 수 없음: %[1]s\x02터널을 삭제할 수 없음\x14\x01\x81\x01" +
-	"\x00\x00/\x02%[1]d 터널을 제거할 수 없었습니다.\x02구성 파일 (*.zip, *.conf)|*.zip;*.con" +
-	"f|All Files (*.*)|*.*\x02파일에서 터널(s) 불러오기\x02형상 ZIP 파일 (*.zip)|*.zip\x02터" +
-	"널들을 Zip 파일에 내보내기\x02%[1]s (서명되지 않은 빌드, 업데이트 없음)\x02WireGuard 오류로 종료중" +
-	"\x02다음 원인으로 인해 서비스를 종료할 수 없: %[1]v. 서비스 관리자에서 WireGuard를 중지할 수 있습니다.\x02" +
-	"WireGuard에 대한 업데이트가 가능합니다. 지체 없이 업데이트하는 것이 좋습니다.\x02상태: 사용자를 기다리는 중\x02지" +
-	"금 업데이트\x02상태: 업데이터 서비스를 기다리는 중\x02오류: %[1]v. 다시 시도해 주세요.\x02상태: 완료!"
+	"제거\x02구성 파일을 찾을 수 없음\x02선택한 구성을 가져올 수 없음: %[1]v\x02이름과 함께 또 다른 터널이 이미 " +
+	"존재합니다 ‘%[1]s’\x02구성을 가져올 수 없음: %[1]v\x02터널을 가져옴\x14\x01\x81\x01\x00" +
+	"\x00\x17\x02터널 %[1]d 가져옴\x14\x02\x80\x01\x00!\x02터널 %[1]d 의 %[2]d 가져옴" +
+	"\x02터널을 생성할 수 없음\x14\x01\x81\x01\x00\x00\x14\x02터널 %[1]d 삭제\x14\x01\x81" +
+	"\x01\x00\x000\x02삭제하고 싶은 게 확실해 %[1]d 터널?\x02터널 삭제 ‘%[1]s’\x02터널을 삭제하고 싶은" +
+	" 것이 확실합니까 ‘%[1]s’?\x02%[1]s 이 작업은 실행취소할 수 없습니다.\x02터널을 삭제할 수 없음\x02터널을 제" +
+	"거할 수 없음: %[1]s\x02터널을 삭제할 수 없음\x14\x01\x81\x01\x00\x00/\x02%[1]d 터널을 제" +
+	"거할 수 없었습니다.\x02구성 파일 (*.zip, *.conf)|*.zip;*.conf|All Files (*.*)|*.*" +
+	"\x02파일에서 터널(s) 불러오기\x02형상 ZIP 파일 (*.zip)|*.zip\x02터널들을 Zip 파일에 내보내기\x02%" +
+	"[1]s (서명되지 않은 빌드, 업데이트 없음)\x02WireGuard 오류로 종료중\x02다음 원인으로 인해 서비스를 종료할 수" +
+	" 없: %[1]v. 서비스 관리자에서 WireGuard를 중지할 수 있습니다.\x02WireGuard에 대한 업데이트가 가능합니다" +
+	". 지체 없이 업데이트하는 것이 좋습니다.\x02상태: 사용자를 기다리는 중\x02지금 업데이트\x02상태: 업데이터 서비스를 기" +
+	"다리는 중\x02오류: %[1]v. 다시 시도해 주세요.\x02상태: 완료!"
 
-var nlIndex = []uint32{ // 180 elements
+var nlIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x0000000c, 0x0000004f, 0x0000006d,
 	0x00000084, 0x000000c7, 0x0000010a, 0x00000139,
@@ -1965,20 +2015,23 @@ var nlIndex = []uint32{ // 180 elements
 	0x00000c07, 0x00000c24, 0x00000c83, 0x00000c8b,
 	0x00000c95, 0x00000cae, 0x00000cbf, 0x00000ce3,
 	0x00000d10, 0x00000d22, 0x00000d53, 0x00000d75,
-	0x00000d9a, 0x00000dbe, 0x00000dfb, 0x00000e26,
-	0x00000e5a, 0x00000e89, 0x00000ea0, 0x00000ee0,
-	0x00000f39, 0x00000f52, 0x00000f8c, 0x00000ffe,
-	0x00001017, 0x0000104f, 0x0000107c, 0x00001098,
-	0x000010c6, 0x000010e3, 0x00001142, 0x0000118e,
+	0x00000d9a, 0x00000dbe, 0x00000dfb, 0x00000e2f,
+	0x00000e5e, 0x00000e75, 0x00000eb5, 0x00000f0e,
+	0x00000f27, 0x00000f61, 0x00000fd3, 0x00000fec,
+	0x00001024, 0x00001051, 0x0000106d, 0x0000109b,
+	0x000010b8, 0x00001117, 0x00001163, 0x00001183,
 	// Entry A0 - BF
-	0x000011ae, 0x000011d6, 0x000011ff, 0x000011ff,
-	0x0000121c, 0x0000121c, 0x00001291, 0x000012ae,
-	0x000012bb, 0x000012bb, 0x000012dd, 0x000012ef,
-	0x000012ef, 0x000012ef, 0x000012ef, 0x000012ef,
-	0x000012ef, 0x000012ef, 0x000012ef, 0x000012ef,
-} // Size: 744 bytes
+	0x000011ab, 0x000011d4, 0x000011d4, 0x000011f1,
+	0x000011f1, 0x00001266, 0x00001283, 0x00001290,
+	0x00001290, 0x000012b2, 0x000012c4, 0x000012c4,
+	0x000012c4, 0x000012c4, 0x000012c4, 0x000012c4,
+	0x000012c4, 0x000012c4, 0x000012c4, 0x000012c4,
+	0x000012c4, 0x000012c4, 0x000012c4, 0x000012c4,
+	0x000012c4, 0x000012c4, 0x000012c4, 0x000012c4,
+	0x000012c4, 0x000012c4, 0x000012c4,
+} // Size: 788 bytes
 
-const nlData string = "" + // Size: 4847 bytes
+const nlData string = "" + // Size: 4804 bytes
 	"\x02Foutmelding\x02(geen argumenten): Verhoog rechten en installeer behe" +
 	"erder-service\x02Gebruikswijze: %[1]s [\x0a%[2]s]\x02Opdracht-prompt Opt" +
 	"ies\x02Kan niet bepalen of het proces wordt uitgevoerd onder WOW64: %[1]" +
@@ -2036,30 +2089,29 @@ const nlData string = "" + // Size: 4847 bytes
 	"ar een zip-bestand exporteren\x02In-/ui&tschakelen\x02Alle tunnels naar " +
 	"een &zip-bestand exporteren…\x02Ge&selecteerde tunnel bewerken…\x02Gesel" +
 	"ecteerde tunnel(s) ve&rwijderen\x02geen configuratiebestanden gevonden" +
-	"\x02Kan geselecteerde configuratiebestand niet importeren: %[1]v\x02Kon " +
-	"bestaande tunnels niet opsommen: %[1]v\x02Er bestaat al een andere tunne" +
-	"l met de naam '%[1]s'\x02Kan configuratiebestand niet importeren: %[1]v" +
-	"\x02Geïmporteerde tunnels\x14\x01\x81\x01\x00\x02\x1b\x02%[1]d tunnel ge" +
-	"ïmporteerd\x00\x1c\x02%[1]d tunnels geïmporteerd\x14\x02\x80\x01\x02(" +
-	"\x02%[1]d van %[2]d tunnel(s) geïmporteerd\x00)\x02%[1]d van de %[2]d tu" +
-	"nnels geïmporteerd\x02Kan tunnel niet creëren\x14\x01\x81\x01\x00\x02" +
-	"\x18\x02%[1]d tunnel verwijderd\x00\x19\x02%[1]d tunnels verwijderd\x14" +
-	"\x01\x81\x01\x00\x024\x02Weet je zeker dat je %[1]d tunnel wilt verwijde" +
-	"ren?\x005\x02Weet je zeker dat je %[1]d tunnels wilt verwijderen?\x02Ver" +
-	"wijder tunnel '%[1]s'\x02Weet je zeker dat je de tunnel '%[1]s' wil verw" +
-	"ijderen?\x02%[1]s Je kan deze actie niet ongedaan maken.\x02Kan tunnel n" +
-	"iet verwijderen\x02Eén tunnel kon niet worden verwijderd: %[1]s\x02Kan t" +
-	"unnels niet verwijderen\x14\x01\x81\x01\x00\x02)\x02%[1]d tunnel kon nie" +
-	"t worden verwijderd.\x00-\x02%[1]d tunnels konden niet worden verwijderd" +
-	".\x02Configuratiebestanden (*.zip, *.conf)|*.zip;*.conf|Alle bestanden (" +
-	"*.*)|*.*\x02Importeer tunnel(s) uit bestand\x02Configuratiebestanden ZIP" +
-	" (*.zip)|*.zip\x02Alle tunnels naar zip-bestand exporteren\x02Fout bij a" +
-	"fsluiten WireGuard\x02Er is een update voor WireGuard beschikbaar. Het w" +
-	"ordt ten sterkste aangeraden deze zo snel mogelijk te installeren.\x02St" +
-	"atus: Wachten op gebruiker\x02Nu Bijwerken\x02Fout: %[1]v. Probeer het o" +
-	"pnieuw.\x02Status: Voltooid!"
+	"\x02Kan geselecteerde configuratiebestand niet importeren: %[1]v\x02Er b" +
+	"estaat al een andere tunnel met de naam '%[1]s'\x02Kan configuratiebesta" +
+	"nd niet importeren: %[1]v\x02Geïmporteerde tunnels\x14\x01\x81\x01\x00" +
+	"\x02\x1b\x02%[1]d tunnel geïmporteerd\x00\x1c\x02%[1]d tunnels geïmporte" +
+	"erd\x14\x02\x80\x01\x02(\x02%[1]d van %[2]d tunnel(s) geïmporteerd\x00)" +
+	"\x02%[1]d van de %[2]d tunnels geïmporteerd\x02Kan tunnel niet creëren" +
+	"\x14\x01\x81\x01\x00\x02\x18\x02%[1]d tunnel verwijderd\x00\x19\x02%[1]d" +
+	" tunnels verwijderd\x14\x01\x81\x01\x00\x024\x02Weet je zeker dat je %[1" +
+	"]d tunnel wilt verwijderen?\x005\x02Weet je zeker dat je %[1]d tunnels w" +
+	"ilt verwijderen?\x02Verwijder tunnel '%[1]s'\x02Weet je zeker dat je de " +
+	"tunnel '%[1]s' wil verwijderen?\x02%[1]s Je kan deze actie niet ongedaan" +
+	" maken.\x02Kan tunnel niet verwijderen\x02Eén tunnel kon niet worden ver" +
+	"wijderd: %[1]s\x02Kan tunnels niet verwijderen\x14\x01\x81\x01\x00\x02)" +
+	"\x02%[1]d tunnel kon niet worden verwijderd.\x00-\x02%[1]d tunnels konde" +
+	"n niet worden verwijderd.\x02Configuratiebestanden (*.zip, *.conf)|*.zip" +
+	";*.conf|Alle bestanden (*.*)|*.*\x02Importeer tunnel(s) uit bestand\x02C" +
+	"onfiguratiebestanden ZIP (*.zip)|*.zip\x02Alle tunnels naar zip-bestand " +
+	"exporteren\x02Fout bij afsluiten WireGuard\x02Er is een update voor Wire" +
+	"Guard beschikbaar. Het wordt ten sterkste aangeraden deze zo snel mogeli" +
+	"jk te installeren.\x02Status: Wachten op gebruiker\x02Nu Bijwerken\x02Fo" +
+	"ut: %[1]v. Probeer het opnieuw.\x02Status: Voltooid!"
 
-var pa_INIndex = []uint32{ // 180 elements
+var pa_INIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000010, 0x00000010, 0x00000030,
 	0x0000005d, 0x000000ea, 0x0000017f, 0x000001e6,
@@ -2100,18 +2152,21 @@ var pa_INIndex = []uint32{ // 180 elements
 	0x00001494, 0x000014d7, 0x000015cd, 0x000015dd,
 	0x000015ee, 0x00001619, 0x00001630, 0x0000166a,
 	0x000016cb, 0x000016dc, 0x00001740, 0x0000176b,
-	0x000017a9, 0x000017fc, 0x000017fc, 0x000017fc,
-	0x00001861, 0x000018b2, 0x000018e8, 0x0000195d,
-	0x0000195d, 0x00001991, 0x000019da, 0x00001aad,
-	0x00001ada, 0x00001b42, 0x00001baa, 0x00001bde,
-	0x00001c20, 0x00001c5a, 0x00001c5a, 0x00001cd3,
+	0x000017a9, 0x000017fc, 0x000017fc, 0x00001861,
+	0x000018b2, 0x000018e8, 0x0000195d, 0x0000195d,
+	0x00001991, 0x000019da, 0x00001aad, 0x00001ada,
+	0x00001b42, 0x00001baa, 0x00001bde, 0x00001c20,
+	0x00001c5a, 0x00001c5a, 0x00001cd3, 0x00001d17,
 	// Entry A0 - BF
-	0x00001d17, 0x00001d58, 0x00001d58, 0x00001d58,
-	0x00001d9a, 0x00001e6e, 0x00001f4a, 0x00001faa,
-	0x00001fd4, 0x0000203e, 0x0000207f, 0x0000209e,
+	0x00001d58, 0x00001d58, 0x00001d58, 0x00001d9a,
+	0x00001e6e, 0x00001f4a, 0x00001faa, 0x00001fd4,
+	0x0000203e, 0x0000207f, 0x0000209e, 0x0000209e,
 	0x0000209e, 0x0000209e, 0x0000209e, 0x0000209e,
 	0x0000209e, 0x0000209e, 0x0000209e, 0x0000209e,
-} // Size: 744 bytes
+	0x0000209e, 0x0000209e, 0x0000209e, 0x0000209e,
+	0x0000209e, 0x0000209e, 0x0000209e, 0x0000209e,
+	0x0000209e, 0x0000209e, 0x0000209e,
+} // Size: 788 bytes
 
 const pa_INData string = "" + // Size: 8350 bytes
 	"\x02ਗ਼ਲਤੀ\x02ਵਰਤੋਂ: %[1]s [\x0a%[2]s]\x02ਕਮਾਂਡ ਲਾਈਨ ਚੋਣਾਂ\x02ਪਤਾ ਲਗਾਉਣ ਲ" +
@@ -2178,7 +2233,7 @@ const pa_INData string = "" + // Size: 8350 bytes
 	"\x02ਹੁਣੇ ਅੱਪਡੇਟ ਕਰੋ\x02ਹਾਲਤ: ਅੱਪਡੇਟਰ ਸੇਵਾ ਦੀ ਉਡੀਕ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ\x02ਗ਼ਲਤ" +
 	"ੀ: %[1]v। ਫੇਰ ਕੋਸ਼ਿਸ਼ ਕਰੋ।\x02ਸਥਿਤੀ: ਪੂਰਾ!"
 
-var plIndex = []uint32{ // 180 elements
+var plIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000007, 0x0000004f, 0x00000067,
 	0x0000007e, 0x000000cc, 0x00000108, 0x0000013f,
@@ -2219,20 +2274,23 @@ var plIndex = []uint32{ // 180 elements
 	0x00000dc7, 0x00000ded, 0x00000e44, 0x00000e4b,
 	0x00000e53, 0x00000e69, 0x00000e75, 0x00000e90,
 	0x00000ebb, 0x00000ec7, 0x00000ef6, 0x00000f0f,
-	0x00000f2b, 0x00000f49, 0x00000f7f, 0x00000faf,
-	0x00000fe7, 0x00001014, 0x00001029, 0x000010a1,
-	0x00001139, 0x00001155, 0x000011ad, 0x00001265,
-	0x0000127d, 0x000012ad, 0x000012d2, 0x000012ed,
-	0x00001317, 0x00001332, 0x000013dd, 0x00001427,
+	0x00000f2b, 0x00000f49, 0x00000f7f, 0x00000fb7,
+	0x00000fe4, 0x00000ff9, 0x00001071, 0x00001109,
+	0x00001125, 0x0000117d, 0x00001235, 0x0000124d,
+	0x0000127d, 0x000012a2, 0x000012bd, 0x000012e7,
+	0x00001302, 0x000013ad, 0x000013f7, 0x00001411,
 	// Entry A0 - BF
-	0x00001441, 0x00001466, 0x00001487, 0x000014b6,
-	0x000014d9, 0x00001564, 0x000015b6, 0x000015d5,
-	0x000015e6, 0x0000160e, 0x00001630, 0x00001644,
-	0x00001644, 0x00001644, 0x00001644, 0x00001644,
-	0x00001644, 0x00001644, 0x00001644, 0x00001644,
-} // Size: 744 bytes
+	0x00001436, 0x00001457, 0x00001486, 0x000014a9,
+	0x00001534, 0x00001586, 0x000015a5, 0x000015b6,
+	0x000015de, 0x00001600, 0x00001614, 0x00001614,
+	0x00001614, 0x00001614, 0x00001614, 0x00001614,
+	0x00001614, 0x00001614, 0x00001614, 0x00001614,
+	0x00001614, 0x00001614, 0x00001614, 0x00001614,
+	0x00001614, 0x00001614, 0x00001614, 0x00001614,
+	0x00001614, 0x00001614, 0x00001614,
+} // Size: 788 bytes
 
-const plData string = "" + // Size: 5700 bytes
+const plData string = "" + // Size: 5652 bytes
 	"\x02Błąd\x02(brak argumentu): Podnieś uprawnienia i zainstaluj usługę me" +
 	"nedżera\x02Użycie: %[1]s [\x0a%[2]s]\x02Opcje wiersza poleceń\x02Nie moż" +
 	"na określić, czy proces jest uruchomiony w środowisku WOW64: %[1]v\x02Na" +
@@ -2295,36 +2353,35 @@ const plData string = "" + // Size: 5700 bytes
 	") tunel(e)\x02Eksportuj wszystkie tunele do archiwum ZIP\x02&Przełącz" +
 	"\x02Eksportuj wszystkie tunele do archiwum &zip…\x02Edytuj &wybrany tune" +
 	"l…\x02&Usuń wybrany(-e) tunel(e)\x02brak plików konfiguracyjnych\x02Nie " +
-	"można zaimportować wybranej konfiguracji: %[1]v\x02Nie można wskazać ist" +
-	"niejących tuneli: %[1]v\x02Inny tunel już istnieje z tą samą nazwą ‘%[1]" +
-	"s’\x02Nie można zaimportować konfiguracji: %[1]v\x02Zaimportowane tunele" +
-	"\x14\x01\x81\x01\x00\x04\x1b\x02Zaimportowano %[1]d tunele\x05\x1b\x02Za" +
-	"importowano %[1]d tuneli\x02\x1a\x02Zaimportowano %[1]d tunel\x00\x1b" +
-	"\x02Zaimportowano %[1]d tuneli\x14\x02\x80\x01\x04#\x02Zaimportowano %[1" +
-	"]d z %[2]d tunele\x05#\x02Zaimportowano %[1]d z %[2]d tuneli\x02#\x02Zai" +
-	"mportowano %[1]d z %[2]d tunelu\x00#\x02Zaimportowano %[1]d z %[2]d tune" +
-	"li\x02Nie można utworzyć tunelu\x14\x01\x81\x01\x00\x04\x13\x02Usuń %[1]" +
-	"d tunele\x05\x13\x02Usuń %[1]d tuneli\x02\x12\x02Usuń %[1]d tunel\x00" +
-	"\x13\x02Usuń %[1]d tuneli\x14\x01\x81\x01\x00\x04+\x02Czy na pewno chces" +
-	"z usunąć %[1]d tunele?\x05+\x02Czy na pewno chcesz usunąć %[1]d tuneli?" +
-	"\x02*\x02Czy na pewno chcesz usunąć %[1]d tunel?\x00+\x02Czy na pewno ch" +
-	"cesz usunąć %[1]d tuneli?\x02Usuń tunel ‘%[1]s’\x02Czy na pewno chcesz u" +
-	"sunąć tunel ‘%[1]s’?\x02%[1]s Tej akcji nie można cofnąć.\x02Nie można u" +
-	"sunąć tunelu\x02Tunel nie mógł zostać usunięty: %[1]s\x02Nie można usuną" +
-	"ć tuneli\x14\x01\x81\x01\x00\x04'\x02%[1]d tunele nie mogą być usunięte" +
-	".\x05'\x02%[1]d tunele nie mogą być usunięte.\x02)\x02%[1]d tunel nie mo" +
-	"że zostać usunięty.\x00'\x02%[1]d tunele nie mogą być usunięte.\x02Plik" +
-	"i konfiguracji (*.zip, *.conf)|*.zip;*.conf|Wszystkie pliki (*.*)|*.*" +
-	"\x02Importuj tunel(e) z pliku\x02Pliki ZIP konfiguracji (*.zip)|*.zip" +
-	"\x02Eksportuj tunele do archiwum ZIP\x02%[1]s (wersja niepodpisana, brak" +
-	" aktualizacji)\x02Błąd podczas zamykania WireGuard\x02Nie można wyłączyć" +
-	" usługi ze względu na: %[1]v. Jeśli chcesz wyłączyć WireGuard, możesz to" +
-	" zrobić z poziomu menedżera usług.\x02Aktualizacja WireGuard jest dostęp" +
-	"na. Zaleca się natychmiastową aktualizację.\x02Status: Czekam na użytkow" +
-	"nika\x02Uaktualnij teraz\x02Status: Czekam na usługę aktualizacji\x02Błą" +
-	"d: %[1]v. Spróbuj ponownie.\x02Status: Ukończone!"
+	"można zaimportować wybranej konfiguracji: %[1]v\x02Inny tunel już istnie" +
+	"je z tą samą nazwą ‘%[1]s’\x02Nie można zaimportować konfiguracji: %[1]v" +
+	"\x02Zaimportowane tunele\x14\x01\x81\x01\x00\x04\x1b\x02Zaimportowano %[" +
+	"1]d tunele\x05\x1b\x02Zaimportowano %[1]d tuneli\x02\x1a\x02Zaimportowan" +
+	"o %[1]d tunel\x00\x1b\x02Zaimportowano %[1]d tuneli\x14\x02\x80\x01\x04#" +
+	"\x02Zaimportowano %[1]d z %[2]d tunele\x05#\x02Zaimportowano %[1]d z %[2" +
+	"]d tuneli\x02#\x02Zaimportowano %[1]d z %[2]d tunelu\x00#\x02Zaimportowa" +
+	"no %[1]d z %[2]d tuneli\x02Nie można utworzyć tunelu\x14\x01\x81\x01\x00" +
+	"\x04\x13\x02Usuń %[1]d tunele\x05\x13\x02Usuń %[1]d tuneli\x02\x12\x02Us" +
+	"uń %[1]d tunel\x00\x13\x02Usuń %[1]d tuneli\x14\x01\x81\x01\x00\x04+\x02" +
+	"Czy na pewno chcesz usunąć %[1]d tunele?\x05+\x02Czy na pewno chcesz usu" +
+	"nąć %[1]d tuneli?\x02*\x02Czy na pewno chcesz usunąć %[1]d tunel?\x00+" +
+	"\x02Czy na pewno chcesz usunąć %[1]d tuneli?\x02Usuń tunel ‘%[1]s’\x02Cz" +
+	"y na pewno chcesz usunąć tunel ‘%[1]s’?\x02%[1]s Tej akcji nie można cof" +
+	"nąć.\x02Nie można usunąć tunelu\x02Tunel nie mógł zostać usunięty: %[1]s" +
+	"\x02Nie można usunąć tuneli\x14\x01\x81\x01\x00\x04'\x02%[1]d tunele nie" +
+	" mogą być usunięte.\x05'\x02%[1]d tunele nie mogą być usunięte.\x02)\x02" +
+	"%[1]d tunel nie może zostać usunięty.\x00'\x02%[1]d tunele nie mogą być " +
+	"usunięte.\x02Pliki konfiguracji (*.zip, *.conf)|*.zip;*.conf|Wszystkie p" +
+	"liki (*.*)|*.*\x02Importuj tunel(e) z pliku\x02Pliki ZIP konfiguracji (*" +
+	".zip)|*.zip\x02Eksportuj tunele do archiwum ZIP\x02%[1]s (wersja niepodp" +
+	"isana, brak aktualizacji)\x02Błąd podczas zamykania WireGuard\x02Nie moż" +
+	"na wyłączyć usługi ze względu na: %[1]v. Jeśli chcesz wyłączyć WireGuard" +
+	", możesz to zrobić z poziomu menedżera usług.\x02Aktualizacja WireGuard " +
+	"jest dostępna. Zaleca się natychmiastową aktualizację.\x02Status: Czekam" +
+	" na użytkownika\x02Uaktualnij teraz\x02Status: Czekam na usługę aktualiz" +
+	"acji\x02Błąd: %[1]v. Spróbuj ponownie.\x02Status: Ukończone!"
 
-var pt_BRIndex = []uint32{ // 180 elements
+var pt_BRIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000005, 0x0000003f, 0x00000053,
 	0x00000070, 0x000000c2, 0x00000102, 0x0000013c,
@@ -2365,20 +2422,23 @@ var pt_BRIndex = []uint32{ // 180 elements
 	0x00000caa, 0x00000cd1, 0x00000d3e, 0x00000d46,
 	0x00000d4e, 0x00000d69, 0x00000d7d, 0x00000d9a,
 	0x00000dbd, 0x00000dca, 0x00000df1, 0x00000e0f,
-	0x00000e2d, 0x00000e5d, 0x00000e9d, 0x00000ed3,
-	0x00000f02, 0x00000f36, 0x00000f49, 0x00000f82,
-	0x00000fd0, 0x00000ff6, 0x0000102a, 0x00001099,
-	0x000010b2, 0x000010e7, 0x00001113, 0x00001137,
-	0x00001163, 0x00001186, 0x000011e1, 0x00001235,
+	0x00000e2d, 0x00000e5d, 0x00000e9d, 0x00000ecc,
+	0x00000f00, 0x00000f13, 0x00000f4c, 0x00000f9a,
+	0x00000fc0, 0x00000ff4, 0x00001063, 0x0000107c,
+	0x000010b1, 0x000010dd, 0x00001101, 0x0000112d,
+	0x00001150, 0x000011ab, 0x000011ff, 0x0000121e,
 	// Entry A0 - BF
-	0x00001254, 0x00001281, 0x0000129b, 0x000012cd,
-	0x000012e7, 0x0000135c, 0x000013c3, 0x000013e1,
-	0x000013f1, 0x0000141e, 0x00001447, 0x00001465,
-	0x00001465, 0x00001465, 0x00001465, 0x00001465,
-	0x00001465, 0x00001465, 0x00001465, 0x00001465,
-} // Size: 744 bytes
+	0x0000124b, 0x00001265, 0x00001297, 0x000012b1,
+	0x00001326, 0x0000138d, 0x000013ab, 0x000013bb,
+	0x000013e8, 0x00001411, 0x0000142f, 0x0000142f,
+	0x0000142f, 0x0000142f, 0x0000142f, 0x0000142f,
+	0x0000142f, 0x0000142f, 0x0000142f, 0x0000142f,
+	0x0000142f, 0x0000142f, 0x0000142f, 0x0000142f,
+	0x0000142f, 0x0000142f, 0x0000142f, 0x0000142f,
+	0x0000142f, 0x0000142f, 0x0000142f,
+} // Size: 788 bytes
 
-const pt_BRData string = "" + // Size: 5221 bytes
+const pt_BRData string = "" + // Size: 5167 bytes
 	"\x02Erro\x02(sem argumento): elevar e instalar o serviço gerenciador\x02" +
 	"Uso: %[1]s [\x0a%[2]s]\x02Opções de linha de comando\x02Não foi possível" +
 	" determinar se o processo está sendo executado em WOW64: %[1]v\x02Você d" +
@@ -2437,32 +2497,31 @@ const pt_BRData string = "" + // Size: 5221 bytes
 	"todos os túneis para zip\x02&Alternancia\x02Exportar todos os túneis par" +
 	"a &zip…\x02Editar &túnel selecionado…\x02&Remover túneis selecionados" +
 	"\x02nenhum arquivo de configuração foi encontrado\x02Não foi possível im" +
-	"portar a configuração selecionada: %[1]v\x02Não foi possível enumerar tú" +
-	"neis existentes: %[1]v\x02Já existe outro túnel com o nome ‘%[1]s’\x02Nã" +
-	"o foi possível importar a configuração: %[1]v\x02Importados túneis\x14" +
-	"\x01\x81\x01\x00\x02\x17\x02Túnel %[1]d importado\x00\x19\x02%[1]d túnei" +
-	"s importados\x14\x02\x80\x01\x02#\x02Importados %[1]d dos %[2]d túneis" +
-	"\x00#\x02Importados %[1]d dos %[2]d túneis\x02Não foi possível criar o t" +
-	"únel: %s\x14\x01\x81\x01\x00\x02\x15\x02Excluir túnel %[1]d\x00\x16\x02" +
-	"Excluir %[1]d túneis\x14\x01\x81\x01\x00\x02/\x02Tem certeza que deseja " +
-	"excluir o túnel %[1]d?\x007\x02Você tem certeza que deseja excluir os tú" +
-	"neis %[1]d?\x02Excluir túnel ‘%[1]s'\x02Tem certeza de que deseja exclui" +
-	"r o túnel ‘%[1]s?\x02%[1]s Você não pode desfazer essa ação.\x02Não foi " +
-	"possível excluir o túnel\x02Não foi possível remover um túnel: %[1]s\x02" +
-	"Não foi possível excluir túneis\x14\x01\x81\x01\x00\x02(\x02O túnel %[1]" +
-	"d não pôde ser removido.\x00*\x02%[1]d túneis não puderam ser removidos." +
-	"\x02Arquivos de configuração (*.zip, *.conf)|*.zip;*.conf|Todos os arqui" +
-	"vos (*.*)|*.*\x02Importar túnel(es) do arquivo\x02Arquivos ZIP de config" +
-	"uração (*.zip)|*.zip\x02Exportar túneis para zip\x02%[1]s (versão não as" +
-	"sinada, sem atualizações)\x02Erro ao sair do WireGuard\x02Não é possível" +
-	" sair do serviço devido a: %[1]v. Você pode querer parar o WireGuard do " +
-	"gerenciador de serviços.\x02Uma atualização para o WireGuard está dispon" +
-	"ível. É altamente aconselhável atualizar sem demora.\x02Status: Aguarda" +
-	"ndo o usuário\x02Atualizar agora\x02Estado: Aguardando o serviço do atua" +
-	"lizador\x02Erro: %[1]v. Por favor, tente novamente.\x02Status da tarefa:" +
-	" Concluída!"
+	"portar a configuração selecionada: %[1]v\x02Já existe outro túnel com o " +
+	"nome ‘%[1]s’\x02Não foi possível importar a configuração: %[1]v\x02Impor" +
+	"tados túneis\x14\x01\x81\x01\x00\x02\x17\x02Túnel %[1]d importado\x00" +
+	"\x19\x02%[1]d túneis importados\x14\x02\x80\x01\x02#\x02Importados %[1]d" +
+	" dos %[2]d túneis\x00#\x02Importados %[1]d dos %[2]d túneis\x02Não foi p" +
+	"ossível criar o túnel: %s\x14\x01\x81\x01\x00\x02\x15\x02Excluir túnel %" +
+	"[1]d\x00\x16\x02Excluir %[1]d túneis\x14\x01\x81\x01\x00\x02/\x02Tem cer" +
+	"teza que deseja excluir o túnel %[1]d?\x007\x02Você tem certeza que dese" +
+	"ja excluir os túneis %[1]d?\x02Excluir túnel ‘%[1]s'\x02Tem certeza de q" +
+	"ue deseja excluir o túnel ‘%[1]s?\x02%[1]s Você não pode desfazer essa a" +
+	"ção.\x02Não foi possível excluir o túnel\x02Não foi possível remover um" +
+	" túnel: %[1]s\x02Não foi possível excluir túneis\x14\x01\x81\x01\x00\x02" +
+	"(\x02O túnel %[1]d não pôde ser removido.\x00*\x02%[1]d túneis não puder" +
+	"am ser removidos.\x02Arquivos de configuração (*.zip, *.conf)|*.zip;*.co" +
+	"nf|Todos os arquivos (*.*)|*.*\x02Importar túnel(es) do arquivo\x02Arqui" +
+	"vos ZIP de configuração (*.zip)|*.zip\x02Exportar túneis para zip\x02%[1" +
+	"]s (versão não assinada, sem atualizações)\x02Erro ao sair do WireGuard" +
+	"\x02Não é possível sair do serviço devido a: %[1]v. Você pode querer par" +
+	"ar o WireGuard do gerenciador de serviços.\x02Uma atualização para o Wir" +
+	"eGuard está disponível. É altamente aconselhável atualizar sem demora." +
+	"\x02Status: Aguardando o usuário\x02Atualizar agora\x02Estado: Aguardand" +
+	"o o serviço do atualizador\x02Erro: %[1]v. Por favor, tente novamente." +
+	"\x02Status da tarefa: Concluída!"
 
-var roIndex = []uint32{ // 180 elements
+var roIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000007, 0x0000005d, 0x00000077,
 	0x00000092, 0x000000d1, 0x0000011a, 0x0000014e,
@@ -2503,20 +2562,23 @@ var roIndex = []uint32{ // 180 elements
 	0x00000dc9, 0x00000df3, 0x00000e69, 0x00000e72,
 	0x00000e7b, 0x00000e93, 0x00000ea3, 0x00000ec4,
 	0x00000ee6, 0x00000ef0, 0x00000f16, 0x00000f31,
-	0x00000f53, 0x00000f7e, 0x00000fb7, 0x00000fec,
-	0x0000101c, 0x00001048, 0x0000105b, 0x000010ae,
-	0x0000111e, 0x00001138, 0x0000118e, 0x00001238,
-	0x00001254, 0x0000128e, 0x000012bc, 0x000012d7,
-	0x000012fe, 0x0000131b, 0x0000139f, 0x000013ef,
+	0x00000f53, 0x00000f7e, 0x00000fb7, 0x00000fe7,
+	0x00001013, 0x00001026, 0x00001079, 0x000010e9,
+	0x00001103, 0x00001159, 0x00001203, 0x0000121f,
+	0x00001259, 0x00001287, 0x000012a2, 0x000012c9,
+	0x000012e6, 0x0000136a, 0x000013ba, 0x000013db,
 	// Entry A0 - BF
-	0x00001410, 0x0000143a, 0x00001455, 0x00001486,
-	0x000014a7, 0x00001508, 0x00001565, 0x00001587,
-	0x0000159a, 0x000015c8, 0x000015eb, 0x000015ff,
-	0x000015ff, 0x000015ff, 0x000015ff, 0x000015ff,
-	0x000015ff, 0x000015ff, 0x000015ff, 0x000015ff,
-} // Size: 744 bytes
+	0x00001405, 0x00001420, 0x00001451, 0x00001472,
+	0x000014d3, 0x00001530, 0x00001552, 0x00001565,
+	0x00001593, 0x000015b6, 0x000015ca, 0x000015ca,
+	0x000015ca, 0x000015ca, 0x000015ca, 0x000015ca,
+	0x000015ca, 0x000015ca, 0x000015ca, 0x000015ca,
+	0x000015ca, 0x000015ca, 0x000015ca, 0x000015ca,
+	0x000015ca, 0x000015ca, 0x000015ca, 0x000015ca,
+	0x000015ca, 0x000015ca, 0x000015ca,
+} // Size: 788 bytes
 
-const roData string = "" + // Size: 5631 bytes
+const roData string = "" + // Size: 5578 bytes
 	"\x02Eroare\x02(fără argument): obținere drept administrativ și instalare" +
 	" serviciu de gestionare\x02Utilizare: %[1]s [\x0a%[2]s]\x02Opțiuni linie" +
 	" de comandă\x02Nu se poate determina dacă procesul rulează sub WOW64: %[" +
@@ -2580,34 +2642,33 @@ const roData string = "" + // Size: 5631 bytes
 	"rtă toate tunelurile în zip\x02&Comutare\x02Exportă toate tunelurile în " +
 	"&zip…\x02Editare tunel &selectat…\x02&Eliminare tunel(uri) selectat(e)" +
 	"\x02nu au fost găsite fișiere de configurare\x02Configurația selectată n" +
-	"u a putut fi importată: %[1]v\x02Tunelurile existente nu au putut fi enu" +
-	"merate: %[1]v\x02Există deja un alt tunel cu numele „%[1]s”\x02Configura" +
-	"ția nu poate fi importată: %[1]v\x02Tuneluri importate\x14\x01\x81\x01" +
-	"\x00\x04\x18\x02Importat %[1]d tuneluri\x02\x15\x02Importat %[1]d tunel" +
-	"\x00\x1b\x02Importat %[1]d de tuneluri\x14\x02\x80\x01\x04\x22\x02Import" +
-	"at %[1]d din %[2]d tuneluri\x02\x1f\x02Importat %[1]d din %[2]d tunel" +
-	"\x00%\x02Importat %[1]d din %[2]d de tuneluri\x02Tunelul nu poate fi cre" +
-	"at\x14\x01\x81\x01\x00\x04\x19\x02Ștergere %[1]d tuneluri\x02\x16\x02Ște" +
-	"rgere %[1]d tunel\x00\x1c\x02Ștergere %[1]d de tuneluri\x14\x01\x81\x01" +
-	"\x00\x045\x02Ești sigur că dorești să ștergi %[1]d tuneluri?\x022\x02Eșt" +
-	"i sigur că dorești să ștergi %[1]d tunel?\x008\x02Ești sigur că dorești " +
-	"să ștergi %[1]d de tuneluri?\x02Ștergere tunel „%[1]s”\x02Ești sigur că " +
-	"dorești să ștergi tunelul „%[1]s”?\x02%[1]s Această acțiune nu poate fi " +
-	"anulată.\x02Tunelul nu poate fi șters\x02Un tunel nu a putut fi eliminat" +
-	": %[1]s\x02Nu se pot șterge tunelurile\x14\x01\x81\x01\x00\x04)\x02%[1]d" +
-	" tuneluri nu au putut fi eliminate.\x02$\x02%[1]d tunel nu a putut fi el" +
-	"iminat.\x00,\x02%[1]d de tuneluri nu au putut fi eliminate.\x02Fișiere d" +
-	"e configurare (*.zip, *.conf)|*.zip;*.conf|Toate fișierele (*.*)|*.*\x02" +
-	"Importare tunel(uri) din fișier\x02Fișiere ZIP de configurare (*.zip)|*." +
-	"zip\x02Exportare tuneluri în zip\x02%[1]s (versiune nesemnată, fără actu" +
-	"alizări)\x02Eroare la ieșirea din WireGuard\x02Nu se poate ieși din serv" +
-	"iciu din cauza: %[1]v. Poți opri WireGuard din managerul de servicii." +
-	"\x02Este disponibilă o actualizare pentru WireGuard. Se recomandă ferm a" +
-	"ctualizarea imediată.\x02Stare: se așteaptă utilizatorul\x02Actualizează" +
-	" acum\x02Stare: se așteaptă serviciul de actualizare\x02Eroare: %[1]v. Î" +
-	"ncearcă din nou.\x02Stare: finalizată!"
+	"u a putut fi importată: %[1]v\x02Există deja un alt tunel cu numele „%[1" +
+	"]s”\x02Configurația nu poate fi importată: %[1]v\x02Tuneluri importate" +
+	"\x14\x01\x81\x01\x00\x04\x18\x02Importat %[1]d tuneluri\x02\x15\x02Impor" +
+	"tat %[1]d tunel\x00\x1b\x02Importat %[1]d de tuneluri\x14\x02\x80\x01" +
+	"\x04\x22\x02Importat %[1]d din %[2]d tuneluri\x02\x1f\x02Importat %[1]d " +
+	"din %[2]d tunel\x00%\x02Importat %[1]d din %[2]d de tuneluri\x02Tunelul " +
+	"nu poate fi creat\x14\x01\x81\x01\x00\x04\x19\x02Ștergere %[1]d tuneluri" +
+	"\x02\x16\x02Ștergere %[1]d tunel\x00\x1c\x02Ștergere %[1]d de tuneluri" +
+	"\x14\x01\x81\x01\x00\x045\x02Ești sigur că dorești să ștergi %[1]d tunel" +
+	"uri?\x022\x02Ești sigur că dorești să ștergi %[1]d tunel?\x008\x02Ești s" +
+	"igur că dorești să ștergi %[1]d de tuneluri?\x02Ștergere tunel „%[1]s”" +
+	"\x02Ești sigur că dorești să ștergi tunelul „%[1]s”?\x02%[1]s Această ac" +
+	"țiune nu poate fi anulată.\x02Tunelul nu poate fi șters\x02Un tunel nu " +
+	"a putut fi eliminat: %[1]s\x02Nu se pot șterge tunelurile\x14\x01\x81" +
+	"\x01\x00\x04)\x02%[1]d tuneluri nu au putut fi eliminate.\x02$\x02%[1]d " +
+	"tunel nu a putut fi eliminat.\x00,\x02%[1]d de tuneluri nu au putut fi e" +
+	"liminate.\x02Fișiere de configurare (*.zip, *.conf)|*.zip;*.conf|Toate f" +
+	"ișierele (*.*)|*.*\x02Importare tunel(uri) din fișier\x02Fișiere ZIP de " +
+	"configurare (*.zip)|*.zip\x02Exportare tuneluri în zip\x02%[1]s (versiun" +
+	"e nesemnată, fără actualizări)\x02Eroare la ieșirea din WireGuard\x02Nu " +
+	"se poate ieși din serviciu din cauza: %[1]v. Poți opri WireGuard din man" +
+	"agerul de servicii.\x02Este disponibilă o actualizare pentru WireGuard. " +
+	"Se recomandă ferm actualizarea imediată.\x02Stare: se așteaptă utilizato" +
+	"rul\x02Actualizează acum\x02Stare: se așteaptă serviciul de actualizare" +
+	"\x02Eroare: %[1]v. Încearcă din nou.\x02Stare: finalizată!"
 
-var ruIndex = []uint32{ // 180 elements
+var ruIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x0000000b, 0x000000a7, 0x000000c8,
 	0x000000fd, 0x0000017a, 0x000001e8, 0x00000249,
@@ -2648,20 +2709,23 @@ var ruIndex = []uint32{ // 180 elements
 	0x00001534, 0x00001564, 0x000015ef, 0x000015fe,
 	0x0000161a, 0x0000164b, 0x0000166b, 0x0000169c,
 	0x000016d7, 0x000016ef, 0x0000172e, 0x0000176f,
-	0x000017a1, 0x000017e2, 0x00001832, 0x0000188c,
-	0x000018d3, 0x00001923, 0x00001951, 0x00001a20,
-	0x00001b1e, 0x00001b50, 0x00001bf1, 0x00001d3a,
-	0x00001d64, 0x00001db8, 0x00001e03, 0x00001e35,
-	0x00001e6f, 0x00001ea1, 0x00001f96, 0x00001ff3,
+	0x000017a1, 0x000017e2, 0x00001832, 0x00001879,
+	0x000018c9, 0x000018f7, 0x000019c6, 0x00001ac4,
+	0x00001af6, 0x00001b97, 0x00001ce0, 0x00001d0a,
+	0x00001d5e, 0x00001da9, 0x00001ddb, 0x00001e15,
+	0x00001e47, 0x00001f3c, 0x00001f99, 0x00001fc7,
 	// Entry A0 - BF
-	0x00002021, 0x00002057, 0x00002089, 0x000020d6,
-	0x00002109, 0x000021a9, 0x00002231, 0x00002269,
-	0x00002287, 0x000022bb, 0x000022f4, 0x00002316,
-	0x00002316, 0x00002316, 0x00002316, 0x00002316,
-	0x00002316, 0x00002316, 0x00002316, 0x00002316,
-} // Size: 744 bytes
+	0x00001ffd, 0x0000202f, 0x0000207c, 0x000020af,
+	0x0000214f, 0x000021d7, 0x0000220f, 0x0000222d,
+	0x00002261, 0x0000229a, 0x000022bc, 0x000022bc,
+	0x000022bc, 0x000022bc, 0x000022bc, 0x000022bc,
+	0x000022bc, 0x000022bc, 0x000022bc, 0x000022bc,
+	0x000022bc, 0x000022bc, 0x000022bc, 0x000022bc,
+	0x000022bc, 0x000022bc, 0x000022bc, 0x000022bc,
+	0x000022bc, 0x000022bc, 0x000022bc,
+} // Size: 788 bytes
 
-const ruData string = "" + // Size: 8982 bytes
+const ruData string = "" + // Size: 8892 bytes
 	"\x02Алдаа\x02(нет аргумента): получить права администратора и установить" +
 	" административную службу\x02Хэрэглээ: %[1]s [\x0a%[2]s]\x02Коммандын мөр" +
 	"ний сонголтууд\x02Процесс ажиллаж байгаа эсэхийг тодорхойлох боломжгүй " +
@@ -2723,36 +2787,35 @@ const ruData string = "" + // Size: 8982 bytes
 	"в\x02&Переключить\x02Экспорт всех туннелей в &zip-архив…\x02Редактирова" +
 	"ть &выбранный туннель…\x02&Удалить выбранные туннели\x02файлы конфигура" +
 	"ции не были найдены\x02Невозможно импортировать конфигурацию: %[1]v\x02" +
-	"Не удалось перечислить существующие туннели: %[1]v\x02Туннель с именем " +
-	"’%[1]s’ уже существует\x02Невозможно импортировать конфигурацию: %[1]v" +
-	"\x02Импортированные туннели\x14\x01\x81\x01\x00\x040\x02Импортированы %[" +
-	"1]d туннеля\x052\x02Импортировано %[1]d туннелей\x02.\x02Импортирован %[" +
-	"1]d туннель\x002\x02Импортировано %[1]d туннелей\x14\x02\x80\x01\x04=" +
-	"\x02Импортированы %[1]d из %[2]d туннелей\x05=\x02Импортировано %[1]d из" +
-	" %[2]d туннелей\x02;\x02Импортирован %[1]d из %[2]d туннелей\x00=\x02Имп" +
-	"ортировано %[1]d из %[2]d туннелей\x02Не удалось создать туннель\x14" +
-	"\x01\x81\x01\x00\x04$\x02Удалить %[1]d туннеля\x05&\x02Удалить %[1]d тун" +
-	"нелей\x02$\x02Удалить %[1]d туннель\x00&\x02Удалить %[1]d туннелей\x14" +
-	"\x01\x81\x01\x00\x04N\x02Вы уверены, что хотите удалить %[1]d туннеля?" +
-	"\x05P\x02Вы уверены, что хотите удалить %[1]d туннелей?\x02N\x02Вы увере" +
-	"ны, что хотите удалить %[1]d туннель?\x00P\x02Вы уверены, что хотите уд" +
-	"алить %[1]d туннелей?\x02Удалить туннель ‘%[1]s’\x02Вы уверены, что хот" +
-	"ите удалить ‘%[1]s’ туннель?\x02%[1]s Данное действие невозможно отмени" +
-	"ть.\x02Не удалось удалить туннель\x02Невозможно удалить туннель: %[1]s" +
-	"\x02Не удалось удалить туннели\x14\x01\x81\x01\x00\x049\x02%[1]d туннеля" +
-	" не удалось удалить.\x05;\x02%[1]d туннелей не удалось удалить.\x029\x02" +
-	"%[1]d туннель не удалось удалить.\x00;\x02%[1]d туннелей не удалось удал" +
-	"ить.\x02Файлы конфигурации (*.zip, *.conf)|*.zip;*.conf|Все файлы (*.*)" +
-	"|*.*\x02Импорт туннелей из файла\x02ZIP-файлы конфигурации (*.zip)|*.zip" +
-	"\x02Экспорт туннелей в zip-архив\x02%[1]s (неподписанная сборка, нет обн" +
-	"овлений)\x02Ошибка при завершении WireGuard\x02Не удалось завершить слу" +
-	"жбу: %[1]v. Вы можете остановить WireGuard вручную из оснастки Службы." +
-	"\x02Доступно обновление WireGuard. Настоятельно рекомендуем обновить при" +
-	"ложение.\x02Статус: ожидание пользователя\x02Обновить сейчас\x02Статус:" +
-	" ожидание обновления\x02Ошибка: %[1]v. Попробуйте еще раз.\x02Статус: за" +
-	"вершено!"
+	"Туннель с именем ’%[1]s’ уже существует\x02Невозможно импортировать кон" +
+	"фигурацию: %[1]v\x02Импортированные туннели\x14\x01\x81\x01\x00\x040" +
+	"\x02Импортированы %[1]d туннеля\x052\x02Импортировано %[1]d туннелей\x02" +
+	".\x02Импортирован %[1]d туннель\x002\x02Импортировано %[1]d туннелей\x14" +
+	"\x02\x80\x01\x04=\x02Импортированы %[1]d из %[2]d туннелей\x05=\x02Импор" +
+	"тировано %[1]d из %[2]d туннелей\x02;\x02Импортирован %[1]d из %[2]d ту" +
+	"ннелей\x00=\x02Импортировано %[1]d из %[2]d туннелей\x02Не удалось созд" +
+	"ать туннель\x14\x01\x81\x01\x00\x04$\x02Удалить %[1]d туннеля\x05&\x02У" +
+	"далить %[1]d туннелей\x02$\x02Удалить %[1]d туннель\x00&\x02Удалить %[1" +
+	"]d туннелей\x14\x01\x81\x01\x00\x04N\x02Вы уверены, что хотите удалить %" +
+	"[1]d туннеля?\x05P\x02Вы уверены, что хотите удалить %[1]d туннелей?\x02" +
+	"N\x02Вы уверены, что хотите удалить %[1]d туннель?\x00P\x02Вы уверены, ч" +
+	"то хотите удалить %[1]d туннелей?\x02Удалить туннель ‘%[1]s’\x02Вы увер" +
+	"ены, что хотите удалить ‘%[1]s’ туннель?\x02%[1]s Данное действие невоз" +
+	"можно отменить.\x02Не удалось удалить туннель\x02Невозможно удалить тун" +
+	"нель: %[1]s\x02Не удалось удалить туннели\x14\x01\x81\x01\x00\x049\x02%" +
+	"[1]d туннеля не удалось удалить.\x05;\x02%[1]d туннелей не удалось удали" +
+	"ть.\x029\x02%[1]d туннель не удалось удалить.\x00;\x02%[1]d туннелей не" +
+	" удалось удалить.\x02Файлы конфигурации (*.zip, *.conf)|*.zip;*.conf|Все" +
+	" файлы (*.*)|*.*\x02Импорт туннелей из файла\x02ZIP-файлы конфигурации (" +
+	"*.zip)|*.zip\x02Экспорт туннелей в zip-архив\x02%[1]s (неподписанная сбо" +
+	"рка, нет обновлений)\x02Ошибка при завершении WireGuard\x02Не удалось з" +
+	"авершить службу: %[1]v. Вы можете остановить WireGuard вручную из оснас" +
+	"тки Службы.\x02Доступно обновление WireGuard. Настоятельно рекомендуем " +
+	"обновить приложение.\x02Статус: ожидание пользователя\x02Обновить сейча" +
+	"с\x02Статус: ожидание обновления\x02Ошибка: %[1]v. Попробуйте еще раз." +
+	"\x02Статус: завершено!"
 
-var si_LKIndex = []uint32{ // 180 elements
+var si_LKIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000013, 0x000000a9, 0x000000cc,
 	0x000000fc, 0x00000197, 0x00000223, 0x00000293,
@@ -2793,20 +2856,23 @@ var si_LKIndex = []uint32{ // 180 elements
 	0x00001abd, 0x00001af6, 0x00001bdd, 0x00001bf7,
 	0x00001c11, 0x00001c47, 0x00001c6e, 0x00001cb0,
 	0x00001cfe, 0x00001d1f, 0x00001d70, 0x00001dad,
-	0x00001df0, 0x00001e49, 0x00001ea6, 0x00001efb,
-	0x00001f53, 0x00001fa0, 0x00001fcd, 0x00002045,
-	0x000020e9, 0x00002123, 0x00002173, 0x00002249,
-	0x0000226b, 0x000022c8, 0x00002312, 0x00002345,
-	0x00002399, 0x000023cd, 0x00002479, 0x000024e3,
+	0x00001df0, 0x00001e49, 0x00001ea6, 0x00001efe,
+	0x00001f4b, 0x00001f78, 0x00001ff0, 0x00002094,
+	0x000020ce, 0x0000211e, 0x000021f4, 0x00002216,
+	0x00002273, 0x000022bd, 0x000022f0, 0x00002344,
+	0x00002378, 0x00002424, 0x0000248e, 0x000024d3,
 	// Entry A0 - BF
-	0x00002528, 0x00002570, 0x000025ab, 0x00002616,
-	0x0000265e, 0x00002741, 0x0000280b, 0x0000285b,
-	0x00002884, 0x000028e7, 0x0000292a, 0x0000295e,
-	0x0000295e, 0x0000295e, 0x0000295e, 0x0000295e,
-	0x0000295e, 0x0000295e, 0x0000295e, 0x0000295e,
-} // Size: 744 bytes
+	0x0000251b, 0x00002556, 0x000025c1, 0x00002609,
+	0x000026ec, 0x000027b6, 0x00002806, 0x0000282f,
+	0x00002892, 0x000028d5, 0x00002909, 0x00002909,
+	0x00002909, 0x00002909, 0x00002909, 0x00002909,
+	0x00002909, 0x00002909, 0x00002909, 0x00002909,
+	0x00002909, 0x00002909, 0x00002909, 0x00002909,
+	0x00002909, 0x00002909, 0x00002909, 0x00002909,
+	0x00002909, 0x00002909, 0x00002909,
+} // Size: 788 bytes
 
-const si_LKData string = "" + // Size: 10590 bytes
+const si_LKData string = "" + // Size: 10505 bytes
 	"\x02දෝෂයකි\x02(තර්කයක් නැත): කළමනාකරු සේවාව ඉහළ නැංවීම සහ ස්ථාපනය කිරීම" +
 	"\x02භාවිතය: %[1]s [\x0a%[2]s]\x02විධාන රේඛා විකල්ප\x02ක්\u200dරියාවලිය W" +
 	"OW64: %[1]vයටතේ ක්\u200dරියාත්මක වේද යන්න තීරණය කළ නොහැක\x02ඔබ මෙම පරිගණ" +
@@ -2864,29 +2930,29 @@ const si_LKData string = "" + // Size: 10590 bytes
 	"න්න\x02සියලුම උමං zip වෙත අපනයනය කරන්න\x02&ටොගල් කරන්න\x02සියලුම උමං &" +
 	"zip…වෙත අපනයනය කරන්න\x02සංස්කරණය &තෝරාගත් උමග…\x02&තෝරාගත් උමං(ය) ඉවත් ක" +
 	"රන්න\x02වින්\u200dයාස ගොනු කිසිවක් හමු නොවිණි\x02තෝරාගත් වින්\u200dයාස" +
-	"ය ආයාත කළ නොහැක: %[1]v\x02පවතින උමං මාර්ග ගණනය කළ නොහැක: %[1]v\x02තවත්" +
-	" උමගක් දැනටමත් '%[1]s' නමින් පවතී\x02වින්\u200dයාසය ආයාත කළ නොහැකිය: %[1" +
-	"]v\x02ආනයනික උමං මාර්ග\x14\x01\x81\x01\x00\x024\x02උමං %[1]d ආනයනය කරන ල" +
-	"දී\x00;\x02උමං %[1]d ක් ආනයනය කරන ලදී\x14\x02\x80\x01\x02N\x02උමං %[2]" +
-	"d කින් %[1]d ක් ආනයනය කරන ලදී\x00N\x02උමං %[2]d කින් %[1]d ක් ආනයනය කරන " +
-	"ලදී\x02උමග නිර්මාණය කළ නොහැක\x14\x01\x81\x01\x00\x02 \x02%[1]d උමග මකන" +
-	"්න\x00'\x02උමං %[1]d ක් මකන්න\x14\x01\x81\x01\x00\x02[\x02ඔබ %[1]d උමග" +
-	" මැකීමට කැමති බව විශ්වාසද?\x00r\x02ඔබ උමං මාර්ග %[1]d ක් මැකීමට කැමති බව" +
-	" විශ්වාසද?\x02උමං '%[1]s' මකන්න\x02ඔබ '%[1]s' උමඟ මැකීමට කැමති බව විශ්වා" +
-	"සද?\x02%[1]s මෙම ක්\u200dරියාව ආපසු හැරවිය.\x02උමග මැකීමට නොහැකිය\x02උ" +
-	"මගක් ඉවත් කිරීමට නොහැකි විය: %[1]s\x02උමං මකා දැමිය නොහැක\x14\x01\x81" +
-	"\x01\x00\x02N\x02%[1]d උමං ඉවත් කිරීමට නොහැකි විය.\x00U\x02උමං %[1]d ක් " +
-	"ඉවත් කිරීමට නොහැකි විය.\x02වින්\u200dයාස ගොනු (*.zip, *.conf)|*.zip;*." +
-	"conf|සියලු ගොනු (*.*)|*.*\x02ගොනුවෙන් උමං(ය) ආයාත කරන්න\x02වින්\u200dයාස" +
-	" කිරීම ZIP ගොනු (*.zip)|*.zip\x02zip වෙත උමං අපනයනය කරන්න\x02%[1]s (අත්ස" +
-	"න් නොකළ ගොඩනැගීම, යාවත්කාලීන නැත)\x02වයර්ගාඩ් පිටවීමේදී දෝෂයකි\x02%[1]" +
-	"vනිසා සේවයෙන් ඉවත් විය නොහැක. ඔබට සේවා කළමනාකරුගෙන් WireGuard නැවැත්වීමට" +
-	" අවශ්\u200dය විය හැකිය.\x02WireGuard වෙත යාවත්කාලීනයක් තිබේ. ප්රමාදයකින්" +
-	" තොරව යාවත්කාලීන කිරීම ඉතා යෝග්ය වේ.\x02තත්\u200dවය: පරිශීලක සඳහා රැඳෙමි" +
-	"න්\x02යාවත්කාල කරන්න\x02තත්\u200dවය: යාවත්කාල සේවාව සඳහා රැඳෙමින්\x02ද" +
-	"ෝෂය: %[1]v. යළි උත්සාහ කරන්න.\x02තත්\u200dවය: සම්පූර්ණයි!"
+	"ය ආයාත කළ නොහැක: %[1]v\x02තවත් උමගක් දැනටමත් '%[1]s' නමින් පවතී\x02වින" +
+	"්\u200dයාසය ආයාත කළ නොහැකිය: %[1]v\x02ආනයනික උමං මාර්ග\x14\x01\x81\x01" +
+	"\x00\x024\x02උමං %[1]d ආනයනය කරන ලදී\x00;\x02උමං %[1]d ක් ආනයනය කරන ලදී" +
+	"\x14\x02\x80\x01\x02N\x02උමං %[2]d කින් %[1]d ක් ආනයනය කරන ලදී\x00N\x02උ" +
+	"මං %[2]d කින් %[1]d ක් ආනයනය කරන ලදී\x02උමග නිර්මාණය කළ නොහැක\x14\x01" +
+	"\x81\x01\x00\x02 \x02%[1]d උමග මකන්න\x00'\x02උමං %[1]d ක් මකන්න\x14\x01" +
+	"\x81\x01\x00\x02[\x02ඔබ %[1]d උමග මැකීමට කැමති බව විශ්වාසද?\x00r\x02ඔබ උ" +
+	"මං මාර්ග %[1]d ක් මැකීමට කැමති බව විශ්වාසද?\x02උමං '%[1]s' මකන්න\x02ඔබ" +
+	" '%[1]s' උමඟ මැකීමට කැමති බව විශ්වාසද?\x02%[1]s මෙම ක්\u200dරියාව ආපසු හ" +
+	"ැරවිය.\x02උමග මැකීමට නොහැකිය\x02උමගක් ඉවත් කිරීමට නොහැකි විය: %[1]s" +
+	"\x02උමං මකා දැමිය නොහැක\x14\x01\x81\x01\x00\x02N\x02%[1]d උමං ඉවත් කිරීම" +
+	"ට නොහැකි විය.\x00U\x02උමං %[1]d ක් ඉවත් කිරීමට නොහැකි විය.\x02වින්" +
+	"\u200dයාස ගොනු (*.zip, *.conf)|*.zip;*.conf|සියලු ගොනු (*.*)|*.*\x02ගොනු" +
+	"වෙන් උමං(ය) ආයාත කරන්න\x02වින්\u200dයාස කිරීම ZIP ගොනු (*.zip)|*.zip" +
+	"\x02zip වෙත උමං අපනයනය කරන්න\x02%[1]s (අත්සන් නොකළ ගොඩනැගීම, යාවත්කාලීන " +
+	"නැත)\x02වයර්ගාඩ් පිටවීමේදී දෝෂයකි\x02%[1]vනිසා සේවයෙන් ඉවත් විය නොහැක." +
+	" ඔබට සේවා කළමනාකරුගෙන් WireGuard නැවැත්වීමට අවශ්\u200dය විය හැකිය.\x02Wi" +
+	"reGuard වෙත යාවත්කාලීනයක් තිබේ. ප්රමාදයකින් තොරව යාවත්කාලීන කිරීම ඉතා යෝ" +
+	"ග්ය වේ.\x02තත්\u200dවය: පරිශීලක සඳහා රැඳෙමින්\x02යාවත්කාල කරන්න\x02තත්" +
+	"\u200dවය: යාවත්කාල සේවාව සඳහා රැඳෙමින්\x02දෝෂය: %[1]v. යළි උත්සාහ කරන්න." +
+	"\x02තත්\u200dවය: සම්පූර්ණයි!"
 
-var skIndex = []uint32{ // 180 elements
+var skIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000006, 0x0000005e, 0x00000078,
 	0x00000097, 0x000000d1, 0x0000011e, 0x00000156,
@@ -2927,20 +2993,23 @@ var skIndex = []uint32{ // 180 elements
 	0x00000da1, 0x00000dc7, 0x00000e30, 0x00000e37,
 	0x00000e41, 0x00000e5c, 0x00000e6a, 0x00000e8e,
 	0x00000eb7, 0x00000ec2, 0x00000eef, 0x00000f0d,
-	0x00000f2c, 0x00000f5c, 0x00000f96, 0x00000fc9,
-	0x00000fee, 0x0000101f, 0x00001035, 0x000010b5,
-	0x00001159, 0x00001172, 0x000011eb, 0x000012d9,
-	0x000012f9, 0x00001336, 0x00001362, 0x0000137d,
-	0x000013a5, 0x000013c3, 0x00001475, 0x000014c3,
+	0x00000f2c, 0x00000f5c, 0x00000f96, 0x00000fbb,
+	0x00000fec, 0x00001002, 0x00001082, 0x00001126,
+	0x0000113f, 0x000011b8, 0x000012a6, 0x000012c6,
+	0x00001303, 0x0000132f, 0x0000134a, 0x00001372,
+	0x00001390, 0x00001442, 0x00001490, 0x000014b0,
 	// Entry A0 - BF
-	0x000014e3, 0x0000150b, 0x00001529, 0x0000155d,
-	0x00001578, 0x000015de, 0x00001641, 0x00001661,
-	0x00001675, 0x0000169f, 0x000016bf, 0x000016d2,
-	0x000016d2, 0x000016d2, 0x000016d2, 0x000016d2,
-	0x000016d2, 0x000016d2, 0x000016d2, 0x000016d2,
-} // Size: 744 bytes
+	0x000014d8, 0x000014f6, 0x0000152a, 0x00001545,
+	0x000015ab, 0x0000160e, 0x0000162e, 0x00001642,
+	0x0000166c, 0x0000168c, 0x0000169f, 0x0000169f,
+	0x0000169f, 0x0000169f, 0x0000169f, 0x0000169f,
+	0x0000169f, 0x0000169f, 0x0000169f, 0x0000169f,
+	0x0000169f, 0x0000169f, 0x0000169f, 0x0000169f,
+	0x0000169f, 0x0000169f, 0x0000169f, 0x0000169f,
+	0x0000169f, 0x0000169f, 0x0000169f,
+} // Size: 788 bytes
 
-const skData string = "" + // Size: 5842 bytes
+const skData string = "" + // Size: 5791 bytes
 	"\x02Chyba\x02(bez argumentu): získať administrátorské práva a nainštalov" +
 	"ať službu manažéra\x02Použitie: %[1]s [\x0a%[2]s]\x02Možnosti príkazovéh" +
 	"o riadku\x02Nepodarilo sa zistiť, či proces beží pod WOW64: %[1]v\x02V t" +
@@ -3002,37 +3071,36 @@ const skData string = "" + // Size: 5842 bytes
 	" do zip súboru\x02P&repnúť\x02Export všetkých tunelov do &zip súboru…" +
 	"\x02Upraviť &označený tunel…\x02&Odstrániť označené tunely\x02neboli náj" +
 	"dené žiadne konfiguračné súbory\x02Nepodarilo sa naimportovať vybrané ko" +
-	"nfigurácie: %[1]v\x02Nepodarilo sa načítať existujúce tunely: %[1]v\x02U" +
-	"ž existuje tunel s názvom '%[1]s'\x02Nepodarilo sa naimportovať konfigu" +
-	"ráciu: %[1]v\x02Naimportované tunely\x14\x01\x81\x01\x00\x04\x1c\x02Naim" +
-	"portované %[1]d tunely\x05\x1f\x02Naimportovaných %[1]d tunelov\x02\x19" +
-	"\x02Importovaný %[1]d tunel\x00\x1f\x02Naimportovaných %[1]d tunelov\x14" +
-	"\x02\x80\x01\x04%\x02Naimportované %[1]d z %[2]d tunelov\x05'\x02Naimpor" +
-	"tovaných %[1]d z %[2]d tunelov\x02%\x02Naimportovaný %[1]d z %[2]d tunel" +
-	"ov\x00'\x02Naimportovaných %[1]d z %[2]d tunelov\x02Tunel sa nedá vytvor" +
-	"iť\x14\x01\x81\x01\x00\x04\x19\x02Odstránene %[1]d tunely\x05\x1d\x02Ods" +
-	"tránených %[1]d tunelov\x02\x19\x02Odstránený %[1]d tunel\x00\x1d\x02Ods" +
-	"tránených %[1]d tunelov\x14\x01\x81\x01\x00\x048\x02Ste si istý, že si ž" +
-	"eláte odstrániť %[1]d tunely?\x059\x02Ste si istý, že si želáte odstráni" +
-	"ť %[1]d tunelov?\x027\x02Ste si istý, že si želáte odstrániť %[1]d tune" +
-	"l?\x009\x02Ste si istý, že si želáte odstrániť %[1]d tunelov?\x02Odstrán" +
-	"enie tunela ‘%[1]s’\x02Ste si istý, že si želáte odstrániť tunel ‘%[1]s’" +
-	"?\x02%[1]s Túto akciu nemôže vrátiť späť.\x02Tunel sa nedá odstrániť\x02" +
-	"Nebolo možné odstrániť tunel: %[1]s\x02Tunely sa nedajú odstrániť\x14" +
-	"\x01\x81\x01\x00\x04)\x02%[1]d tunely nebolo možné odstrániť.\x05*\x02%[" +
-	"1]d tunelov nebolo možné odstrániť.\x02(\x02%[1]d tunel nebolo možné ods" +
-	"trániť.\x00*\x02%[1]d tunelov nebolo možné odstrániť.\x02Konfirugačné sú" +
-	"bory (*.zip, *.conf)|*.zip;*.conf|Všetky súbory (*.*)|*.*\x02Importovať " +
-	"tunel(y) zo súboru\x02Konfiguračné ZIP súbry (*.zip)|*.zip\x02Export tun" +
-	"elov do zip súboru\x02%[1]s (nepodpísaná verzia, žiadne aktualizácie)" +
-	"\x02Chyba ukončenia WireGuard\x02Nie je možné ukončiť služby z dôvodu: %" +
-	"[1]v. Skúste zastaviť WireGuard v správcovi služieb.\x02Je k dispozícii " +
-	"nová verzia programu WireGuard. Odporúčame bezodkladne vykonať aktualizá" +
-	"ciu.\x02Stav: Čaká sa na užívateľa\x02Aktualizovať teraz\x02Stav: Čaká s" +
-	"a na aktualizačnú službu\x02Chyba: %[1]v. Skúste to znova.\x02Stav: Doko" +
-	"nčené!"
+	"nfigurácie: %[1]v\x02Už existuje tunel s názvom '%[1]s'\x02Nepodarilo sa" +
+	" naimportovať konfiguráciu: %[1]v\x02Naimportované tunely\x14\x01\x81" +
+	"\x01\x00\x04\x1c\x02Naimportované %[1]d tunely\x05\x1f\x02Naimportovanýc" +
+	"h %[1]d tunelov\x02\x19\x02Importovaný %[1]d tunel\x00\x1f\x02Naimportov" +
+	"aných %[1]d tunelov\x14\x02\x80\x01\x04%\x02Naimportované %[1]d z %[2]d " +
+	"tunelov\x05'\x02Naimportovaných %[1]d z %[2]d tunelov\x02%\x02Naimportov" +
+	"aný %[1]d z %[2]d tunelov\x00'\x02Naimportovaných %[1]d z %[2]d tunelov" +
+	"\x02Tunel sa nedá vytvoriť\x14\x01\x81\x01\x00\x04\x19\x02Odstránene %[1" +
+	"]d tunely\x05\x1d\x02Odstránených %[1]d tunelov\x02\x19\x02Odstránený %[" +
+	"1]d tunel\x00\x1d\x02Odstránených %[1]d tunelov\x14\x01\x81\x01\x00\x048" +
+	"\x02Ste si istý, že si želáte odstrániť %[1]d tunely?\x059\x02Ste si ist" +
+	"ý, že si želáte odstrániť %[1]d tunelov?\x027\x02Ste si istý, že si žel" +
+	"áte odstrániť %[1]d tunel?\x009\x02Ste si istý, že si želáte odstrániť " +
+	"%[1]d tunelov?\x02Odstránenie tunela ‘%[1]s’\x02Ste si istý, že si želát" +
+	"e odstrániť tunel ‘%[1]s’?\x02%[1]s Túto akciu nemôže vrátiť späť.\x02Tu" +
+	"nel sa nedá odstrániť\x02Nebolo možné odstrániť tunel: %[1]s\x02Tunely s" +
+	"a nedajú odstrániť\x14\x01\x81\x01\x00\x04)\x02%[1]d tunely nebolo možné" +
+	" odstrániť.\x05*\x02%[1]d tunelov nebolo možné odstrániť.\x02(\x02%[1]d " +
+	"tunel nebolo možné odstrániť.\x00*\x02%[1]d tunelov nebolo možné odstrán" +
+	"iť.\x02Konfirugačné súbory (*.zip, *.conf)|*.zip;*.conf|Všetky súbory (*" +
+	".*)|*.*\x02Importovať tunel(y) zo súboru\x02Konfiguračné ZIP súbry (*.zi" +
+	"p)|*.zip\x02Export tunelov do zip súboru\x02%[1]s (nepodpísaná verzia, ž" +
+	"iadne aktualizácie)\x02Chyba ukončenia WireGuard\x02Nie je možné ukončiť" +
+	" služby z dôvodu: %[1]v. Skúste zastaviť WireGuard v správcovi služieb." +
+	"\x02Je k dispozícii nová verzia programu WireGuard. Odporúčame bezodklad" +
+	"ne vykonať aktualizáciu.\x02Stav: Čaká sa na užívateľa\x02Aktualizovať t" +
+	"eraz\x02Stav: Čaká sa na aktualizačnú službu\x02Chyba: %[1]v. Skúste to " +
+	"znova.\x02Stav: Dokončené!"
 
-var slIndex = []uint32{ // 180 elements
+var slIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000007, 0x00000058, 0x00000070,
 	0x00000089, 0x000000c1, 0x00000111, 0x00000148,
@@ -3073,20 +3141,23 @@ var slIndex = []uint32{ // 180 elements
 	0x00000cbb, 0x00000cde, 0x00000d23, 0x00000d2a,
 	0x00000d31, 0x00000d4a, 0x00000d56, 0x00000d6e,
 	0x00000d86, 0x00000d90, 0x00000dae, 0x00000dc7,
-	0x00000de0, 0x00000e05, 0x00000e33, 0x00000e66,
-	0x00000e8b, 0x00000eb1, 0x00000ec1, 0x00000f25,
-	0x00000fb0, 0x00000fd1, 0x00001036, 0x00001123,
-	0x0000113e, 0x00001179, 0x000011a4, 0x000011be,
-	0x000011e6, 0x00001201, 0x000012b5, 0x00001302,
+	0x00000de0, 0x00000e05, 0x00000e33, 0x00000e58,
+	0x00000e7e, 0x00000e8e, 0x00000ef2, 0x00000f7d,
+	0x00000f9e, 0x00001003, 0x000010f0, 0x0000110b,
+	0x00001146, 0x00001171, 0x0000118b, 0x000011b3,
+	0x000011ce, 0x00001282, 0x000012cf, 0x000012e8,
 	// Entry A0 - BF
-	0x0000131b, 0x00001346, 0x00001363, 0x00001394,
-	0x000013b4, 0x00001421, 0x00001474, 0x00001490,
-	0x0000149e, 0x000014c5, 0x000014e7, 0x000014f9,
-	0x000014f9, 0x000014f9, 0x000014f9, 0x000014f9,
-	0x000014f9, 0x000014f9, 0x000014f9, 0x000014f9,
-} // Size: 744 bytes
+	0x00001313, 0x00001330, 0x00001361, 0x00001381,
+	0x000013ee, 0x00001441, 0x0000145d, 0x0000146b,
+	0x00001492, 0x000014b4, 0x000014c6, 0x000014c6,
+	0x000014c6, 0x000014c6, 0x000014c6, 0x000014c6,
+	0x000014c6, 0x000014c6, 0x000014c6, 0x000014c6,
+	0x000014c6, 0x000014c6, 0x000014c6, 0x000014c6,
+	0x000014c6, 0x000014c6, 0x000014c6, 0x000014c6,
+	0x000014c6, 0x000014c6, 0x000014c6,
+} // Size: 788 bytes
 
-const slData string = "" + // Size: 5369 bytes
+const slData string = "" + // Size: 5318 bytes
 	"\x02Napaka\x02(brez argumenta): povzdigni na skrbniške pravice in namest" +
 	"i skrbniško storitev\x02Uporaba: %[1]s [\x0a%[2]s]\x02Možnosti ukazne vr" +
 	"stice\x02Napaka pri določanju ali proces teče kot WOW64: %[1]v\x02Na tem" +
@@ -3146,37 +3217,36 @@ const slData string = "" + // Size: 5369 bytes
 	"l\u00a0…\x02Dodaj tunel\x02Odstrani izbrane tunele\x02Izvozi vse tunele " +
 	"v zip\x02&Preklopi\x02Izvozi vse tunele v &zip\u00a0…\x02Uredi &izbran t" +
 	"unel\u00a0…\x02Odst&rani izbrane tunele\x02ni najdenih konfiguracijskih " +
-	"datotek\x02Napaka pri uvozu izbrane konfiguracije: %[1]v\x02Napaka pri p" +
-	"reštevanju obstoječih tunelov: %[1]v\x02Tunel z imenom »%[1]s« že obstaj" +
-	"a\x02Napaka pri uvozu konfiguracije: %[1]v\x02Uvoženi tuneli\x14\x01\x81" +
-	"\x01\x00\x04\x16\x02Uvoženi %[1]d tuneli\x02\x14\x02Uvožen %[1]d tunel" +
-	"\x03\x16\x02Uvožena %[1]d tunela\x00\x17\x02Uvoženo %[1]d tunelov\x14" +
-	"\x02\x80\x01\x04 \x02Uvoženi %[1]d od %[2]d tunelov\x02\x1f\x02Uvožen %[" +
-	"1]d od %[2]d tunelov\x03 \x02Uvožena %[1]d od %[2]d tunelov\x00 \x02Uvož" +
-	"eno %[1]d od %[2]d tunelov\x02Tunela ni bilo mogoče ustvariti\x14\x01" +
-	"\x81\x01\x00\x04\x16\x02Izbriši %[1]d tunele\x02\x15\x02Izbriši %[1]d tu" +
-	"nel\x03\x16\x02Izbriši %[1]d tunela\x00\x17\x02Izbriši %[1]d tunelov\x14" +
-	"\x01\x81\x01\x00\x048\x02Ali ste prepričani, da želite izbrisati %[1]d t" +
-	"unele?\x027\x02Ali ste prepričani, da želite izbrisati %[1]d tunel?\x038" +
-	"\x02Ali ste prepričani, da želite izbrisati %[1]d tunela?\x009\x02Ali st" +
-	"e prepričani, da želite izbrisati %[1]d tunelov?\x02Izbriši tunel ‘%[1]s" +
-	"’\x02Ali ste prepričani, da želite izbrisati tunel »%[1]s«?\x02%[1]s T" +
-	"ega dejanja ne morete razveljaviti.\x02Napaka pri izbrisu tunela\x02Napa" +
-	"ka pri odstranjevanju tunela: %[1]s\x02Napaka pri izbrisu tunelov\x14" +
-	"\x01\x81\x01\x00\x04*\x02%[1]d tunelov ni bilo mogoče odstraniti.\x02)" +
-	"\x02%[1]d tunela ni bilo mogoče odstraniti.\x03*\x02%[1]d tunelov ni bil" +
-	"o mogoče odstraniti.\x00*\x02%[1]d tunelov ni bilo mogoče odstraniti." +
-	"\x02Konfiguracijske datoteke (*.zip, *.conf)|*.zip;*.conf|Vse datoteke (" +
-	"*.*)|*.*\x02Uvozi tunele iz datoteke\x02Konfiguracijske datoteke ZIP (*." +
-	"zip)|*.zip\x02Izvozi tunele v datoteko zip\x02%[1]s (nepodpisane različi" +
-	"ce, brez posodobitev)\x02Napaka pri izhodu iz WireGuarda\x02Storitve ni " +
-	"bilo mogoče zaustaviti, ker: %[1]v. Poskusite zaustaviti WireGuard z upo" +
-	"rabo programa Storitve.\x02Posodobitev WireGuarda je na voljo. Zelo prip" +
-	"oročamo posodobitev brez odlašanja.\x02Status: Čaka na uporabnika\x02Pos" +
-	"odobi zdaj\x02Status: Čaka na servis za posodobitev\x02Napaka: %[1]v. Po" +
-	"skusite ponovno.\x02Status: Končano!"
+	"datotek\x02Napaka pri uvozu izbrane konfiguracije: %[1]v\x02Tunel z imen" +
+	"om »%[1]s« že obstaja\x02Napaka pri uvozu konfiguracije: %[1]v\x02Uvožen" +
+	"i tuneli\x14\x01\x81\x01\x00\x04\x16\x02Uvoženi %[1]d tuneli\x02\x14\x02" +
+	"Uvožen %[1]d tunel\x03\x16\x02Uvožena %[1]d tunela\x00\x17\x02Uvoženo %[" +
+	"1]d tunelov\x14\x02\x80\x01\x04 \x02Uvoženi %[1]d od %[2]d tunelov\x02" +
+	"\x1f\x02Uvožen %[1]d od %[2]d tunelov\x03 \x02Uvožena %[1]d od %[2]d tun" +
+	"elov\x00 \x02Uvoženo %[1]d od %[2]d tunelov\x02Tunela ni bilo mogoče ust" +
+	"variti\x14\x01\x81\x01\x00\x04\x16\x02Izbriši %[1]d tunele\x02\x15\x02Iz" +
+	"briši %[1]d tunel\x03\x16\x02Izbriši %[1]d tunela\x00\x17\x02Izbriši %[1" +
+	"]d tunelov\x14\x01\x81\x01\x00\x048\x02Ali ste prepričani, da želite izb" +
+	"risati %[1]d tunele?\x027\x02Ali ste prepričani, da želite izbrisati %[1" +
+	"]d tunel?\x038\x02Ali ste prepričani, da želite izbrisati %[1]d tunela?" +
+	"\x009\x02Ali ste prepričani, da želite izbrisati %[1]d tunelov?\x02Izbri" +
+	"ši tunel ‘%[1]s’\x02Ali ste prepričani, da želite izbrisati tunel »%[1]" +
+	"s«?\x02%[1]s Tega dejanja ne morete razveljaviti.\x02Napaka pri izbrisu " +
+	"tunela\x02Napaka pri odstranjevanju tunela: %[1]s\x02Napaka pri izbrisu " +
+	"tunelov\x14\x01\x81\x01\x00\x04*\x02%[1]d tunelov ni bilo mogoče odstran" +
+	"iti.\x02)\x02%[1]d tunela ni bilo mogoče odstraniti.\x03*\x02%[1]d tunel" +
+	"ov ni bilo mogoče odstraniti.\x00*\x02%[1]d tunelov ni bilo mogoče odstr" +
+	"aniti.\x02Konfiguracijske datoteke (*.zip, *.conf)|*.zip;*.conf|Vse dato" +
+	"teke (*.*)|*.*\x02Uvozi tunele iz datoteke\x02Konfiguracijske datoteke Z" +
+	"IP (*.zip)|*.zip\x02Izvozi tunele v datoteko zip\x02%[1]s (nepodpisane r" +
+	"azličice, brez posodobitev)\x02Napaka pri izhodu iz WireGuarda\x02Storit" +
+	"ve ni bilo mogoče zaustaviti, ker: %[1]v. Poskusite zaustaviti WireGuard" +
+	" z uporabo programa Storitve.\x02Posodobitev WireGuarda je na voljo. Zel" +
+	"o priporočamo posodobitev brez odlašanja.\x02Status: Čaka na uporabnika" +
+	"\x02Posodobi zdaj\x02Status: Čaka na servis za posodobitev\x02Napaka: %[" +
+	"1]v. Poskusite ponovno.\x02Status: Končano!"
 
-var sv_SEIndex = []uint32{ // 180 elements
+var sv_SEIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000004, 0x0000003c, 0x00000058,
 	0x0000006f, 0x000000af, 0x000000f7, 0x0000012f,
@@ -3217,20 +3287,23 @@ var sv_SEIndex = []uint32{ // 180 elements
 	0x00000bf6, 0x00000c19, 0x00000c83, 0x00000c8b,
 	0x00000c95, 0x00000caf, 0x00000cbc, 0x00000cd2,
 	0x00000cf2, 0x00000cfa, 0x00000d1e, 0x00000d37,
-	0x00000d4e, 0x00000d70, 0x00000d9f, 0x00000dd4,
-	0x00000e0b, 0x00000e33, 0x00000e47, 0x00000e83,
-	0x00000ed1, 0x00000ee7, 0x00000f1b, 0x00000f8c,
-	0x00000fa7, 0x00000fe2, 0x0000100b, 0x00001023,
-	0x00001048, 0x00001061, 0x000010b0, 0x000010f5,
+	0x00000d4e, 0x00000d70, 0x00000d9f, 0x00000dd6,
+	0x00000dfe, 0x00000e12, 0x00000e4e, 0x00000e9c,
+	0x00000eb2, 0x00000ee6, 0x00000f57, 0x00000f72,
+	0x00000fad, 0x00000fd6, 0x00000fee, 0x00001013,
+	0x0000102c, 0x0000107b, 0x000010c0, 0x000010dc,
 	// Entry A0 - BF
-	0x00001111, 0x00001136, 0x00001151, 0x0000117d,
-	0x0000119b, 0x0000120c, 0x00001268, 0x00001288,
-	0x00001295, 0x000012bd, 0x000012e2, 0x000012f3,
-	0x000012f3, 0x000012f3, 0x000012f3, 0x000012f3,
-	0x000012f3, 0x000012f3, 0x000012f3, 0x000012f3,
-} // Size: 744 bytes
+	0x00001101, 0x0000111c, 0x00001148, 0x00001166,
+	0x000011d7, 0x00001233, 0x00001253, 0x00001260,
+	0x00001288, 0x000012ad, 0x000012be, 0x000012be,
+	0x000012be, 0x000012be, 0x000012be, 0x000012be,
+	0x000012be, 0x000012be, 0x000012be, 0x000012be,
+	0x000012be, 0x000012be, 0x000012be, 0x000012be,
+	0x000012be, 0x000012be, 0x000012be, 0x000012be,
+	0x000012be, 0x000012be, 0x000012be,
+} // Size: 788 bytes
 
-const sv_SEData string = "" + // Size: 4851 bytes
+const sv_SEData string = "" + // Size: 4798 bytes
 	"\x02Fel\x02(inget argument): höj och installera hanterartjänsten\x02Anvä" +
 	"ndning: %[1]s [\x0a%[2]s]\x02Kommandoradsalternativ\x02Det går inte att " +
 	"avgöra om processen körs under WOW64: %[1]v\x02Du måste använda den inby" +
@@ -3286,30 +3359,30 @@ const sv_SEData string = "" + // Size: 4851 bytes
 	"apa tunnel\x02Ta bort valda tunnlar\x02Exportera alla tunnlar till zip" +
 	"\x02&Växla\x02Exportera alla tunnlar till &zip…\x02Redigera &vald tunnel" +
 	"…\x02&Ta bort valda tunnlar\x02inga konfigurationsfiler hittades\x02Ku" +
-	"nde inte importera vald konfiguration: %[1]v\x02Det gick inte att numrer" +
-	"a existerande tunnlar: %[1]v\x02Det finns redan en annan tunnel med namn" +
-	"et ‘%[1]s’\x02Kan inte importera konfiguration: %[1]v\x02Importerade tun" +
-	"nlar\x14\x01\x81\x01\x00\x02\x19\x02Importerade %[1]d tunnel\x00\x1a\x02" +
-	"Importerade %[1]d tunnlar\x14\x02\x80\x01\x02#\x02Importerade %[1]d av %" +
-	"[2]d tunnlar\x00#\x02Importerade %[1]d av %[2]d tunnlar\x02Kan inte skap" +
-	"a tunnel\x14\x01\x81\x01\x00\x02\x15\x02Ta bort %[1]d tunnel\x00\x16\x02" +
-	"Ta bort %[1]d tunnlar\x14\x01\x81\x01\x00\x024\x02Är du säker på att du " +
-	"vill ta bort %[1]d tunnel?\x004\x02Är du säker på att du vill radera %[1" +
-	"]d tunnlar?\x02Ta bort tunnel ‘%[1]s’\x02Är du säker på att du vill ta b" +
-	"ort tunneln ‘%[1]s’?\x02%[1]s Du kan inte ångra denna åtgärd.\x02Kan int" +
-	"e ta bort tunnel\x02En tunnel kunde inte tas bort: %[1]s\x02Kan inte ta " +
-	"bort tunnlar\x14\x01\x81\x01\x00\x02#\x02%[1]d tunneln kunde inte tas bo" +
-	"rt.\x00#\x02%[1]d tunnlar kunde inte tas bort.\x02Inställningsfiler (*.z" +
-	"ip, *.conf)|*.zip;*.conf|Alla filer (*.*)|*.*\x02Importera tunnlar från " +
-	"fil\x02Inställningsfiler ZIP (*.zip)|*.zip\x02Exportera tunnlar till zip" +
-	"\x02%[1]s (osignerat bygge, inga uppdateringar)\x02Fel när WireGuard avs" +
-	"lutades\x02Det går inte att avsluta tjänsten på grund av %[1]v. Du kansk" +
-	"e vill stoppa WireGuard från servicehanteraren.\x02En uppdatering av Wir" +
-	"eGuard finns tillgänglig. Uppdatering bör utföras snarast möjligt.\x02St" +
-	"atus: Väntar på användaren\x02Uppdatera nu\x02Status: Väntar på uppdater" +
-	"ingstjänst\x02Fel: %[1]v. Vänligen försök igen.\x02Status: Färdig!"
+	"nde inte importera vald konfiguration: %[1]v\x02Det finns redan en annan" +
+	" tunnel med namnet ‘%[1]s’\x02Kan inte importera konfiguration: %[1]v" +
+	"\x02Importerade tunnlar\x14\x01\x81\x01\x00\x02\x19\x02Importerade %[1]d" +
+	" tunnel\x00\x1a\x02Importerade %[1]d tunnlar\x14\x02\x80\x01\x02#\x02Imp" +
+	"orterade %[1]d av %[2]d tunnlar\x00#\x02Importerade %[1]d av %[2]d tunnl" +
+	"ar\x02Kan inte skapa tunnel\x14\x01\x81\x01\x00\x02\x15\x02Ta bort %[1]d" +
+	" tunnel\x00\x16\x02Ta bort %[1]d tunnlar\x14\x01\x81\x01\x00\x024\x02Är " +
+	"du säker på att du vill ta bort %[1]d tunnel?\x004\x02Är du säker på att" +
+	" du vill radera %[1]d tunnlar?\x02Ta bort tunnel ‘%[1]s’\x02Är du säker " +
+	"på att du vill ta bort tunneln ‘%[1]s’?\x02%[1]s Du kan inte ångra denna" +
+	" åtgärd.\x02Kan inte ta bort tunnel\x02En tunnel kunde inte tas bort: %[" +
+	"1]s\x02Kan inte ta bort tunnlar\x14\x01\x81\x01\x00\x02#\x02%[1]d tunnel" +
+	"n kunde inte tas bort.\x00#\x02%[1]d tunnlar kunde inte tas bort.\x02Ins" +
+	"tällningsfiler (*.zip, *.conf)|*.zip;*.conf|Alla filer (*.*)|*.*\x02Impo" +
+	"rtera tunnlar från fil\x02Inställningsfiler ZIP (*.zip)|*.zip\x02Exporte" +
+	"ra tunnlar till zip\x02%[1]s (osignerat bygge, inga uppdateringar)\x02Fe" +
+	"l när WireGuard avslutades\x02Det går inte att avsluta tjänsten på grund" +
+	" av %[1]v. Du kanske vill stoppa WireGuard från servicehanteraren.\x02En" +
+	" uppdatering av WireGuard finns tillgänglig. Uppdatering bör utföras sna" +
+	"rast möjligt.\x02Status: Väntar på användaren\x02Uppdatera nu\x02Status:" +
+	" Väntar på uppdateringstjänst\x02Fel: %[1]v. Vänligen försök igen.\x02St" +
+	"atus: Färdig!"
 
-var trIndex = []uint32{ // 180 elements
+var trIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000005, 0x00000053, 0x0000006d,
 	0x00000089, 0x000000cd, 0x00000112, 0x0000013d,
@@ -3350,20 +3423,23 @@ var trIndex = []uint32{ // 180 elements
 	0x00000cb6, 0x00000cd5, 0x00000d39, 0x00000d43,
 	0x00000d4d, 0x00000d62, 0x00000d6e, 0x00000d8a,
 	0x00000db2, 0x00000dbd, 0x00000de9, 0x00000e07,
-	0x00000e24, 0x00000e48, 0x00000e7b, 0x00000ea2,
-	0x00000ecf, 0x00000ef9, 0x00000f14, 0x00000f59,
-	0x00000fa9, 0x00000fc1, 0x00000fee, 0x0000105d,
-	0x00001077, 0x000010b2, 0x000010d7, 0x000010e9,
-	0x0000110c, 0x00001121, 0x00001168, 0x000011b7,
+	0x00000e24, 0x00000e48, 0x00000e7b, 0x00000ea8,
+	0x00000ed2, 0x00000eed, 0x00000f32, 0x00000f82,
+	0x00000f9a, 0x00000fc7, 0x00001036, 0x00001050,
+	0x0000108b, 0x000010b0, 0x000010c2, 0x000010e5,
+	0x000010fa, 0x00001141, 0x00001190, 0x000011af,
 	// Entry A0 - BF
-	0x000011d6, 0x00001202, 0x00001225, 0x0000124f,
-	0x0000126b, 0x000012d8, 0x0000133f, 0x0000135d,
-	0x0000136e, 0x00001399, 0x000013bf, 0x000013d3,
-	0x000013d3, 0x000013d3, 0x000013d3, 0x000013d3,
-	0x000013d3, 0x000013d3, 0x000013d3, 0x000013d3,
-} // Size: 744 bytes
+	0x000011db, 0x000011fe, 0x00001228, 0x00001244,
+	0x000012b1, 0x00001318, 0x00001336, 0x00001347,
+	0x00001372, 0x00001398, 0x000013ac, 0x000013ac,
+	0x000013ac, 0x000013ac, 0x000013ac, 0x000013ac,
+	0x000013ac, 0x000013ac, 0x000013ac, 0x000013ac,
+	0x000013ac, 0x000013ac, 0x000013ac, 0x000013ac,
+	0x000013ac, 0x000013ac, 0x000013ac, 0x000013ac,
+	0x000013ac, 0x000013ac, 0x000013ac,
+} // Size: 788 bytes
 
-const trData string = "" + // Size: 5075 bytes
+const trData string = "" + // Size: 5036 bytes
 	"\x02Hata\x02(parametre belirtilmediyse): gerekli izinleri al ve yönetim " +
 	"hizmetini yükle\x02Kullanım: %[1]s [\x0a%[2]s]\x02Komut Satırı Seçenekle" +
 	"ri\x02İşlemin WOW64 altında çalıştığından emin olunamadı: %[1]v\x02Bu bi" +
@@ -3419,30 +3495,30 @@ const trData string = "" + // Size: 5075 bytes
 	"e…\x02Tünel ekle\x02Seçilen tünelleri kaldır\x02Tüm tünelleri zip olarak" +
 	" dışa aktar\x02&Aç/kapat\x02Tüm tünelleri &zip olarak dışa aktar…\x02&Se" +
 	"çilen tüneli düzenle…\x02S&eçilen tünelleri kaldır\x02yapılandırma dosy" +
-	"ası bulunamadı\x02Seçilen yapılandırma içe aktarılamadı: %[1]v\x02Mevcut" +
-	" tüneller sıralanamadı: %[1]v\x02‘%[1]s’ adında başka bir tünel mevcut" +
-	"\x02Yapılandırma içe aktarılamadı: %[1]v\x02Tüneller içe aktarıldı\x14" +
-	"\x01\x81\x01\x00\x02\x1e\x02%[1]d tünel içe aktarıldı\x00\x1e\x02%[1]d t" +
-	"ünel içe aktarıldı\x14\x02\x80\x01\x02$\x02%[2]d/%[1]d tünel içe aktarı" +
-	"ldı\x00$\x02%[2]d/%[1]d tünel içe aktarıldı\x02Tünel oluşturulamadı\x14" +
-	"\x01\x81\x01\x00\x02\x12\x02%[1]d tüneli sil\x00\x12\x02%[1]d tüneli sil" +
-	"\x14\x01\x81\x01\x00\x023\x02%[1]d tüneli silmek istediğinizden emin mis" +
-	"iniz?\x003\x02%[1]d tüneli silmek istediğinizden emin misiniz?\x02‘%[1]s" +
-	"’ tünelini sil\x02‘%[1]s’ tünelini silmek istediğinizden emin misiniz?" +
-	"\x02%[1]s Bu işlemi geri alamazsınız.\x02Tünel silinemedi\x02Bir tünel k" +
-	"aldırılamadı: %[1]s\x02Tüneller silinemedi\x14\x01\x81\x01\x00\x02\x1f" +
-	"\x02%[1]d tünel kaldırılamadı.\x00\x1f\x02%[1]d tünel kaldırılamadı.\x02" +
-	"Yapılandırma dosyaları (*.zip, *.conf)|*.zip;*.conf|Tüm dosyalar (*.*)|*" +
-	".*\x02Tünelleri dosyadan içe aktar\x02Yapılandırma ZIP dosyaları (*.zip)" +
-	"|*.zip\x02Tünelleri zip olarak dışa aktar\x02%[1]s (imzasız derleme, gün" +
-	"celleme yok)\x02WireGuard Çıkış Hatası\x02Şu nedenden dolayı hizmetten ç" +
-	"ıkılamadı: %[1]v. WireGuard'ı hizmet yöneticisinden durdurabilirsiniz." +
-	"\x02Yeni bir WireGuard güncellemesi yayımlandı. Vakit kaybetmeden güncel" +
-	"leme yapmanız tavsiye edilir.\x02Durum: Kullanıcı bekleniyor\x02Şimdi gü" +
-	"ncelle\x02Durum: Güncelleştirme hizmeti bekleniyor\x02Hata: %[1]v. Lütfe" +
-	"n yeniden deneyin.\x02Durum: Tamamlandı!"
+	"ası bulunamadı\x02Seçilen yapılandırma içe aktarılamadı: %[1]v\x02‘%[1]s" +
+	"’ adında başka bir tünel mevcut\x02Yapılandırma içe aktarılamadı: %[1]" +
+	"v\x02Tüneller içe aktarıldı\x14\x01\x81\x01\x00\x02\x1e\x02%[1]d tünel i" +
+	"çe aktarıldı\x00\x1e\x02%[1]d tünel içe aktarıldı\x14\x02\x80\x01\x02$" +
+	"\x02%[2]d/%[1]d tünel içe aktarıldı\x00$\x02%[2]d/%[1]d tünel içe aktarı" +
+	"ldı\x02Tünel oluşturulamadı\x14\x01\x81\x01\x00\x02\x12\x02%[1]d tüneli " +
+	"sil\x00\x12\x02%[1]d tüneli sil\x14\x01\x81\x01\x00\x023\x02%[1]d tüneli" +
+	" silmek istediğinizden emin misiniz?\x003\x02%[1]d tüneli silmek istediğ" +
+	"inizden emin misiniz?\x02‘%[1]s’ tünelini sil\x02‘%[1]s’ tünelini silmek" +
+	" istediğinizden emin misiniz?\x02%[1]s Bu işlemi geri alamazsınız.\x02Tü" +
+	"nel silinemedi\x02Bir tünel kaldırılamadı: %[1]s\x02Tüneller silinemedi" +
+	"\x14\x01\x81\x01\x00\x02\x1f\x02%[1]d tünel kaldırılamadı.\x00\x1f\x02%[" +
+	"1]d tünel kaldırılamadı.\x02Yapılandırma dosyaları (*.zip, *.conf)|*.zip" +
+	";*.conf|Tüm dosyalar (*.*)|*.*\x02Tünelleri dosyadan içe aktar\x02Yapıla" +
+	"ndırma ZIP dosyaları (*.zip)|*.zip\x02Tünelleri zip olarak dışa aktar" +
+	"\x02%[1]s (imzasız derleme, güncelleme yok)\x02WireGuard Çıkış Hatası" +
+	"\x02Şu nedenden dolayı hizmetten çıkılamadı: %[1]v. WireGuard'ı hizmet y" +
+	"öneticisinden durdurabilirsiniz.\x02Yeni bir WireGuard güncellemesi yay" +
+	"ımlandı. Vakit kaybetmeden güncelleme yapmanız tavsiye edilir.\x02Durum" +
+	": Kullanıcı bekleniyor\x02Şimdi güncelle\x02Durum: Güncelleştirme hizmet" +
+	"i bekleniyor\x02Hata: %[1]v. Lütfen yeniden deneyin.\x02Durum: Tamamland" +
+	"ı!"
 
-var ukIndex = []uint32{ // 180 elements
+var ukIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x0000000f, 0x0000008e, 0x000000b7,
 	0x000000ea, 0x00000144, 0x000001c2, 0x0000021b,
@@ -3483,20 +3559,23 @@ var ukIndex = []uint32{ // 180 elements
 	0x00001483, 0x000014b1, 0x0000152a, 0x00001537,
 	0x0000154d, 0x00001578, 0x00001592, 0x000015bd,
 	0x000015f1, 0x00001607, 0x0000163f, 0x00001676,
-	0x000016a2, 0x000016de, 0x00001738, 0x00001788,
-	0x000017c0, 0x0000180b, 0x0000182f, 0x000018e8,
-	0x000019c8, 0x000019fa, 0x00001a9b, 0x00001be2,
-	0x00001c08, 0x00001c5a, 0x00001c99, 0x00001cca,
-	0x00001d03, 0x00001d34, 0x00001e29, 0x00001e86,
+	0x000016a2, 0x000016de, 0x00001738, 0x00001770,
+	0x000017bb, 0x000017df, 0x00001898, 0x00001978,
+	0x000019aa, 0x00001a4b, 0x00001b92, 0x00001bb8,
+	0x00001c0a, 0x00001c49, 0x00001c7a, 0x00001cb3,
+	0x00001ce4, 0x00001dd9, 0x00001e36, 0x00001e68,
 	// Entry A0 - BF
-	0x00001eb8, 0x00001ef0, 0x00001f1d, 0x00001f66,
-	0x00001f96, 0x0000203e, 0x000020aa, 0x000020e4,
-	0x000020fe, 0x00002146, 0x00002192, 0x000021af,
-	0x000021af, 0x000021af, 0x000021af, 0x000021af,
-	0x000021af, 0x000021af, 0x000021af, 0x000021af,
-} // Size: 744 bytes
+	0x00001ea0, 0x00001ecd, 0x00001f16, 0x00001f46,
+	0x00001fee, 0x0000205a, 0x00002094, 0x000020ae,
+	0x000020f6, 0x00002142, 0x0000215f, 0x0000215f,
+	0x0000215f, 0x0000215f, 0x0000215f, 0x0000215f,
+	0x0000215f, 0x0000215f, 0x0000215f, 0x0000215f,
+	0x0000215f, 0x0000215f, 0x0000215f, 0x0000215f,
+	0x0000215f, 0x0000215f, 0x0000215f, 0x0000215f,
+	0x0000215f, 0x0000215f, 0x0000215f,
+} // Size: 788 bytes
 
-const ukData string = "" + // Size: 8623 bytes
+const ukData string = "" + // Size: 8543 bytes
 	"\x02Помилка\x02(немає аргумента): отримати права аднімістратора і встано" +
 	"вити службу\x02Використання: %[1]s [\x0a%[2]s]\x02Параметри командного " +
 	"рядка\x02Неможливо визначити, чи працює процес під WOW64: %[1]v\x02Ви п" +
@@ -3556,36 +3635,35 @@ const ukData string = "" + // Size: 8623 bytes
 	"\x02Видалити обрані тунелі\x02Експортувати всі тунелі в zip\x02&Перемкну" +
 	"ти\x02Експортувати всі тунелі в &zip…\x02Редагувати &вибраний тунель…" +
 	"\x02&Видалити обрані тунелі\x02не знайдено файлів конфігурації\x02Не вда" +
-	"лося імпортувати вибрану конфігурацію: %[1]v\x02Не вдалося перерахувати" +
-	" існуючі тунелі: %[1]v\x02Тунель з ім'ям ‘%[1]s’ вже існує\x02Не вдалося" +
-	" імпортувати конфігурацію: %[1]v\x02Імпортовано тунелі\x14\x01\x81\x01" +
-	"\x00\x04*\x02Імпортовано %[1]d тунелі\x05,\x02Імпортовано %[1]d тунелів" +
-	"\x02*\x02Імпортовано %[1]d тунель\x00,\x02Імпортовано %[1]d тунелів\x14" +
-	"\x02\x80\x01\x045\x02Імпортовано %[1]d з %[2]d тунелів\x055\x02Імпортова" +
-	"но %[1]d з %[2]d тунелів\x025\x02Імпортовано %[1]d з %[2]d тунелів\x005" +
-	"\x02Імпортовано %[1]d з %[2]d тунелів\x02Не вдалося створити тунель\x14" +
-	"\x01\x81\x01\x00\x04$\x02Видалити %[1]d тунелі\x05&\x02Видалити %[1]d ту" +
-	"нелів\x02$\x02Видалити %[1]d тунель\x00&\x02Видалити %[1]d тунелів\x14" +
-	"\x01\x81\x01\x00\x04N\x02Ви впевнені, що хочете видалити %[1]d тунелі?" +
-	"\x05P\x02Ви впевнені, що хочете видалити %[1]d тунелів?\x02N\x02Ви впевн" +
-	"ені, що хочете видалити %[1]d тунель?\x00N\x02Ви впевнені, що хочете ви" +
-	"далити %[1]d тунелі?\x02Видалити тунель '%[1]s'\x02Ви впевнені, що бажа" +
-	"єте видалити тунель '%[1]s'?\x02%[1]s Цю дію не можна буде скасувати." +
-	"\x02Неможливо видалити тунель\x02Тунель не вдалося видалити: %[1]s\x02Не" +
-	"можливо видалити тунелі\x14\x01\x81\x01\x00\x049\x02%[1]d тунелі не вда" +
-	"лося видалити.\x05;\x02%[1]d тунелів не вдалося видалити.\x029\x02%[1]d" +
-	" тунель не вдалося видалити.\x00;\x02%[1]d тунелів не вдалося видалити." +
-	"\x02Файли конфігурації (*.zip, *.conf)|*.zip;*.conf|Всі файли (*.*)|*.*" +
-	"\x02Імпортувати тунелі з файлу\x02ZIP-файли конфігурації (*.zip) | *.zip" +
-	"\x02Експортувати тунелі в zip\x02%[1]s (непідписані збірки, немає оновле" +
-	"нь)\x02Помилка при виході з WireGuard\x02Не вдалося зупинити службу чер" +
-	"ез: %[1]v. Ви можете зупинити її вручну через менеджер сервісів.\x02Дос" +
-	"тупне оновлення WireGuard, доцільне оновлення без затримок.\x02Статус: " +
-	"Очікування користувача\x02Оновити зараз\x02Статус: Очікування на службу" +
-	" оновлення\x02Помилка: %[1]v. Будь ласка, спробуйте ще раз.\x02Стан: Зав" +
-	"ершено"
+	"лося імпортувати вибрану конфігурацію: %[1]v\x02Тунель з ім'ям ‘%[1]s’ " +
+	"вже існує\x02Не вдалося імпортувати конфігурацію: %[1]v\x02Імпортовано " +
+	"тунелі\x14\x01\x81\x01\x00\x04*\x02Імпортовано %[1]d тунелі\x05,\x02Імп" +
+	"ортовано %[1]d тунелів\x02*\x02Імпортовано %[1]d тунель\x00,\x02Імпорто" +
+	"вано %[1]d тунелів\x14\x02\x80\x01\x045\x02Імпортовано %[1]d з %[2]d ту" +
+	"нелів\x055\x02Імпортовано %[1]d з %[2]d тунелів\x025\x02Імпортовано %[1" +
+	"]d з %[2]d тунелів\x005\x02Імпортовано %[1]d з %[2]d тунелів\x02Не вдало" +
+	"ся створити тунель\x14\x01\x81\x01\x00\x04$\x02Видалити %[1]d тунелі" +
+	"\x05&\x02Видалити %[1]d тунелів\x02$\x02Видалити %[1]d тунель\x00&\x02Ви" +
+	"далити %[1]d тунелів\x14\x01\x81\x01\x00\x04N\x02Ви впевнені, що хочете" +
+	" видалити %[1]d тунелі?\x05P\x02Ви впевнені, що хочете видалити %[1]d ту" +
+	"нелів?\x02N\x02Ви впевнені, що хочете видалити %[1]d тунель?\x00N\x02Ви" +
+	" впевнені, що хочете видалити %[1]d тунелі?\x02Видалити тунель '%[1]s'" +
+	"\x02Ви впевнені, що бажаєте видалити тунель '%[1]s'?\x02%[1]s Цю дію не " +
+	"можна буде скасувати.\x02Неможливо видалити тунель\x02Тунель не вдалося" +
+	" видалити: %[1]s\x02Неможливо видалити тунелі\x14\x01\x81\x01\x00\x049" +
+	"\x02%[1]d тунелі не вдалося видалити.\x05;\x02%[1]d тунелів не вдалося в" +
+	"идалити.\x029\x02%[1]d тунель не вдалося видалити.\x00;\x02%[1]d тунелі" +
+	"в не вдалося видалити.\x02Файли конфігурації (*.zip, *.conf)|*.zip;*.co" +
+	"nf|Всі файли (*.*)|*.*\x02Імпортувати тунелі з файлу\x02ZIP-файли конфіг" +
+	"урації (*.zip) | *.zip\x02Експортувати тунелі в zip\x02%[1]s (непідписа" +
+	"ні збірки, немає оновлень)\x02Помилка при виході з WireGuard\x02Не вдал" +
+	"ося зупинити службу через: %[1]v. Ви можете зупинити її вручну через ме" +
+	"неджер сервісів.\x02Доступне оновлення WireGuard, доцільне оновлення бе" +
+	"з затримок.\x02Статус: Очікування користувача\x02Оновити зараз\x02Стату" +
+	"с: Очікування на службу оновлення\x02Помилка: %[1]v. Будь ласка, спробу" +
+	"йте ще раз.\x02Стан: Завершено"
 
-var viIndex = []uint32{ // 180 elements
+var viIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000006, 0x00000006, 0x00000022,
 	0x0000003b, 0x0000003b, 0x0000003b, 0x0000003b,
@@ -3637,7 +3715,10 @@ var viIndex = []uint32{ // 180 elements
 	0x0000036d, 0x0000036d, 0x0000036d, 0x0000036d,
 	0x0000036d, 0x0000036d, 0x0000036d, 0x0000036d,
 	0x0000036d, 0x0000036d, 0x0000036d, 0x0000036d,
-} // Size: 744 bytes
+	0x0000036d, 0x0000036d, 0x0000036d, 0x0000036d,
+	0x0000036d, 0x0000036d, 0x0000036d, 0x0000036d,
+	0x0000036d, 0x0000036d, 0x0000036d,
+} // Size: 788 bytes
 
 const viData string = "" + // Size: 877 bytes
 	"\x02Lỗi\x02Sử dụng: %[1]s [\x0a%[2]s]\x02Tùy chọn dòng lệnh\x02Vừa xong" +
@@ -3655,7 +3736,7 @@ const viData string = "" + // Size: 877 bytes
 	"không hợp lệ.\x02Không thể liệt kê các VPN\x02VPN đã tồn tại\x02Đã tồn t" +
 	"ại VPN với tên ‘%[1]s’."
 
-var zh_CNIndex = []uint32{ // 180 elements
+var zh_CNIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000007, 0x00000030, 0x00000047,
 	0x00000057, 0x0000008b, 0x000000c9, 0x000000ef,
@@ -3696,20 +3777,23 @@ var zh_CNIndex = []uint32{ // 180 elements
 	0x00000a4f, 0x00000a60, 0x00000aa2, 0x00000aa9,
 	0x00000ab5, 0x00000acd, 0x00000ada, 0x00000aed,
 	0x00000b10, 0x00000b28, 0x00000b53, 0x00000b6e,
-	0x00000b86, 0x00000b9c, 0x00000bb6, 0x00000bd6,
-	0x00000c03, 0x00000c1d, 0x00000c2a, 0x00000c4b,
-	0x00000c81, 0x00000c94, 0x00000cb2, 0x00000ce5,
-	0x00000cfd, 0x00000d27, 0x00000d45, 0x00000d58,
-	0x00000d72, 0x00000d85, 0x00000dac, 0x00000ded,
+	0x00000b86, 0x00000b9c, 0x00000bb6, 0x00000be3,
+	0x00000bfd, 0x00000c0a, 0x00000c2b, 0x00000c61,
+	0x00000c74, 0x00000c92, 0x00000cc5, 0x00000cdd,
+	0x00000d07, 0x00000d25, 0x00000d38, 0x00000d52,
+	0x00000d65, 0x00000d8c, 0x00000dcd, 0x00000de3,
 	// Entry A0 - BF
-	0x00000e03, 0x00000e1e, 0x00000e41, 0x00000e6e,
-	0x00000e89, 0x00000eea, 0x00000f22, 0x00000f37,
-	0x00000f44, 0x00000f5f, 0x00000f7c, 0x00000f8e,
-	0x00000f8e, 0x00000f8e, 0x00000f8e, 0x00000f8e,
-	0x00000f8e, 0x00000f8e, 0x00000f8e, 0x00000f8e,
-} // Size: 744 bytes
+	0x00000dfe, 0x00000e21, 0x00000e4e, 0x00000e69,
+	0x00000eca, 0x00000f02, 0x00000f17, 0x00000f24,
+	0x00000f3f, 0x00000f5c, 0x00000f6e, 0x00000f6e,
+	0x00000f6e, 0x00000f6e, 0x00000f6e, 0x00000f6e,
+	0x00000f6e, 0x00000f75, 0x00000f75, 0x00000f75,
+	0x00000f75, 0x00000f75, 0x00000f75, 0x00000f75,
+	0x00000f75, 0x00000f75, 0x00000f75, 0x00000f75,
+	0x00000f75, 0x00000f75, 0x00000f75,
+} // Size: 788 bytes
 
-const zh_CNData string = "" + // Size: 3982 bytes
+const zh_CNData string = "" + // Size: 3957 bytes
 	"\x02错误\x02(无参数): 提升并安装管理服务\x02用法: %[1]s [\x0a%[2]s]\x02命令行选项\x02无法确定该进程是" +
 	"否在WOW64下运行: %[1]v\x02您必须在此计算机上使用原生版本的 WireGuard。\x02无法打开当前进程令牌: %[1]v" +
 	"\x02WireGuard 可能只能被内建的 %[1]s 小组中的成员使用。\x02WireGuard 正在运行，但用户界面只能从内建的 %[1" +
@@ -3740,18 +3824,18 @@ const zh_CNData string = "" + // Size: 3982 bytes
 	"\x02发现更新！\x02WireGuard 更新\x02新的 WireGuard 版本发布了。强烈建议您现在安装。\x02隧道\x02编辑 (" +
 	"&E)\x02新建空隧道… (&E)\x02新建隧道\x02删除所选隧道\x02导出所有隧道 (ZIP 压缩包)\x02切换连接状态 (&T)" +
 	"\x02导出所有隧道 (ZIP 压缩包)… (&Z)\x02编辑所选隧道… (&E)\x02删除所选隧道 (&R)\x02未找到配置文件\x02" +
-	"无法导入配置: %[1]v\x02无法列出现有隧道: %[1]v\x02另一个同名的隧道「%[1]s」已存在\x02无法导入配置: %[1]" +
-	"v\x02导入隧道\x14\x01\x81\x01\x00\x00\x1a\x02导入了 %[1]d 个隧道\x14\x02\x80\x01" +
-	"\x000\x02导入了 %[2]d 个隧道中的 %[1]d 个隧道\x02无法创建隧道\x14\x01\x81\x01\x00\x00\x17" +
-	"\x02删除 %[1]d 个隧道\x14\x01\x81\x01\x00\x00,\x02您确定要删除这 %[1]d 个隧道吗？\x02删除隧道" +
-	"「%[1]s」\x02您确定要删除隧道「%[1]s」吗？\x02%[1]s此操作无法撤销。\x02无法删除隧道\x02无法删除隧道: %[1" +
-	"]s\x02无法删除隧道\x14\x01\x81\x01\x00\x00 \x02无法删除 %[1]d 个隧道。\x02配置文件 (*.zip," +
-	" *.conf)|*.zip;*.conf|所有文件 (*.*)|*.*\x02从文件导入隧道\x02配置文件 (*.zip)|*.zip" +
-	"\x02导出配置文件 (ZIP 压缩包)\x02%[1]s (未签名版本，禁用自动更新)\x02退出 WireGuard 时出错\x02无法停止" +
-	"服务: %[1]v。您可能需要在服务管理器中手动停止 WireGuard 服务。\x02发现新版 WireGuard。强烈建议您现在安装。" +
-	"\x02状态: 等待用户\x02立即更新\x02状态: 等待更新服务\x02错误: %[1]v。请重试。\x02状态: 完成！"
+	"无法导入配置: %[1]v\x02另一个同名的隧道「%[1]s」已存在\x02无法导入配置: %[1]v\x02导入隧道\x14\x01" +
+	"\x81\x01\x00\x00\x1a\x02导入了 %[1]d 个隧道\x14\x02\x80\x01\x000\x02导入了 %[2]d " +
+	"个隧道中的 %[1]d 个隧道\x02无法创建隧道\x14\x01\x81\x01\x00\x00\x17\x02删除 %[1]d 个隧道" +
+	"\x14\x01\x81\x01\x00\x00,\x02您确定要删除这 %[1]d 个隧道吗？\x02删除隧道「%[1]s」\x02您确定要删" +
+	"除隧道「%[1]s」吗？\x02%[1]s此操作无法撤销。\x02无法删除隧道\x02无法删除隧道: %[1]s\x02无法删除隧道\x14" +
+	"\x01\x81\x01\x00\x00 \x02无法删除 %[1]d 个隧道。\x02配置文件 (*.zip, *.conf)|*.zip;*" +
+	".conf|所有文件 (*.*)|*.*\x02从文件导入隧道\x02配置文件 (*.zip)|*.zip\x02导出配置文件 (ZIP 压缩包" +
+	")\x02%[1]s (未签名版本，禁用自动更新)\x02退出 WireGuard 时出错\x02无法停止服务: %[1]v。您可能需要在服务管" +
+	"理器中手动停止 WireGuard 服务。\x02发现新版 WireGuard。强烈建议您现在安装。\x02状态: 等待用户\x02立即更新" +
+	"\x02状态: 等待更新服务\x02错误: %[1]v。请重试。\x02状态: 完成！\x02设置"
 
-var zh_TWIndex = []uint32{ // 180 elements
+var zh_TWIndex = []uint32{ // 191 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000007, 0x00000037, 0x00000056,
 	0x00000066, 0x000000a4, 0x000000df, 0x00000110,
@@ -3792,20 +3876,23 @@ var zh_TWIndex = []uint32{ // 180 elements
 	0x00000aa7, 0x00000ab8, 0x00000b11, 0x00000b18,
 	0x00000b24, 0x00000b3c, 0x00000b49, 0x00000b5c,
 	0x00000b7f, 0x00000b97, 0x00000bbc, 0x00000bd4,
-	0x00000bef, 0x00000c02, 0x00000c1e, 0x00000c3a,
-	0x00000c64, 0x00000c80, 0x00000c90, 0x00000cb1,
-	0x00000ce4, 0x00000cf7, 0x00000d15, 0x00000d45,
-	0x00000d5a, 0x00000d84, 0x00000daa, 0x00000dbd,
-	0x00000dd9, 0x00000dec, 0x00000e10, 0x00000e54,
+	0x00000bef, 0x00000c02, 0x00000c1e, 0x00000c48,
+	0x00000c64, 0x00000c74, 0x00000c95, 0x00000cc8,
+	0x00000cdb, 0x00000cf9, 0x00000d29, 0x00000d3e,
+	0x00000d68, 0x00000d8e, 0x00000da1, 0x00000dbd,
+	0x00000dd0, 0x00000df4, 0x00000e38, 0x00000e54,
 	// Entry A0 - BF
-	0x00000e70, 0x00000e8e, 0x00000ea7, 0x00000edd,
-	0x00000ef5, 0x00000f56, 0x00000fab, 0x00000fc4,
-	0x00000fd1, 0x00000fed, 0x00001012, 0x00001028,
-	0x00001028, 0x00001028, 0x00001028, 0x00001028,
-	0x00001028, 0x00001028, 0x00001028, 0x00001028,
-} // Size: 744 bytes
+	0x00000e72, 0x00000e8b, 0x00000ec1, 0x00000ed9,
+	0x00000f3a, 0x00000f8f, 0x00000fa8, 0x00000fb5,
+	0x00000fd1, 0x00000ff6, 0x0000100c, 0x0000100c,
+	0x0000100c, 0x0000100c, 0x0000100c, 0x0000100c,
+	0x0000100c, 0x00001013, 0x00001013, 0x00001013,
+	0x00001013, 0x00001013, 0x00001013, 0x00001013,
+	0x00001013, 0x00001013, 0x00001013, 0x00001013,
+	0x00001013, 0x00001013, 0x00001013,
+} // Size: 788 bytes
 
-const zh_TWData string = "" + // Size: 4136 bytes
+const zh_TWData string = "" + // Size: 4115 bytes
 	"\x02錯誤\x02(無參數)：提升權限並安裝管理服務\x02使用方法： %[1]s [\x0a%[2]s]\x02命令列選項\x02無法確定該" +
 	"處理程序是否在 WOW64 下執行： %[1]v\x02您必須在此電腦上執行原生版本的 WireGuard。\x02無法開啓目前處理程序的權" +
 	"杖： %[1]v\x02WireGuard 可能只能被內建的「%[1]s」群組成員使用。\x02WireGuard 正在執行，但 UI 只能" +
@@ -3837,15 +3924,15 @@ const zh_TWData string = "" + // Size: 4136 bytes
 	"d 更新\x02更新的 WireGuard 已經為您準備好了。\x0a強烈建議您立即更新 WireGuard。\x02隧道\x02編輯 (&E)" +
 	"\x02新增隧道精靈 (&E)\x02新增隧道\x02刪除選取隧道\x02匯出所有隧道（ZIP 格式）\x02切換連線狀態 (&T)\x02匯出" +
 	"所有隧道至 &ZIP 壓縮檔\x02編輯選取隧道 (&S)\x02刪除已選取隧道 (&R)\x02找不到設定檔\x02無法匯入設定： %[1" +
-	"]v\x02無法列出隧道： %[1]v\x02已有另一個同名的隧道「%[1]s」\x02無法匯入設定： %[1]v\x02已匯入隧道\x14" +
-	"\x01\x81\x01\x00\x00\x1a\x02已匯入 %[1]d 個隧道\x14\x02\x80\x01\x00-\x02已匯入 %[" +
-	"1]d 個隧道（共 %[2]d 個）\x02無法建立隧道\x14\x01\x81\x01\x00\x00\x17\x02刪除 %[1]d 個隧道" +
-	"\x14\x01\x81\x01\x00\x00)\x02您確定要刪除 %[1]d 個隧道嗎？\x02刪除隧道 - %[1]s\x02您確定要刪" +
-	"除隧道「%[1]s」嗎？\x02%[1]s\x0a\x0a您將無法復原此操作。\x02無法刪除隧道\x02無法刪除隧道： %[1]s\x02" +
-	"無法刪除隧道\x14\x01\x81\x01\x00\x00\x1d\x02無法刪除 %[1]d 個隧道\x02隧道設定檔 (*.zip, " +
-	"*.conf)|*.zip;*.conf|所有檔案 (*.*)|*.*\x02從檔案中匯入隧道…\x02隧道設定檔 (*.zip)|*.zip" +
-	"\x02匯出隧道設定至…\x02%[1]s（未簽署發行版本，無法自動更新）\x02離開 WireGuard 失敗\x02無法結束服務： %[1]" +
-	"v。\x0a您可能需要手動從服務管理中結束 WireGuard 服務。\x02更新的 WireGuard 已經為您準備好了。\x0a強烈建議您立" +
-	"即進行更新。\x02狀態：等待使用者\x02立即更新\x02狀態：等待更新服務\x02錯誤： %[1]v。請稍後再試。\x02狀態：已完成！"
+	"]v\x02已有另一個同名的隧道「%[1]s」\x02無法匯入設定： %[1]v\x02已匯入隧道\x14\x01\x81\x01\x00" +
+	"\x00\x1a\x02已匯入 %[1]d 個隧道\x14\x02\x80\x01\x00-\x02已匯入 %[1]d 個隧道（共 %[2]d " +
+	"個）\x02無法建立隧道\x14\x01\x81\x01\x00\x00\x17\x02刪除 %[1]d 個隧道\x14\x01\x81" +
+	"\x01\x00\x00)\x02您確定要刪除 %[1]d 個隧道嗎？\x02刪除隧道 - %[1]s\x02您確定要刪除隧道「%[1]s」嗎？" +
+	"\x02%[1]s\x0a\x0a您將無法復原此操作。\x02無法刪除隧道\x02無法刪除隧道： %[1]s\x02無法刪除隧道\x14\x01" +
+	"\x81\x01\x00\x00\x1d\x02無法刪除 %[1]d 個隧道\x02隧道設定檔 (*.zip, *.conf)|*.zip;*." +
+	"conf|所有檔案 (*.*)|*.*\x02從檔案中匯入隧道…\x02隧道設定檔 (*.zip)|*.zip\x02匯出隧道設定至…\x02%" +
+	"[1]s（未簽署發行版本，無法自動更新）\x02離開 WireGuard 失敗\x02無法結束服務： %[1]v。\x0a您可能需要手動從服務管" +
+	"理中結束 WireGuard 服務。\x02更新的 WireGuard 已經為您準備好了。\x0a強烈建議您立即進行更新。\x02狀態：等待" +
+	"使用者\x02立即更新\x02狀態：等待更新服務\x02錯誤： %[1]v。請稍後再試。\x02狀態：已完成！\x02設定"
 
-	// Total table size 175581 bytes (171KiB); checksum: F4F0E6D8
+	// Total table size 175992 bytes (171KiB); checksum: 6252A0B8

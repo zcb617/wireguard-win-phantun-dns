@@ -1806,6 +1806,12 @@
                     "expr": "hf"
                 }
             ]
+        },
+        {
+            "id": "Settings",
+            "message": "Settings",
+            "translation": "設定",
+            "translatorComment": "Copied from source."
         }
     ]
 }
