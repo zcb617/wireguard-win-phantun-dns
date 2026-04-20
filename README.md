@@ -53,6 +53,10 @@ Before building or running, you need the Phantun client binaries and the WinDive
 
 These files are included in this repository under `phantun-client-win/`. They were built from the [phantun-client-win](https://github.com/zcb617/phantun-client-win) project.
 
+### Related Projects
+
+- **[phantun-client-win](https://github.com/zcb617/phantun-client-win)** — Windows port of Phantun using WinDivert for packet interception. This project is used as the obfuscation backend.
+
 ## Download & Install
 
 If you've come here looking to simply run WireGuard for Windows, [the main download page has links](https://www.wireguard.com/install/). There you will find two things:
