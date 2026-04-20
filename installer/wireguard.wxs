@@ -93,6 +93,12 @@
 			<Component Directory="WireGuardFolder" Id="PhantunSys" Guid="0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d">
 				<File Source="..\phantun-client-win\WinDivert64.sys" KeyPath="yes" />
 			</Component>
+			<Component Directory="WireGuardFolder" Id="LicenseFile" Guid="a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d">
+				<File Source="..\COPYING" KeyPath="yes" />
+			</Component>
+			<Component Directory="WireGuardFolder" Id="ThirdPartyNotices" Guid="b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e">
+				<File Source="..\THIRD_PARTY_NOTICES.md" KeyPath="yes" />
+			</Component>
 		</ComponentGroup>
 
 		<!--
