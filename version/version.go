@@ -6,5 +6,5 @@
 package version
 
 const (
-	Number = "26.04.21.2018"
+	Number = "26.04.22.0000"
 )

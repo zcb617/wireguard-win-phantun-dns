@@ -44,9 +44,10 @@ type PhantunPage struct {
 	saveButton  *walk.PushButton
 	statusLabel *walk.TextLabel
 
-	currentTunnel string
-	phantunConfig  *conf.PhantunConfig
-	dnsCryptConfig *conf.DNSCryptConfig
+	currentTunnel   string
+	tunnelIPv4Addr  string
+	phantunConfig   *conf.PhantunConfig
+	dnsCryptConfig  *conf.DNSCryptConfig
 	dnsRouterConfig *conf.DNSRouterConfig
 }
 
@@ -397,6 +398,15 @@ func (pp *PhantunPage) SetTunnel(tunnel *manager.Tunnel) {
 	}
 
 	pp.currentTunnel = tunnel.Name
+	pp.tunnelIPv4Addr = ""
+	if cfg, err := tunnel.StoredConfig(); err == nil {
+		for _, prefix := range cfg.Interface.Addresses {
+			if addr := prefix.Addr(); addr.Is4() {
+				pp.tunnelIPv4Addr = addr.String()
+				break
+			}
+		}
+	}
 	pp.enabledCB.SetEnabled(true)
 	pp.remoteEdit.SetEnabled(true)
 	pp.localEdit.SetEnabled(true)
@@ -468,6 +478,9 @@ func (pp *PhantunPage) onDNSEnabledChanged() {
 	pp.dnsListenEdit.SetEnabled(enabled)
 	pp.dnsServerNamesEdit.SetEnabled(enabled)
 	pp.dnsCustomTOMLEdit.SetEnabled(enabled)
+	if enabled && pp.tunnelIPv4Addr != "" {
+		pp.dnsListenEdit.SetText(pp.tunnelIPv4Addr + ":10053")
+	}
 }
 
 func (pp *PhantunPage) onDNSRouterEnabledChanged() {
@@ -482,6 +495,9 @@ func (pp *PhantunPage) onDNSRouterEnabledChanged() {
 	pp.dnsRouterModeCombo.SetEnabled(enabled)
 	if enabled {
 		pp.dnsRouterTTLEdit.SetEnabled(pp.dnsRouterModeCombo.CurrentIndex() == 1)
+		if pp.tunnelIPv4Addr != "" {
+			pp.dnsRouterListenEdit.SetText(pp.tunnelIPv4Addr + ":53")
+		}
 	} else {
 		pp.dnsRouterTTLEdit.SetEnabled(false)
 	}
@@ -569,6 +585,23 @@ func (pp *PhantunPage) onSaveClicked() {
 	}
 
 	pp.statusLabel.SetText(l18n.Sprintf("Saved settings for %s", pp.currentTunnel))
+}
+
+// tunnelIPv4 returns the first IPv4 address assigned to the tunnel interface.
+func tunnelIPv4(tunnelName string) string {
+	if !conf.TunnelNameIsValid(tunnelName) {
+		return ""
+	}
+	cfg, err := conf.LoadFromName(tunnelName)
+	if err != nil {
+		return ""
+	}
+	for _, prefix := range cfg.Interface.Addresses {
+		if addr := prefix.Addr(); addr.Is4() {
+			return addr.String()
+		}
+	}
+	return ""
 }
 
 // isUDPPortInUse tries to bind to the given UDP address. It returns true only
