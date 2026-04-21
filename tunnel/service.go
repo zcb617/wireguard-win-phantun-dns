@@ -53,6 +53,9 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 	var routeSyncer *routeTableSyncer
 	var dnscryptListenAddr string
 	var physicalDNSOverrides []winipcfg.PhysicalDNSOverride
+	var dnscryptCmd *exec.Cmd
+	var originalServers []netip.Addr
+	var dnscryptUpstream string
 
 	defer func() {
 		if phantunProcess != nil {
@@ -269,16 +272,16 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		}
 
 		dnscryptArgs := []string{"-config", tomlPath}
-		cmd := exec.Command(dnscryptExe, dnscryptArgs...)
-		cmd.Dir = filepath.Dir(dnscryptExe)
-		cmd.SysProcAttr = &windows.SysProcAttr{HideWindow: true}
-		if cmdErr := cmd.Start(); cmdErr != nil {
-			err = fmt.Errorf("failed to start dnscrypt-proxy: %w", cmdErr)
-			serviceError = services.ErrorDNSCryptClient
-			return
+		dnscryptCmd = exec.Command(dnscryptExe, dnscryptArgs...)
+		dnscryptCmd.Dir = filepath.Dir(dnscryptExe)
+		dnscryptCmd.SysProcAttr = &windows.SysProcAttr{HideWindow: true}
+		// Redirect dnscrypt-proxy output to a log file so it is visible when
+		// running as a SYSTEM service (which has no console).
+		logPath := filepath.Join(configDir, "dnscrypt-proxy-"+config.Name+".log")
+		if logFile, openErr := os.OpenFile(logPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0o600); openErr == nil {
+			dnscryptCmd.Stdout = logFile
+			dnscryptCmd.Stderr = logFile
 		}
-		dnscryptProcess = cmd.Process
-		log.Println("DNSCrypt proxy started")
 
 		// Note: we no longer override config.Interface.DNS automatically.
 		// The user is responsible for setting the tunnel DNS to the local
@@ -293,7 +296,7 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 	if dnsRouterErr == nil && dnsRouterConfig.Enabled {
 		log.Println("Starting DNS router")
 		// Determine dnscrypt upstream address
-		dnscryptUpstream := ""
+		dnscryptUpstream = ""
 		if dnscryptListenAddr != "" {
 			dnscryptUpstream = dnsCryptConfig.ListenAddress
 		}
@@ -312,10 +315,8 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		} else {
 			log.Printf("Warning: could not parse DNS router listen address %q: %v", dnsRouterConfig.ListenAddress, parseErr)
 		}
-		// Override physical adapter DNS to 127.0.0.1 so all system DNS queries
-		// are forced through the DNS router regardless of interface routing.
-		// Capture the original DNS servers before override to avoid loopback loops.
-		var originalServers []netip.Addr
+		// Override physical adapter DNS so all system DNS queries are forced
+		// through the DNS router regardless of interface routing.
 		var overrideErr error
 		physicalDNSOverrides, originalServers, overrideErr = winipcfg.OverridePhysicalDNS([]netip.Addr{routerAddr})
 		if overrideErr != nil {
@@ -323,14 +324,7 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		} else {
 			log.Printf("Overridden %d physical adapter(s) DNS to %s", len(physicalDNSOverrides), routerAddr)
 		}
-		// Start DNS router with the captured original DNS servers.
-		var routerErr error
-		dnsRouterInst, routerErr = startDNSRouter(config.Name, dnscryptUpstream, originalServers, wgIPChan)
-		if routerErr != nil {
-			err = routerErr
-			serviceError = services.ErrorDNSRouter
-			return
-		}
+		// DNS router will be started after the interface is UP so it can bind WG IPs.
 	}
 
 	log.Println("Creating network adapter")
@@ -394,6 +388,29 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		return
 	}
 
+	// Start DNSCrypt proxy after interface is UP so it can bind WG IPs.
+	if dnscryptCmd != nil {
+		if cmdErr := dnscryptCmd.Start(); cmdErr != nil {
+			err = fmt.Errorf("failed to start dnscrypt-proxy: %w", cmdErr)
+			serviceError = services.ErrorDNSCryptClient
+			return
+		}
+		dnscryptProcess = dnscryptCmd.Process
+		log.Println("DNSCrypt proxy started")
+	}
+
+	// Start DNS router after interface is UP so it can bind WG IPs.
+	if dnsRouterErr == nil && dnsRouterConfig != nil && dnsRouterConfig.Enabled {
+		log.Println("Starting DNS router")
+		var routerErr error
+		dnsRouterInst, routerErr = startDNSRouter(config.Name, dnscryptUpstream, originalServers, wgIPChan)
+		if routerErr != nil {
+			err = routerErr
+			serviceError = services.ErrorDNSRouter
+			return
+		}
+	}
+
 	// Start syncer if DNS router is active (after interface is UP)
 	if wgIPChan != nil {
 		if dnsRouterConfig.Mode == conf.DNSRouterModeRouteTable {
@@ -401,6 +418,14 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 			config.Interface.TableOff = true
 			routeSyncer = newRouteTableSyncer(luid, dnsRouterConfig.TTLMinutes)
 			routeSyncer.Start()
+			// Add /32 (v4) and /128 (v6) AllowedIPs to the route table as host routes.
+			for _, peer := range config.Peers {
+				for _, prefix := range peer.AllowedIPs {
+					if prefix.IsSingleIP() {
+						routeSyncer.AddIP(prefix.Addr())
+					}
+				}
+			}
 			go func() {
 				for ip := range wgIPChan {
 					if addr, ok := netip.AddrFromSlice(ip.To4()); ok {

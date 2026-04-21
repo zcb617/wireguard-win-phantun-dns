@@ -6,10 +6,12 @@
 package ui
 
 import (
+	"errors"
 	"fmt"
 	"net"
 	"strconv"
 	"strings"
+	"syscall"
 
 	"github.com/lxn/walk"
 
@@ -569,16 +571,17 @@ func (pp *PhantunPage) onSaveClicked() {
 	pp.statusLabel.SetText(l18n.Sprintf("Saved settings for %s", pp.currentTunnel))
 }
 
-// isUDPPortInUse tries to bind to the given UDP address. If binding fails,
-// the port is considered in use.
+// isUDPPortInUse tries to bind to the given UDP address. It returns true only
+// when the error is EADDRINUSE; other failures (e.g. the IP does not exist yet)
+// are treated as "not in use" so the user can still save the configuration.
 func isUDPPortInUse(addr string) bool {
 	udpAddr, err := net.ResolveUDPAddr("udp", addr)
 	if err != nil {
-		return true
+		return false
 	}
 	conn, err := net.ListenUDP("udp", udpAddr)
 	if err != nil {
-		return true
+		return errors.Is(err, syscall.Errno(10048))
 	}
 	conn.Close()
 	return false

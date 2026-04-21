@@ -171,7 +171,8 @@ func (cfg *DNSCryptConfig) GenerateTOML() string {
 	b.WriteString("require_dnssec = false\n")
 	b.WriteString("require_nolog = true\n")
 	b.WriteString("require_nofilter = true\n")
-	b.WriteString("disabled_server_names = []\n\n")
+	b.WriteString("disabled_server_names = []\n")
+	b.WriteString("log_level = 0\n\n")
 
 	if strings.TrimSpace(cfg.ServerNames) != "" {
 		names := strings.Split(cfg.ServerNames, ",")
