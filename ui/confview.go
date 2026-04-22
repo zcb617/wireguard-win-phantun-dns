@@ -52,9 +52,6 @@ type interfaceView struct {
 	dns            *labelTextLine
 	scripts        *labelTextLine
 	table          *labelTextLine
-	phantunStatus  *labelTextLine
-	dnscryptStatus *labelTextLine
-	dnsrouterStatus *labelTextLine
 	toggleActive   *toggleActiveLine
 	lines          []widgetsLine
 }
@@ -74,6 +71,7 @@ type ConfView struct {
 	*walk.ScrollView
 	name            *walk.GroupBox
 	interfaze       *interfaceView
+	components      *componentsView
 	peers           map[conf.Key]*peerView
 	tunnelChangedCB *manager.TunnelChangeCallback
 	tunnel          *manager.Tunnel
@@ -319,9 +317,6 @@ func newInterfaceView(parent walk.Container) (*interfaceView, error) {
 		{l18n.Sprintf("DNS servers:"), &iv.dns},
 		{l18n.Sprintf("Scripts:"), &iv.scripts},
 		{l18n.Sprintf("Table:"), &iv.table},
-		{l18n.Sprintf("Phantun obfuscation:"), &iv.phantunStatus},
-		{l18n.Sprintf("DNSCrypt proxy:"), &iv.dnscryptStatus},
-		{l18n.Sprintf("DNS router:"), &iv.dnsrouterStatus},
 	}
 	if iv.lines, err = createLabelTextLines(items, parent, &disposables); err != nil {
 		return nil, err
@@ -380,22 +375,65 @@ func (iv *interfaceView) widgetsLines() []widgetsLine {
 	return iv.lines
 }
 
-func (iv *interfaceView) applyProcessStatus(status *conf.ProcessStatus) {
+type componentsView struct {
+	group           *walk.GroupBox
+	phantunStatus   *labelTextLine
+	dnscryptStatus  *labelTextLine
+	dnsrouterStatus *labelTextLine
+}
+
+func (cv *componentsView) applyProcessStatus(status *conf.ProcessStatus) {
 	if status.PhantunRunning {
-		iv.phantunStatus.show(l18n.Sprintf("Running"))
+		cv.phantunStatus.show(l18n.Sprintf("Running"))
 	} else {
-		iv.phantunStatus.show(l18n.Sprintf("Not running"))
+		cv.phantunStatus.show(l18n.Sprintf("Not running"))
 	}
 	if status.DNSCryptRunning {
-		iv.dnscryptStatus.show(l18n.Sprintf("Running"))
+		cv.dnscryptStatus.show(l18n.Sprintf("Running"))
 	} else {
-		iv.dnscryptStatus.show(l18n.Sprintf("Not running"))
+		cv.dnscryptStatus.show(l18n.Sprintf("Not running"))
 	}
 	if status.DNSRouterRunning {
-		iv.dnsrouterStatus.show(l18n.Sprintf("Running"))
+		cv.dnsrouterStatus.show(l18n.Sprintf("Running"))
 	} else {
-		iv.dnsrouterStatus.show(l18n.Sprintf("Not running"))
+		cv.dnsrouterStatus.show(l18n.Sprintf("Not running"))
 	}
+}
+
+type widgetLinesWrapper struct {
+	lines []widgetsLine
+}
+
+func (w *widgetLinesWrapper) widgetsLines() []widgetsLine {
+	return w.lines
+}
+
+func newComponentsView(parent walk.Container) (*componentsView, error) {
+	var err error
+	var disposables walk.Disposables
+	defer disposables.Treat()
+
+	cv := new(componentsView)
+
+	if cv.group, err = newPaddedGroupGrid(parent); err != nil {
+		return nil, err
+	}
+	disposables.Add(cv.group)
+	cv.group.SetTitle(l18n.Sprintf("Components"))
+
+	items := []labelTextLineItem{
+		{l18n.Sprintf("Phantun obfuscation:"), &cv.phantunStatus},
+		{l18n.Sprintf("DNSCrypt proxy:"), &cv.dnscryptStatus},
+		{l18n.Sprintf("DNS router:"), &cv.dnsrouterStatus},
+	}
+	lines, err := createLabelTextLines(items, cv.group, nil)
+	if err != nil {
+		return nil, err
+	}
+	layoutInGrid(&widgetLinesWrapper{lines}, cv.group.Layout().(*walk.GridLayout))
+
+	disposables.Spare()
+	return cv, nil
 }
 
 func (iv *interfaceView) apply(c *conf.Interface) {
@@ -600,8 +638,7 @@ func NewConfView(parent walk.Container) (*ConfView, error) {
 					}
 					procStatus, _ = tunnel.ProcessStatus()
 					cv.Synchronize(func() {
-						cv.setTunnel(tunnel, &config, state)
-						cv.interfaze.applyProcessStatus(&procStatus)
+						cv.setTunnel(tunnel, &config, state, &procStatus)
 					})
 				}
 			case <-cv.quit:
@@ -665,14 +702,19 @@ func (cv *ConfView) onTunnelChanged(tunnel *manager.Tunnel, state, globalState m
 		}
 		procStatus, _ = tunnel.ProcessStatus()
 		cv.Synchronize(func() {
-			cv.setTunnel(tunnel, &config, state)
-			cv.interfaze.applyProcessStatus(&procStatus)
+			cv.setTunnel(tunnel, &config, state, &procStatus)
 		})
 	}
 }
 
 func (cv *ConfView) SetTunnel(tunnel *manager.Tunnel) {
 	cv.tunnel = tunnel // XXX: This races with the read in the updateTicker, but it's pointer-sized!
+
+	// Destroy components group when tunnel changes so it's recreated after peers
+	if cv.components != nil {
+		cv.components.group.Dispose()
+		cv.components = nil
+	}
 
 	var config conf.Config
 	var state manager.TunnelState
@@ -687,16 +729,15 @@ func (cv *ConfView) SetTunnel(tunnel *manager.Tunnel) {
 			}
 			procStatus, _ = tunnel.ProcessStatus()
 			cv.Synchronize(func() {
-				cv.setTunnel(tunnel, &config, state)
-				cv.interfaze.applyProcessStatus(&procStatus)
+				cv.setTunnel(tunnel, &config, state, &procStatus)
 			})
 		}()
 	} else {
-		cv.setTunnel(tunnel, &config, state)
+		cv.setTunnel(tunnel, &config, state, nil)
 	}
 }
 
-func (cv *ConfView) setTunnel(tunnel *manager.Tunnel, config *conf.Config, state manager.TunnelState) {
+func (cv *ConfView) setTunnel(tunnel *manager.Tunnel, config *conf.Config, state manager.TunnelState, procStatus *conf.ProcessStatus) {
 	if !(cv.tunnel == nil || tunnel == nil || tunnel.Name == cv.tunnel.Name) {
 		return
 	}
@@ -768,5 +809,21 @@ func (cv *ConfView) setTunnel(tunnel *manager.Tunnel, config *conf.Config, state
 		groupBox.SetVisible(false)
 		groupBox.Parent().Children().Remove(groupBox)
 		groupBox.Dispose()
+	}
+
+	// Create/update components group after peers so it appears below them
+	if tunnel != nil && cv.components == nil {
+		var compErr error
+		cv.components, compErr = newComponentsView(cv)
+		if compErr != nil {
+			// Silently ignore component view creation errors
+		}
+	}
+	if cv.components != nil && procStatus != nil {
+		cv.components.applyProcessStatus(procStatus)
+	}
+	if tunnel == nil && cv.components != nil {
+		cv.components.group.Dispose()
+		cv.components = nil
 	}
 }
