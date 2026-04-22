@@ -1,142 +1,82 @@
-# [WireGuard](https://www.wireguard.com/) for Windows with Phantun Obfuscation
+# WireGuard for Windows（增强版）
 
-This is a fork of the official WireGuard for Windows client, enhanced with [Phantun](https://github.com/dndx/phantun) UDP-to-TCP obfuscation support.
+基于 [WireGuard for Windows 官方客户端](https://github.com/WireGuard/wireguard-windows) 的二次开发，集成 Phantun TCP 伪装、DNSCrypt 加密代理和智能 DNS 路由分流功能。
 
-## Features
+## 核心功能
 
-- All features from the official WireGuard for Windows client
-- **Obfuscation tab**: Configure Phantun per-tunnel to mask WireGuard UDP traffic as TCP
-- Auto-starts `phantun-client.exe` when a tunnel with obfuscation enabled is activated
-- Transparently redirects peer endpoints through the local Phantun proxy
+### 1. Phantun TCP 伪装
 
-## Phantun Integration
+将 WireGuard 的 UDP 流量伪装为 TCP 连接，帮助绕过针对 UDP 的防火墙限速和 QoS 策略。
 
-Phantun is a UDP-to-TCP obfuscation tool that makes WireGuard traffic look like regular TCP connections. This helps bypass firewalls and QoS throttling that target UDP.
+**使用方法：**
 
-### How it works
+1. 在 UI 中选中隧道，打开 **Obfuscation** 标签页
+2. 勾选 **Enable Phantun obfuscation**
+3. 填写 **Remote server**（Phantun 服务端地址，格式 `服务器IP:端口`）
+4. **Local listen** 自动填入 WG 客户端 IP 和端口（默认 `127.0.0.1:8080`）
+5. 保存配置，激活隧道后自动启动 `phantun-client.exe`
 
-1. In the UI, select a tunnel and open the **"Obfuscation"** tab
-2. Enable Phantun, set the **Remote server** (Phantun server address), and optionally adjust the **Local listen** address (default `127.0.0.1:8080`)
-3. Save the configuration
-4. When the tunnel is activated, the client automatically starts `phantun-client.exe` and redirects all peer endpoints to the local Phantun proxy
-5. On tunnel deactivation, the Phantun process is cleanly shut down
+**AllowedIPs 配置建议：**
 
-### Important: AllowedIPs Configuration (Best Practice)
+使用 Phantun 时，Peer 的 AllowedIPs 请勿使用 `0.0.0.0/0`，否则 WireGuard 的 WFP classify callback 会拦截 Phantun 发出的伪造 TCP 包，导致流量循环。
 
-When using Phantun obfuscation, **do not use `AllowedIPs = 0.0.0.0/0`** in your WireGuard tunnel configuration.
-
-**Why:** WireGuard treats `0.0.0.0/0` as a "full tunnel" signal and enables an aggressive NDIS classify callback that intercepts **all** outbound traffic at the WFP layer. When Phantun's fake TCP packets are injected by WinDivert, they are immediately caught by this classify callback, re-encrypted, and sent back into the tunnel toward `127.0.0.1:8080`, creating an infinite loop.
-
-**Solution:** Use `0.0.0.0/1, 128.0.0.0/1` instead. This covers the entire IPv4 address space identically, but WireGuard handles it as ordinary route entries rather than triggering the full-tunnel classify mode. WinDivert-injected packets will then bypass WireGuard and exit through the physical adapter normally.
+正确写法：
 
 ```ini
 [Peer]
 AllowedIPs = 0.0.0.0/1, 128.0.0.0/1
 ```
 
-If you also need IPv6 coverage:
+### 2. DNS 加密（DNSCrypt Proxy）
 
-```ini
-[Peer]
-AllowedIPs = 0.0.0.0/1, 128.0.0.0/1, ::/1, 8000::/1
-```
+隧道内运行 dnscrypt-proxy，为 DNS 查询提供加密保护，防止 DNS 劫持和污染。
 
-### Prerequisite: Phantun Client Binaries
+**使用方法：**
 
-Before building or running, you need the Phantun client binaries and the WinDivert driver:
+1. 在 UI 中选中隧道，打开 **DNS Proxy** 标签页
+2. 勾选 **Enable DNSCrypt proxy**
+3. **Listen address** 自动填入 WG 客户端 IP 和端口（默认 `WG_IP:10053`）
+4. 在 **Server names** 中填写要使用的 dnscrypt 服务器名称（如 `cloudflare`）
+5. 高级用户可在 **Custom TOML** 中粘贴自定义配置或 sdns:// stamp
+6. 保存配置，隧道 handshake 完成后自动启动 `dnscrypt-proxy.exe`
 
-| File | Purpose |
-|------|---------|
-| `phantun-client.exe` | Phantun client executable |
-| `WinDivert.dll` | WinDivert user-mode DLL |
-| `WinDivert64.sys` | WinDivert kernel driver (64-bit) |
+### 3. IP 路由分流（DNS Router）
 
-These files are included in this repository under `phantun-client-win/`. They were built from the [phantun-client-win](https://github.com/zcb617/phantun-client-win) project.
+根据域名规则智能分流：匹配规则的域名走 WG 隧道，其他域名走本地网络直连。支持两种模式：
 
-### Related Projects
+- **AllowedIPs 模式**：将匹配域名解析到的 IP 动态加入 WG AllowedIPs
+- **RouteTable 模式**（默认）：将匹配域名解析到的 IP 加入系统路由表作为 /32 主机路由，非匹配流量直接走物理网卡
 
-- **[phantun-client-win](https://github.com/zcb617/phantun-client-win)** — Windows port of Phantun using WinDivert for packet interception. This project is used as the obfuscation backend.
+**使用方法：**
 
-## Download & Install
+1. 在 UI 中选中隧道，打开 **DNS Router** 标签页
+2. 勾选 **Enable DNS router**
+3. **Listen address** 自动填入 WG 客户端 IP 和端口（默认 `WG_IP:53`）
+4. **Mode** 选择 `routetable`（系统路由表模式）或 `allowedips`
+5. **Domain list URL** 使用默认即可，首次启动会自动下载域名规则列表
+6. 保存配置
 
-If you've come here looking to simply run WireGuard for Windows, [the main download page has links](https://www.wireguard.com/install/). There you will find two things:
+启用后，系统物理网卡的 DNS 会被临时重定向到 DNS Router，所有 DNS 查询先经过本地规则匹配，匹配域名通过 dnscrypt-proxy 加密解析，非匹配域名使用原始系统 DNS。
 
-- [The WireGuard Installer](https://download.wireguard.com/windows-client/wireguard-installer.exe) &ndash; This selects the most recent version for your architecture, downloads it, checks signatures and hashes, and installs it.
-- [Standalone MSIs](https://download.wireguard.com/windows-client/) &ndash; These are for system admins who wish to deploy the MSIs directly. For most end users, the ordinary installer takes care of downloading these automatically.
+## 构建与安装
 
-> **Note**: This fork (with Phantun support) does not have official pre-built releases. You must build from source or use the installer build process described below.
-
-## Building from Source (Windows)
-
-Windows 10 64-bit or later, and Git for Windows are required.
-
-### 1. Clone the repository
+需要 Windows 10 64-bit 或更高版本，以及 Git for Windows。
 
 ```text
-C:\Projects> git clone git@github.com:zcb617/wireguard-win-phantun-dns.git
-C:\Projects> cd wireguard-win-phantun-dns
+git clone https://github.com/zcb617/wireguard-win-phantun-dns.git
+cd wireguard-win-phantun-dns
+build
 ```
 
-### 2. Build
+`build.bat` 会自动下载并配置 Go、LLVM-MinGW、WireGuardNT 等依赖。
+
+构建安装包：
 
 ```text
-C:\Projects\wireguard-win-phantun-dns> build
+cd installer
+build
 ```
 
-The `build.bat` script will automatically download, verify, and extract the required dependencies (Go, LLVM-MinGW, ImageMagick, WireGuard tools, WireGuardNT driver).
+## 许可证
 
-### 3. Run
-
-```text
-C:\Projects\wireguard-win-phantun-dns> amd64\wireguard.exe
-```
-
-Since WireGuard requires a driver to be installed, and this generally requires a valid Microsoft signature, you may benefit from first installing a release of WireGuard for Windows from the official [wireguard.com](https://www.wireguard.com/install/) builds, which bundles a Microsoft-signed driver, and then subsequently run your own `wireguard.exe`. Alternatively, you can craft your own installer using the `quickinstall.bat` script.
-
-### Building the Installer (Optional)
-
-To build the `.msi` installer that includes the Phantun binaries:
-
-1. Ensure `phantun-client.exe`, `WinDivert.dll`, and `WinDivert64.sys` are available (see **Prerequisite: Phantun Client Binaries** above).
-2. Build the installer:
-
-```text
-C:\Projects\wireguard-win-phantun-dns> cd installer
-C:\Projects\wireguard-win-phantun-dns\installer> build
-```
-
-## Documentation
-
-In addition to this [`README.md`](README.md), the following documents are also available:
-
-- [`adminregistry.md`](docs/adminregistry.md) &ndash; A list of registry keys settable by the system administrator for changing the behavior of the application.
-- [`attacksurface.md`](docs/attacksurface.md) &ndash; A discussion of the various components from a security perspective, so that future auditors of this code have a head start in assessing its security design.
-- [`buildrun.md`](docs/buildrun.md) &ndash; Instructions on building, localizing, running, and developing for this repository.
-- [`enterprise.md`](docs/enterprise.md) &ndash; A summary of various features and tips for making the application usable in enterprise settings.
-- [`netquirk.md`](docs/netquirk.md) &ndash; A description of various networking quirks and "kill-switch" semantics.
-
-## License
-
-This repository is MIT-licensed.
-
-```text
-Copyright (C) 2018-2026 WireGuard LLC. All Rights Reserved.
-
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the "Software"),
-to deal in the Software without restriction, including without limitation
-the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
-```
+MIT 许可证。详见 [COPYING](COPYING)。
