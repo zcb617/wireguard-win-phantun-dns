@@ -314,7 +314,7 @@ func NewPhantunPage() (*PhantunPage, error) {
 	pp.dnsRouterModeCombo.SetEnabled(false)
 	pp.dnsRouterModeCombo.SetModel([]string{
 		l18n.Sprintf("AllowedIPs (dynamic update)"),
-		l18n.Sprintf("System route table"),
+		l18n.Sprintf("System route table (recommended)"),
 	})
 	pp.dnsRouterModeCombo.CurrentIndexChanged().Attach(func() {
 		pp.dnsRouterTTLEdit.SetEnabled(pp.dnsRouterModeCombo.CurrentIndex() == 1)
