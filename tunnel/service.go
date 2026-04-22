@@ -376,6 +376,13 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		return
 	}
 
+	// Route table mode: tell the driver not to add default routes.
+	// We control routing via dynamic /32 entries instead.
+	if dnsRouterErr == nil && dnsRouterConfig != nil && dnsRouterConfig.Enabled &&
+		dnsRouterConfig.Mode == conf.DNSRouterModeRouteTable {
+		config.Interface.TableOff = true
+	}
+
 	log.Println("Setting interface configuration")
 	err = adapter.SetConfiguration(config.ToDriverConfiguration())
 	if err != nil {
@@ -454,8 +461,6 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 				// Start syncer if DNS router is active.
 				if wgIPChan != nil {
 					if dnsRouterConfig.Mode == conf.DNSRouterModeRouteTable {
-						// Prevent WG from adding default routes; we control routing via /32 entries.
-						config.Interface.TableOff = true
 						routeSyncer = newRouteTableSyncer(luid, dnsRouterConfig.TTLMinutes)
 						routeSyncer.Start()
 						// Add /32 (v4) and /128 (v6) AllowedIPs to the route table as host routes.
