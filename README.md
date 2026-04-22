@@ -1,66 +1,68 @@
-# WireGuard for Windows（增强版）
+# WireGuard for Windows (Enhanced)
 
-基于 [WireGuard for Windows 官方客户端](https://github.com/WireGuard/wireguard-windows) 的二次开发，集成 Phantun TCP 伪装、DNSCrypt 加密代理和智能 DNS 路由分流功能。
+[中文](README_CN.md) | English
 
-## 核心功能
+A fork of the official [WireGuard for Windows](https://github.com/WireGuard/wireguard-windows) client, enhanced with Phantun TCP obfuscation, DNSCrypt proxy, and intelligent DNS-based traffic routing.
 
-### 1. Phantun TCP 伪装
+## Core Features
 
-将 WireGuard 的 UDP 流量伪装为 TCP 连接，帮助绕过针对 UDP 的防火墙限速和 QoS 策略。
+### 1. Phantun TCP Obfuscation
 
-**使用方法：**
+Masks WireGuard UDP traffic as TCP connections to bypass firewalls and QoS throttling targeting UDP.
 
-1. 在 UI 中选中隧道，打开 **Obfuscation** 标签页
-2. 勾选 **Enable Phantun obfuscation**
-3. 填写 **Remote server**（Phantun 服务端地址，格式 `服务器IP:端口`）
-4. **Local listen** 自动填入 WG 客户端 IP 和端口（默认 `127.0.0.1:8080`）
-5. 保存配置，激活隧道后自动启动 `phantun-client.exe`
+**Setup:**
 
-**AllowedIPs 配置建议：**
+1. Select a tunnel in the UI, open the **Obfuscation** tab
+2. Check **Enable Phantun obfuscation**
+3. Fill in **Remote server** (Phantun server address, format `IP:PORT`)
+4. **Local listen** is auto-filled with the WG client IP and port (default `127.0.0.1:8080`)
+5. Save the configuration; `phantun-client.exe` auto-starts when the tunnel is activated
 
-使用 Phantun 时，Peer 的 AllowedIPs 请勿使用 `0.0.0.0/0`，否则 WireGuard 的 WFP classify callback 会拦截 Phantun 发出的伪造 TCP 包，导致流量循环。
+**AllowedIPs best practice:**
 
-正确写法：
+Do not use `0.0.0.0/0` in Peer AllowedIPs when Phantun is enabled, because WireGuard's WFP classify callback will intercept Phantun's fake TCP packets and create a traffic loop.
+
+Correct configuration:
 
 ```ini
 [Peer]
 AllowedIPs = 0.0.0.0/1, 128.0.0.0/1
 ```
 
-### 2. DNS 加密（DNSCrypt Proxy）
+### 2. DNS Encryption (DNSCrypt Proxy)
 
-隧道内运行 dnscrypt-proxy，为 DNS 查询提供加密保护，防止 DNS 劫持和污染。
+Runs dnscrypt-proxy inside the tunnel to encrypt DNS queries and prevent DNS hijacking and poisoning.
 
-**使用方法：**
+**Setup:**
 
-1. 在 UI 中选中隧道，打开 **DNS Proxy** 标签页
-2. 勾选 **Enable DNSCrypt proxy**
-3. **Listen address** 自动填入 WG 客户端 IP 和端口（默认 `WG_IP:10053`）
-4. 在 **Server names** 中填写要使用的 dnscrypt 服务器名称（如 `cloudflare`）
-5. 高级用户可在 **Custom TOML** 中粘贴自定义配置或 sdns:// stamp
-6. 保存配置，隧道 handshake 完成后自动启动 `dnscrypt-proxy.exe`
+1. Select a tunnel in the UI, open the **DNS Proxy** tab
+2. Check **Enable DNSCrypt proxy**
+3. **Listen address** is auto-filled with the WG client IP and port (default `WG_IP:10053`)
+4. Enter **Server names** (e.g., `cloudflare`)
+5. Advanced users can paste custom config or sdns:// stamp in **Custom TOML**
+6. Save the configuration; `dnscrypt-proxy.exe` auto-starts after WG handshake completes
 
-### 3. IP 路由分流（DNS Router）
+### 3. IP Traffic Routing (DNS Router)
 
-根据域名规则智能分流：匹配规则的域名走 WG 隧道，其他域名走本地网络直连。支持两种模式：
+Intelligent domain-based traffic splitting: matched domains go through the WG tunnel, others use the local network directly. Two modes are supported:
 
-- **AllowedIPs 模式**：将匹配域名解析到的 IP 动态加入 WG AllowedIPs
-- **RouteTable 模式**（默认）：将匹配域名解析到的 IP 加入系统路由表作为 /32 主机路由，非匹配流量直接走物理网卡
+- **AllowedIPs mode**: dynamically adds resolved IPs of matched domains to WG AllowedIPs
+- **RouteTable mode** (default): adds resolved IPs as /32 host routes in the system routing table; unmatched traffic goes through the physical adapter
 
-**使用方法：**
+**Setup:**
 
-1. 在 UI 中选中隧道，打开 **DNS Router** 标签页
-2. 勾选 **Enable DNS router**
-3. **Listen address** 自动填入 WG 客户端 IP 和端口（默认 `WG_IP:53`）
-4. **Mode** 选择 `routetable`（系统路由表模式）或 `allowedips`
-5. **Domain list URL** 使用默认即可，首次启动会自动下载域名规则列表
-6. 保存配置
+1. Select a tunnel in the UI, open the **DNS Router** tab
+2. Check **Enable DNS router**
+3. **Listen address** is auto-filled with the WG client IP and port (default `WG_IP:53`)
+4. **Mode**: choose `routetable` (system route table mode) or `allowedips`
+5. **Domain list URL**: use the default; the domain rule list is auto-downloaded on first start
+6. Save the configuration
 
-启用后，系统物理网卡的 DNS 会被临时重定向到 DNS Router，所有 DNS 查询先经过本地规则匹配，匹配域名通过 dnscrypt-proxy 加密解析，非匹配域名使用原始系统 DNS。
+When enabled, the physical adapter DNS is temporarily redirected to the DNS Router. All DNS queries are matched against local rules first; matched domains are resolved via dnscrypt-proxy, unmatched domains use the original system DNS.
 
-## 构建与安装
+## Building and Installation
 
-需要 Windows 10 64-bit 或更高版本，以及 Git for Windows。
+Requires Windows 10 64-bit or later, and Git for Windows.
 
 ```text
 git clone https://github.com/zcb617/wireguard-win-phantun-dns.git
@@ -68,15 +70,15 @@ cd wireguard-win-phantun-dns
 build
 ```
 
-`build.bat` 会自动下载并配置 Go、LLVM-MinGW、WireGuardNT 等依赖。
+`build.bat` automatically downloads and configures Go, LLVM-MinGW, WireGuardNT, and other dependencies.
 
-构建安装包：
+To build the installer:
 
 ```text
 cd installer
 build
 ```
 
-## 许可证
+## License
 
-MIT 许可证。详见 [COPYING](COPYING)。
+MIT License. See [COPYING](COPYING).
