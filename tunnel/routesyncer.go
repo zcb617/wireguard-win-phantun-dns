@@ -19,13 +19,14 @@ import (
 // that traffic to those IPs is forwarded through the WG tunnel.
 // Expired routes are periodically removed from the route table.
 type routeTableSyncer struct {
-	luid         winipcfg.LUID
-	dynamicRoutes map[netip.Addr]time.Time
-	mu           sync.RWMutex
-	ticker       *time.Ticker
-	stop         chan struct{}
-	wg           sync.WaitGroup
-	ttl          time.Duration
+	luid            winipcfg.LUID
+	dynamicRoutes   map[netip.Addr]time.Time
+	permanentRoutes map[netip.Addr]struct{}
+	mu              sync.RWMutex
+	ticker          *time.Ticker
+	stop            chan struct{}
+	wg              sync.WaitGroup
+	ttl             time.Duration
 }
 
 func newRouteTableSyncer(luid winipcfg.LUID, ttlMinutes int) *routeTableSyncer {
@@ -33,10 +34,11 @@ func newRouteTableSyncer(luid winipcfg.LUID, ttlMinutes int) *routeTableSyncer {
 		ttlMinutes = 10
 	}
 	return &routeTableSyncer{
-		luid:          luid,
-		dynamicRoutes: make(map[netip.Addr]time.Time),
-		stop:          make(chan struct{}),
-		ttl:           time.Duration(ttlMinutes) * time.Minute,
+		luid:            luid,
+		dynamicRoutes:   make(map[netip.Addr]time.Time),
+		permanentRoutes: make(map[netip.Addr]struct{}),
+		stop:            make(chan struct{}),
+		ttl:             time.Duration(ttlMinutes) * time.Minute,
 	}
 }
 
@@ -64,6 +66,16 @@ func (s *routeTableSyncer) AddIP(ip netip.Addr) {
 	}
 }
 
+func (s *routeTableSyncer) AddPermanent(ip netip.Addr) {
+	s.mu.Lock()
+	_, exists := s.permanentRoutes[ip]
+	s.permanentRoutes[ip] = struct{}{}
+	s.mu.Unlock()
+	if !exists {
+		s.addRoute(ip)
+	}
+}
+
 func (s *routeTableSyncer) loop() {
 	defer s.wg.Done()
 	for {
@@ -82,6 +94,10 @@ func (s *routeTableSyncer) reap() {
 	var expired []netip.Addr
 	for ip, expiry := range s.dynamicRoutes {
 		if now.After(expiry) {
+			// Skip if this IP also exists in permanent routes
+			if _, ok := s.permanentRoutes[ip]; ok {
+				continue
+			}
 			expired = append(expired, ip)
 			delete(s.dynamicRoutes, ip)
 		}
@@ -99,6 +115,10 @@ func (s *routeTableSyncer) flush() {
 		all = append(all, ip)
 	}
 	s.dynamicRoutes = make(map[netip.Addr]time.Time)
+	for ip := range s.permanentRoutes {
+		all = append(all, ip)
+	}
+	s.permanentRoutes = make(map[netip.Addr]struct{})
 	s.mu.Unlock()
 	for _, ip := range all {
 		s.deleteRoute(ip)

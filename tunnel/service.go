@@ -479,7 +479,7 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 						for _, peer := range config.Peers {
 							for _, prefix := range peer.AllowedIPs {
 								if prefix.IsSingleIP() {
-									routeSyncer.AddIP(prefix.Addr())
+									routeSyncer.AddPermanent(prefix.Addr())
 								}
 							}
 						}
