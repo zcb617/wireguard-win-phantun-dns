@@ -388,66 +388,6 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 		return
 	}
 
-	// Start DNSCrypt proxy after interface is UP so it can bind WG IPs.
-	if dnscryptCmd != nil {
-		if cmdErr := dnscryptCmd.Start(); cmdErr != nil {
-			err = fmt.Errorf("failed to start dnscrypt-proxy: %w", cmdErr)
-			serviceError = services.ErrorDNSCryptClient
-			return
-		}
-		dnscryptProcess = dnscryptCmd.Process
-		log.Println("DNSCrypt proxy started")
-	}
-
-	// Start DNS router after interface is UP so it can bind WG IPs.
-	if dnsRouterErr == nil && dnsRouterConfig != nil && dnsRouterConfig.Enabled {
-		log.Println("Starting DNS router")
-		var routerErr error
-		dnsRouterInst, routerErr = startDNSRouter(config.Name, dnscryptUpstream, originalServers, wgIPChan)
-		if routerErr != nil {
-			err = routerErr
-			serviceError = services.ErrorDNSRouter
-			return
-		}
-	}
-
-	// Start syncer if DNS router is active (after interface is UP)
-	if wgIPChan != nil {
-		if dnsRouterConfig.Mode == conf.DNSRouterModeRouteTable {
-			// Prevent WG from adding default routes; we control routing via /32 entries.
-			config.Interface.TableOff = true
-			routeSyncer = newRouteTableSyncer(luid, dnsRouterConfig.TTLMinutes)
-			routeSyncer.Start()
-			// Add /32 (v4) and /128 (v6) AllowedIPs to the route table as host routes.
-			for _, peer := range config.Peers {
-				for _, prefix := range peer.AllowedIPs {
-					if prefix.IsSingleIP() {
-						routeSyncer.AddIP(prefix.Addr())
-					}
-				}
-			}
-			go func() {
-				for ip := range wgIPChan {
-					if addr, ok := netip.AddrFromSlice(ip.To4()); ok {
-						routeSyncer.AddIP(addr)
-					}
-				}
-			}()
-			log.Println("Route table syncer started")
-		} else {
-			ipSyncer = newAllowedIPsSyncer(adapter, config, dnsRouterConfig.TTLMinutes)
-			ipSyncer.Start()
-			go func() {
-				for ip := range wgIPChan {
-					if addr, ok := netip.AddrFromSlice(ip.To4()); ok {
-						ipSyncer.AddIP(addr)
-					}
-				}
-			}()
-			log.Println("AllowedIPs syncer started")
-		}
-	}
-
 	watcher.Configure(adapter, config, luid)
 
 	err = runScriptCommand(config.Interface.PostUp, config.Name)
@@ -476,6 +416,77 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 				changes <- svc.Status{State: serviceState, Accepts: svc.AcceptStop | svc.AcceptShutdown}
 				log.Println("Startup complete")
 				started = true
+
+				// Start DNSCrypt proxy after WG is fully connected so it can bind WG IPs.
+				if dnscryptCmd != nil {
+					var cmdErr error
+					for i := range 3 {
+						if i > 0 {
+							log.Printf("Retrying dnscrypt-proxy start (%d/3)...", i)
+							time.Sleep(time.Second)
+						}
+						cmdErr = dnscryptCmd.Start()
+						if cmdErr == nil {
+							break
+						}
+					}
+					if cmdErr != nil {
+						err = fmt.Errorf("failed to start dnscrypt-proxy: %w", cmdErr)
+						serviceError = services.ErrorDNSCryptClient
+						return
+					}
+					dnscryptProcess = dnscryptCmd.Process
+					log.Println("DNSCrypt proxy started")
+				}
+
+				// Start DNS router only after dnscrypt-proxy is up.
+				if dnsRouterErr == nil && dnsRouterConfig != nil && dnsRouterConfig.Enabled {
+					log.Println("Starting DNS router")
+					var routerErr error
+					dnsRouterInst, routerErr = startDNSRouter(config.Name, dnscryptUpstream, originalServers, wgIPChan)
+					if routerErr != nil {
+						err = routerErr
+						serviceError = services.ErrorDNSRouter
+						return
+					}
+				}
+
+				// Start syncer if DNS router is active.
+				if wgIPChan != nil {
+					if dnsRouterConfig.Mode == conf.DNSRouterModeRouteTable {
+						// Prevent WG from adding default routes; we control routing via /32 entries.
+						config.Interface.TableOff = true
+						routeSyncer = newRouteTableSyncer(luid, dnsRouterConfig.TTLMinutes)
+						routeSyncer.Start()
+						// Add /32 (v4) and /128 (v6) AllowedIPs to the route table as host routes.
+						for _, peer := range config.Peers {
+							for _, prefix := range peer.AllowedIPs {
+								if prefix.IsSingleIP() {
+									routeSyncer.AddIP(prefix.Addr())
+								}
+							}
+						}
+						go func() {
+							for ip := range wgIPChan {
+								if addr, ok := netip.AddrFromSlice(ip.To4()); ok {
+									routeSyncer.AddIP(addr)
+								}
+							}
+						}()
+						log.Println("Route table syncer started")
+					} else {
+						ipSyncer = newAllowedIPsSyncer(adapter, config, dnsRouterConfig.TTLMinutes)
+						ipSyncer.Start()
+						go func() {
+							for ip := range wgIPChan {
+								if addr, ok := netip.AddrFromSlice(ip.To4()); ok {
+									ipSyncer.AddIP(addr)
+								}
+							}
+						}()
+						log.Println("AllowedIPs syncer started")
+					}
+				}
 			}
 		case e := <-watcher.errors:
 			serviceError, err = e.serviceError, e.err

@@ -50,15 +50,22 @@ func newDNSRouter(rules map[string]struct{}, dnscryptAddr, systemAddr, listenAdd
 }
 
 func (r *dnsRouter) Start() error {
+	udpAddr, err := net.ResolveUDPAddr("udp", r.listenAddr)
+	if err != nil {
+		return fmt.Errorf("DNS router: invalid listen address %s: %w", r.listenAddr, err)
+	}
+	conn, err := net.ListenUDP("udp", udpAddr)
+	if err != nil {
+		return fmt.Errorf("DNS router: failed to bind %s: %w", r.listenAddr, err)
+	}
 	r.server = &dns.Server{
-		Addr:    r.listenAddr,
-		Net:     "udp",
-		Handler: dns.HandlerFunc(r.handleRequest),
+		PacketConn: conn,
+		Handler:    dns.HandlerFunc(r.handleRequest),
 	}
 	r.wg.Add(1)
 	go func() {
 		defer r.wg.Done()
-		if err := r.server.ListenAndServe(); err != nil {
+		if err := r.server.ActivateAndServe(); err != nil {
 			log.Printf("DNS router stopped: %v", err)
 		}
 	}()
