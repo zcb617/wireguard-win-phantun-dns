@@ -56,8 +56,14 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 	var dnscryptCmd *exec.Cmd
 	var originalServers []netip.Addr
 	var dnscryptUpstream string
+	var processStatus conf.ProcessStatus
+
+	writeStatus := func() { processStatus.Save(config.Name) }
 
 	defer func() {
+		processStatus = conf.ProcessStatus{}
+		processStatus.Save(config.Name)
+		conf.DeleteProcessStatus(config.Name)
 		if phantunProcess != nil {
 			log.Println("Stopping phantun client")
 			phantunProcess.Kill()
@@ -238,6 +244,8 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 			return
 		}
 		phantunProcess = cmd.Process
+		processStatus.PhantunRunning = true
+		writeStatus()
 		log.Println("Phantun client started")
 	}
 
@@ -443,6 +451,8 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 						return
 					}
 					dnscryptProcess = dnscryptCmd.Process
+					processStatus.DNSCryptRunning = true
+					writeStatus()
 					log.Println("DNSCrypt proxy started")
 				}
 
@@ -456,6 +466,8 @@ func (service *tunnelService) Execute(args []string, r <-chan svc.ChangeRequest,
 						serviceError = services.ErrorDNSRouter
 						return
 					}
+					processStatus.DNSRouterRunning = true
+					writeStatus()
 				}
 
 				// Start syncer if DNS router is active.

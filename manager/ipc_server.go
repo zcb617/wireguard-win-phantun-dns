@@ -255,6 +255,17 @@ func (s *ManagerService) Quit(stopTunnelsOnQuit bool) (alreadyQuit bool, err err
 	return false, nil
 }
 
+func (s *ManagerService) ProcessStatus(tunnelName string) (conf.ProcessStatus, error) {
+	status, err := conf.LoadProcessStatus(tunnelName)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return conf.ProcessStatus{}, nil
+		}
+		return conf.ProcessStatus{}, err
+	}
+	return *status, nil
+}
+
 func (s *ManagerService) UpdateState() UpdateState {
 	return updateState
 }
@@ -540,6 +551,21 @@ func (s *ManagerService) ServeConn(reader io.Reader, writer io.Writer) {
 				cfg = conf.DefaultDNSRouterConfig()
 			}
 			err = encoder.Encode(*cfg)
+			if err != nil {
+				return
+			}
+			err = encoder.Encode(errToString(retErr))
+			if err != nil {
+				return
+			}
+		case ProcessStatusMethodType:
+			var tunnelName string
+			err := decoder.Decode(&tunnelName)
+			if err != nil {
+				return
+			}
+			status, retErr := s.ProcessStatus(tunnelName)
+			err = encoder.Encode(status)
 			if err != nil {
 				return
 			}

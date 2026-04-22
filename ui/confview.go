@@ -44,16 +44,19 @@ type toggleActiveLine struct {
 }
 
 type interfaceView struct {
-	status       *labelStatusLine
-	publicKey    *labelTextLine
-	listenPort   *labelTextLine
-	mtu          *labelTextLine
-	addresses    *labelTextLine
-	dns          *labelTextLine
-	scripts      *labelTextLine
-	table        *labelTextLine
-	toggleActive *toggleActiveLine
-	lines        []widgetsLine
+	status         *labelStatusLine
+	publicKey      *labelTextLine
+	listenPort     *labelTextLine
+	mtu            *labelTextLine
+	addresses      *labelTextLine
+	dns            *labelTextLine
+	scripts        *labelTextLine
+	table          *labelTextLine
+	phantunStatus  *labelTextLine
+	dnscryptStatus *labelTextLine
+	dnsrouterStatus *labelTextLine
+	toggleActive   *toggleActiveLine
+	lines          []widgetsLine
 }
 
 type peerView struct {
@@ -316,6 +319,9 @@ func newInterfaceView(parent walk.Container) (*interfaceView, error) {
 		{l18n.Sprintf("DNS servers:"), &iv.dns},
 		{l18n.Sprintf("Scripts:"), &iv.scripts},
 		{l18n.Sprintf("Table:"), &iv.table},
+		{l18n.Sprintf("Phantun obfuscation:"), &iv.phantunStatus},
+		{l18n.Sprintf("DNSCrypt proxy:"), &iv.dnscryptStatus},
+		{l18n.Sprintf("DNS router:"), &iv.dnsrouterStatus},
 	}
 	if iv.lines, err = createLabelTextLines(items, parent, &disposables); err != nil {
 		return nil, err
@@ -372,6 +378,24 @@ func layoutInGrid(view widgetsLinesView, layout *walk.GridLayout) {
 
 func (iv *interfaceView) widgetsLines() []widgetsLine {
 	return iv.lines
+}
+
+func (iv *interfaceView) applyProcessStatus(status *conf.ProcessStatus) {
+	if status.PhantunRunning {
+		iv.phantunStatus.show(l18n.Sprintf("Running"))
+	} else {
+		iv.phantunStatus.show(l18n.Sprintf("Not running"))
+	}
+	if status.DNSCryptRunning {
+		iv.dnscryptStatus.show(l18n.Sprintf("Running"))
+	} else {
+		iv.dnscryptStatus.show(l18n.Sprintf("Not running"))
+	}
+	if status.DNSRouterRunning {
+		iv.dnsrouterStatus.show(l18n.Sprintf("Running"))
+	} else {
+		iv.dnsrouterStatus.show(l18n.Sprintf("Not running"))
+	}
 }
 
 func (iv *interfaceView) apply(c *conf.Interface) {
@@ -567,14 +591,17 @@ func NewConfView(parent walk.Container) (*ConfView, error) {
 					tunnel := cv.tunnel
 					var state manager.TunnelState
 					var config conf.Config
+					var procStatus conf.ProcessStatus
 					if state, _ = tunnel.State(); state == manager.TunnelStarted {
 						config, _ = tunnel.RuntimeConfig()
 					}
 					if config.Name == "" {
 						config, _ = tunnel.StoredConfig()
 					}
+					procStatus, _ = tunnel.ProcessStatus()
 					cv.Synchronize(func() {
 						cv.setTunnel(tunnel, &config, state)
+						cv.interfaze.applyProcessStatus(&procStatus)
 					})
 				}
 			case <-cv.quit:
@@ -629,14 +656,17 @@ func (cv *ConfView) onTunnelChanged(tunnel *manager.Tunnel, state, globalState m
 	})
 	if cv.tunnel != nil && cv.tunnel.Name == tunnel.Name {
 		var config conf.Config
+		var procStatus conf.ProcessStatus
 		if state == manager.TunnelStarted {
 			config, _ = tunnel.RuntimeConfig()
 		}
 		if config.Name == "" {
 			config, _ = tunnel.StoredConfig()
 		}
+		procStatus, _ = tunnel.ProcessStatus()
 		cv.Synchronize(func() {
 			cv.setTunnel(tunnel, &config, state)
+			cv.interfaze.applyProcessStatus(&procStatus)
 		})
 	}
 }
@@ -648,14 +678,17 @@ func (cv *ConfView) SetTunnel(tunnel *manager.Tunnel) {
 	var state manager.TunnelState
 	if tunnel != nil {
 		go func() {
+			var procStatus conf.ProcessStatus
 			if state, _ = tunnel.State(); state == manager.TunnelStarted {
 				config, _ = tunnel.RuntimeConfig()
 			}
 			if config.Name == "" {
 				config, _ = tunnel.StoredConfig()
 			}
+			procStatus, _ = tunnel.ProcessStatus()
 			cv.Synchronize(func() {
 				cv.setTunnel(tunnel, &config, state)
+				cv.interfaze.applyProcessStatus(&procStatus)
 			})
 		}()
 	} else {

@@ -61,6 +61,7 @@ const (
 	LoadDNSCryptConfigMethodType
 	SaveDNSRouterConfigMethodType
 	LoadDNSRouterConfigMethodType
+	ProcessStatusMethodType
 )
 
 var (
@@ -574,6 +575,26 @@ func IPCClientSaveDNSRouterConfig(tunnelName string, cfg *conf.DNSRouterConfig) 
 		return "", err
 	}
 	return msg, nil
+}
+
+func (t *Tunnel) ProcessStatus() (status conf.ProcessStatus, err error) {
+	rpcMutex.Lock()
+	defer rpcMutex.Unlock()
+
+	err = rpcEncoder.Encode(ProcessStatusMethodType)
+	if err != nil {
+		return
+	}
+	err = rpcEncoder.Encode(t.Name)
+	if err != nil {
+		return
+	}
+	err = rpcDecoder.Decode(&status)
+	if err != nil {
+		return
+	}
+	err = rpcDecodeError()
+	return
 }
 
 func IPCClientLoadDNSRouterConfig(tunnelName string) (*conf.DNSRouterConfig, error) {
